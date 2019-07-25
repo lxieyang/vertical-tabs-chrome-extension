@@ -4,6 +4,11 @@
   "background": {
     "page": "background.html"
   },
+  "browser_action": {},
+  "permissions": [
+    "tabs",
+    "activeTab"
+  ],
   "icons": {
     "128": "icon-128.png"
   },

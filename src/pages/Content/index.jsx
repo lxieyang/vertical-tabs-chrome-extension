@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Frame from './modules/frame';
+import Frame from './modules/frame/frame';
 
 let shouldShrinkBody = false;
 let sidebarRoot = document.createElement('div');
@@ -18,7 +18,6 @@ function shrinkBody(isOpen) {
 }
 
 function mountSidebar() {
-  console.log(chrome.extension.getURL('sidebar.html'));
   const App = (
     <Frame
       url={chrome.extension.getURL('sidebar.html')}
@@ -46,3 +45,11 @@ setTimeout(() => {
   console.log(Frame.isReady());
   Frame.toggle();
 }, 1000);
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.from === 'background' && request.msg === 'TOGGLE_SIDEBAR') {
+    if (Frame.isReady()) {
+      Frame.toggle();
+    }
+  }
+});

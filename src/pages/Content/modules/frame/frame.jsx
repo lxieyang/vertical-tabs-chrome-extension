@@ -3,8 +3,8 @@ import cx from 'classnames';
 import { css } from 'glamor';
 import { node, object, string, number, func } from 'prop-types';
 
-import { APP_NAME_SHORT } from '../../../shared//constants';
-import Logo from '../../../components/Logo/Logo';
+import { APP_NAME_SHORT } from '../../../../shared/constants';
+import Logo from '../../../../components/Logo/Logo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
