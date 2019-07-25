@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
 
 const shouldShrinkBody = true;
-const sidebarLocation = 'left';
+const sidebarLocation = 'right';
 const toggleButtonLocation = 'bottom';
 let sidebarWidth = 400;
 

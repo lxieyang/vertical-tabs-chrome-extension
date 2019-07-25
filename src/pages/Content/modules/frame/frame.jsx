@@ -403,6 +403,10 @@ export class Frame extends Component {
                 this.state.isDragging && sidebarLocation === 'left'
                   ? '4px solid rgb(233, 115, 46)'
                   : null,
+              // borderImage:
+              //   'linear-gradient(red, orange, yellow, green, blue, indigo, violet) 40',
+              borderImage:
+                'linear-gradient(rgba(255,131,7,1) 0%,rgba(255,176,112,1) 100%) 30',
             }}
             onResize={(e, direction, ref, d) => {
               let width =
