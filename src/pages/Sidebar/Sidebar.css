@@ -1,0 +1,36 @@
+li.TabContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  transition: 0.1s all ease-in;
+}
+
+li.ActiveTabContainer {
+  background-color: rgb(218, 221, 222);
+}
+
+li.InactiveTabContainer:hover {
+  background-color: rgb(241, 243, 244);
+}
+
+li.NewTabIconContainer {
+  justify-content: center;
+  cursor: pointer;
+}
+
+.Ordinal {
+  width: 20px;
+  text-align: right;
+  margin-right: 5px;
+}
+
+.ActionButton {
+  opacity: 0.5;
+  transition: 0.11s all ease-in;
+}
+
+.ActionButton:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}

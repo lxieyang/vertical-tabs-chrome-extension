@@ -54,14 +54,14 @@ const containerMinimizedClass = css({
 });
 
 const containerRightMinimizedClass = css({
-  transform: 'translateX(98%)',
+  transform: 'translateX(100%)',
   ':hover': {
     transform: `translateX(94%)`,
   },
 });
 
 const containerLeftMinimizedClass = css({
-  transform: 'translateX(-98%)',
+  transform: 'translateX(-100%)',
   ':hover': {
     transform: `translateX(-94%)`,
   },
@@ -386,9 +386,9 @@ export class Frame extends Component {
             size={{ width: this.state.width, height: this.state.height }}
             enable={{
               top: false,
-              right: isMinimized && sidebarLocation === 'left' ? false : true,
+              right: !isMinimized && sidebarLocation === 'left' ? true : false,
               bottom: false,
-              left: isMinimized && sidebarLocation === 'right' ? false : true,
+              left: !isMinimized && sidebarLocation === 'right' ? true : false,
               topRight: false,
               bottomRight: false,
               bottomLeft: false,
