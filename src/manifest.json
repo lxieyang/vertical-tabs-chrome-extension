@@ -7,7 +7,8 @@
   "browser_action": {},
   "permissions": [
     "tabs",
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "icons": {
     "128": "icon-128.png"

@@ -2,20 +2,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
 
-let shouldShrinkBody = false;
-let sidebarRoot = document.createElement('div');
-document.body.appendChild(sidebarRoot);
-sidebarRoot.setAttribute('id', 'vt-sidebar-root');
+const shouldShrinkBody = true;
+const sidebarLocation = 'left';
+const toggleButtonLocation = 'bottom';
+let sidebarWidth = 400;
+
+const setSidebarWidth = (width) => {
+  sidebarWidth = width;
+};
+
+chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
+  let widthObj = result['vt-sidebar-width'];
+  if (widthObj !== undefined) {
+    sidebarWidth = JSON.parse(widthObj).width;
+  }
+});
 
 function shrinkBody(isOpen) {
   if (shouldShrinkBody) {
-    if (isOpen) {
-      document.body.style.marginRight = '410px';
-    } else {
-      document.body.style.marginRight = '0px';
+    if (sidebarLocation === 'right') {
+      if (isOpen) {
+        document.body.style.marginRight = `${sidebarWidth}px`;
+      } else {
+        document.body.style.marginRight = '0px';
+      }
+    } else if (sidebarLocation === 'left') {
+      if (isOpen) {
+        document.body.style.marginLeft = `${sidebarWidth}px`;
+      } else {
+        document.body.style.marginLeft = '0px';
+      }
     }
   }
 }
+
+let sidebarRoot = document.createElement('div');
+document.body.appendChild(sidebarRoot);
+sidebarRoot.setAttribute('id', 'vt-sidebar-root');
 
 function mountSidebar() {
   const App = (
@@ -23,8 +46,9 @@ function mountSidebar() {
       url={chrome.extension.getURL('sidebar.html')}
       shrinkBody={shrinkBody}
       viewportWidth={window.innerWidth}
-      sidebarLocation={'left'}
-      toggleButtonLocation={'bottom'}
+      sidebarLocation={sidebarLocation}
+      toggleButtonLocation={toggleButtonLocation}
+      setSidebarWidth={setSidebarWidth}
     />
   );
   ReactDOM.render(App, sidebarRoot);
@@ -40,11 +64,6 @@ function unmountSidebar() {
 }
 
 mountSidebar();
-
-setTimeout(() => {
-  console.log(Frame.isReady());
-  Frame.toggle();
-}, 1000);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.from === 'background' && request.msg === 'TOGGLE_SIDEBAR') {

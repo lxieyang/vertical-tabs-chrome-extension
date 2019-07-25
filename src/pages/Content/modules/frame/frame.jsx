@@ -194,12 +194,19 @@ export class Frame extends Component {
     }, delay);
 
     try {
-      let widthObj = localStorage.getItem('vt-sidebar-width');
-      if (widthObj !== undefined) {
-        this.setState({ width: JSON.parse(widthObj).width });
-      }
+      chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
+        let widthObj = result['vt-sidebar-width'];
+        if (widthObj !== undefined) {
+          this.setState({ width: JSON.parse(widthObj).width });
+        }
+      });
+      // let widthObj = localStorage.getItem('vt-sidebar-width');
+      // if (widthObj !== undefined) {
+      //   this.setState({ width: JSON.parse(widthObj).width });
+      // }
     } catch (e) {
-      localStorage.removeItem('vt-sidebar-width');
+      chrome.storage.sync.remove(['vt-sidebar-width']);
+      // localStorage.removeItem('vt-sidebar-width');
     }
   }
 
@@ -285,9 +292,9 @@ export class Frame extends Component {
               [toggleButtonBottomLeftClass]:
                 toggleButtonLocation === 'bottom' && sidebarLocation === 'left',
             })}
-            title={`${
-              this.state.isMinimized ? 'Open' : 'Hide'
-            } ${APP_NAME_SHORT} sidebar`}
+            // title={`${
+            //   this.state.isMinimized ? 'Open' : 'Hide'
+            // } ${APP_NAME_SHORT} sidebar`}
           >
             <div
               className={cx({
@@ -327,7 +334,7 @@ export class Frame extends Component {
                     />
                     <div style={{ marginLeft: '5px' }}>
                       {` ${
-                        this.state.isMinimized ? 'Open' : 'Close'
+                        this.state.isMinimized ? 'Open' : 'Hide'
                       } Vertical Tabs`}
                     </div>
                   </>
@@ -346,7 +353,7 @@ export class Frame extends Component {
                     </div>
                     <div style={{ marginLeft: '5px' }}>
                       {` ${
-                        this.state.isMinimized ? 'Open' : 'Close'
+                        this.state.isMinimized ? 'Open' : 'Hide'
                       } Vertical Tabs`}
                     </div>
                   </>
@@ -397,9 +404,12 @@ export class Frame extends Component {
                   ? '4px solid rgb(233, 115, 46)'
                   : null,
             }}
-            // onResize={e => {
-            //   e.stopPropagation();
-            // }}
+            onResize={(e, direction, ref, d) => {
+              let width =
+                parseInt(this.state.width, 10) + parseInt(d.width, 10);
+              this.props.setSidebarWidth(width);
+              this.props.shrinkBody(true);
+            }}
             onResizeStart={(e) => {
               this.setState({ isDragging: true });
             }}
@@ -410,10 +420,17 @@ export class Frame extends Component {
                 width: width,
                 isDragging: false,
               });
-              localStorage.setItem(
-                'vt-sidebar-width',
-                JSON.stringify({ width: width })
-              );
+
+              this.props.setSidebarWidth(width);
+              this.props.shrinkBody(true);
+
+              chrome.storage.sync.set({
+                'vt-sidebar-width': JSON.stringify({ width: width }),
+              });
+              // localStorage.setItem(
+              //   'vt-sidebar-width',
+              //   JSON.stringify({ width: width })
+              // );
             }}
           >
             <div
