@@ -13,7 +13,16 @@
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-brands-svg-icons": "^5.9.0",
+    "@fortawesome/free-regular-svg-icons": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@hot-loader/react-dom": "^16.8.6",
+    "classnames": "^2.2.6",
+    "glamor": "^2.20.40",
+    "prop-types": "^15.7.2",
+    "re-resizable": "^5.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.12.8"
@@ -30,6 +39,7 @@
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "2.1.0",
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-config-react-app": "^4.0.1",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.18.2",
