@@ -34,9 +34,8 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
-    newtab: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.jsx'),
     options: path.join(__dirname, 'src', 'pages', 'Options', 'index.jsx'),
-    popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
+    sidebar: path.join(__dirname, 'src', 'pages', 'Sidebar', 'index.jsx'),
     background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
   },
@@ -123,19 +122,14 @@ var options = {
       }
     ),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.html'),
-      filename: 'newtab.html',
-      chunks: ['newtab'],
-    }),
-    new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
       filename: 'options.html',
       chunks: ['options'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'pages', 'Popup', 'index.html'),
-      filename: 'popup.html',
-      chunks: ['popup'],
+      template: path.join(__dirname, 'src', 'pages', 'Sidebar', 'index.html'),
+      filename: 'sidebar.html',
+      chunks: ['sidebar'],
     }),
     new HtmlWebpackPlugin({
       template: path.join(
