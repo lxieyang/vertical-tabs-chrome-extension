@@ -17,21 +17,29 @@ const iframeClass = css({
   height: '100%',
   background: 'white',
   boxSizing: 'border-box',
-  borderRadius: '3px',
-  boxShadow: '-1px 1px 8px rgba(0,0,0,.15)',
+  // borderRadius: '3px',
 });
 
 const containerClass = css({
   position: 'fixed',
   top: '0px',
-  right: '0px',
+  // right: '0px',
   height: '100%',
-  padding: '3px 3px 3px 0px',
+  padding: '0px 0px 0px 0px',
   boxSizing: 'border-box',
   borderRadius: '3px',
+  boxShadow: '-1px 1px 8px rgba(0,0,0,.15)',
   transform: 'translateX(115%)',
   transition: 'transform .25s cubic-bezier(0, 0, 0.3, 1)',
   zIndex: 99999999,
+});
+
+const containerRightClass = css({
+  right: '0px',
+});
+
+const containerLeftClass = css({
+  left: '0px',
 });
 
 const containerVisibleClass = css({
@@ -40,26 +48,74 @@ const containerVisibleClass = css({
 
 const containerMinimizedClass = css({
   cursor: 'pointer',
-  transform: 'translateX(98%)',
-  ':hover': {
-    transform: 'translateX(94%)',
-  },
   '& > iframe': {
     pointerEvents: 'none',
   },
 });
 
+const containerRightMinimizedClass = css({
+  transform: 'translateX(98%)',
+  ':hover': {
+    transform: `translateX(94%)`,
+  },
+});
+
+const containerLeftMinimizedClass = css({
+  transform: 'translateX(-98%)',
+  ':hover': {
+    transform: `translateX(-94%)`,
+  },
+});
+
 const toggleButtonClass = css({
   position: 'fixed',
+  zIndex: 9999999999,
+});
+
+const toggleButtonBottomRightClass = css({
   bottom: '40px',
   right: '30px',
-  zIndex: 9999999999,
+});
+
+const toggleButtonBottomRightInnerClass = css({
+  bottom: '0px',
+  right: '0px',
+});
+
+const toggleButtonTopRightClass = css({
+  top: '40px',
+  right: '30px',
+});
+
+const toggleButtonTopRightInnerClass = css({
+  top: '0px',
+  right: '0px',
+});
+
+const toggleButtonBottomLeftClass = css({
+  bottom: '40px',
+  left: '30px',
+});
+
+const toggleButtonBottomLeftInnerClass = css({
+  bottom: '0px',
+  left: '0px',
+});
+
+const toggleButtonTopLeftClass = css({
+  top: '40px',
+  left: '30px',
+});
+
+const toggleButtonTopLeftInnerClass = css({
+  top: '0px',
+  left: '0px',
 });
 
 const toggleButtonInnerClass = css({
   position: 'absolute',
-  right: '0px',
-  bottom: '0px',
+  // right: '0px',
+  // bottom: '0px',
   width: '45px',
   height: '35px',
   boxSizing: 'border-box',
@@ -71,13 +127,14 @@ const toggleButtonInnerClass = css({
   fontSize: '16px',
   fontFamily: 'arial',
   backgroundColor: 'white',
-  color: 'rgb(193, 40, 27)',
+  color: 'black',
+  userSelect: 'none',
   borderRadius: '6px',
   boxShadow: '-1px 1px 8px rgba(0,0,0,.2)',
   transition: 'all 0.3s',
   opacity: 0.3,
   ':hover': {
-    width: '210px',
+    width: '200px',
     opacity: 1,
   },
 });
@@ -101,8 +158,6 @@ export class Frame extends Component {
     maskStyle: {},
     containerClassName: '',
     containerStyle: {},
-    iframeClassName: '',
-    iframeStyle: {},
     onMount: () => {},
     onUnmount: () => {},
     onLoad: () => {},
@@ -115,8 +170,6 @@ export class Frame extends Component {
     maskStyle: object,
     containerClassName: string,
     containerStyle: object,
-    iframeClassName: string,
-    iframeStyle: object,
     children: node,
     containerChildren: node,
     onMount: func,
@@ -209,11 +262,11 @@ export class Frame extends Component {
       className,
       containerClassName,
       containerStyle,
-      iframeClassName,
-      iframeStyle,
       children,
       containerChildren,
       viewportWidth,
+      sidebarLocation,
+      toggleButtonLocation,
     } = this.props;
 
     return (
@@ -222,6 +275,15 @@ export class Frame extends Component {
           <div
             className={cx({
               [toggleButtonClass]: true,
+              [toggleButtonTopRightClass]:
+                toggleButtonLocation === 'top' && sidebarLocation === 'right',
+              [toggleButtonBottomRightClass]:
+                toggleButtonLocation === 'bottom' &&
+                sidebarLocation === 'right',
+              [toggleButtonTopLeftClass]:
+                toggleButtonLocation === 'top' && sidebarLocation === 'left',
+              [toggleButtonBottomLeftClass]:
+                toggleButtonLocation === 'bottom' && sidebarLocation === 'left',
             })}
             title={`${
               this.state.isMinimized ? 'Open' : 'Hide'
@@ -230,8 +292,18 @@ export class Frame extends Component {
             <div
               className={cx({
                 [toggleButtonInnerClass]: true,
+                [toggleButtonTopRightInnerClass]:
+                  toggleButtonLocation === 'top' && sidebarLocation === 'right',
+                [toggleButtonBottomRightInnerClass]:
+                  toggleButtonLocation === 'bottom' &&
+                  sidebarLocation === 'right',
+                [toggleButtonTopLeftInnerClass]:
+                  toggleButtonLocation === 'top' && sidebarLocation === 'left',
+                [toggleButtonBottomLeftInnerClass]:
+                  toggleButtonLocation === 'bottom' &&
+                  sidebarLocation === 'left',
               })}
-              style={{ margin: '5px' }}
+              style={{ margin: '3px' }}
               onClick={this.onFrameClick}
             >
               <div
@@ -242,27 +314,59 @@ export class Frame extends Component {
                   alignItems: 'center',
                 }}
               >
-                <FontAwesomeIcon
-                  icon={this.state.isMinimized ? faChevronLeft : faChevronRight}
-                  style={{ marginRight: '5px' }}
-                />
-                <div style={{ width: '20px' }}>
-                  <Logo size={'20px'} />
-                </div>
-                <div style={{ marginLeft: '5px' }}>
-                  {` ${
-                    this.state.isMinimized ? 'Open' : 'Close'
-                  } ${APP_NAME_SHORT} sidebar`}
-                </div>
+                {sidebarLocation === 'left' && (
+                  <>
+                    <div style={{ width: '20px' }}>
+                      <Logo size={'20px'} />
+                    </div>
+                    <FontAwesomeIcon
+                      icon={
+                        this.state.isMinimized ? faChevronRight : faChevronLeft
+                      }
+                      style={{ marginLeft: '5px', color: 'rgb(233, 115, 46)' }}
+                    />
+                    <div style={{ marginLeft: '5px' }}>
+                      {` ${
+                        this.state.isMinimized ? 'Open' : 'Close'
+                      } Vertical Tabs`}
+                    </div>
+                  </>
+                )}
+
+                {sidebarLocation === 'right' && (
+                  <>
+                    <FontAwesomeIcon
+                      icon={
+                        this.state.isMinimized ? faChevronLeft : faChevronRight
+                      }
+                      style={{ marginRight: '5px', color: 'rgb(233, 115, 46)' }}
+                    />
+                    <div style={{ width: '20px' }}>
+                      <Logo size={'20px'} />
+                    </div>
+                    <div style={{ marginLeft: '5px' }}>
+                      {` ${
+                        this.state.isMinimized ? 'Open' : 'Close'
+                      } Vertical Tabs`}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
         )}
         <div
+          id="nice"
           className={cx({
             [containerClass]: true,
+            [containerLeftClass]: sidebarLocation === 'left',
+            [containerRightClass]: sidebarLocation === 'right',
             [containerVisibleClass]: isVisible,
             [containerMinimizedClass]: isMinimized,
+            [containerLeftMinimizedClass]:
+              isMinimized && sidebarLocation === 'left',
+            [containerRightMinimizedClass]:
+              isMinimized && sidebarLocation === 'right',
             [containerClassName]: true,
           })}
           style={{
@@ -275,16 +379,23 @@ export class Frame extends Component {
             size={{ width: this.state.width, height: this.state.height }}
             enable={{
               top: false,
-              right: false,
+              right: isMinimized && sidebarLocation === 'left' ? false : true,
               bottom: false,
-              left: isMinimized ? false : true,
+              left: isMinimized && sidebarLocation === 'right' ? false : true,
               topRight: false,
               bottomRight: false,
               bottomLeft: false,
               topLeft: false,
             }}
             style={{
-              borderLeft: this.state.isDragging ? '4px solid #2196F3' : null,
+              borderLeft:
+                this.state.isDragging && sidebarLocation === 'right'
+                  ? '4px solid rgb(233, 115, 46)'
+                  : null,
+              borderRight:
+                this.state.isDragging && sidebarLocation === 'left'
+                  ? '4px solid rgb(233, 115, 46)'
+                  : null,
             }}
             // onResize={e => {
             //   e.stopPropagation();
@@ -305,17 +416,45 @@ export class Frame extends Component {
               );
             }}
           >
-            <iframe
-              title={'vt-sidebar-iframe'}
-              className={cx({
-                [iframeClass]: true,
-                [iframeClassName]: true,
-              })}
-              style={iframeStyle}
-              src={url}
-              ref={(frame) => (this.frame = frame)}
-              onLoad={this.onLoad}
-            />
+            <div
+              style={{
+                display: 'flex',
+                height: '100%',
+              }}
+            >
+              {/* <div
+                style={{
+                  order:
+                    sidebarLocation === 'left'
+                      ? 2
+                      : sidebarLocation === 'right'
+                      ? 1
+                      : null,
+                  width: !isMinimized ? '15px' : '40px',
+                  height: '100%',
+                  cursor: 'pointer',
+                  backgroundColor: 'white',
+                }}
+                onClick={(e) => {
+                  this.onFrameClick();
+                }}
+              ></div> */}
+              <div
+                style={{
+                  flex: '1',
+                }}
+              >
+                <iframe
+                  title={'vt-sidebar-iframe'}
+                  className={cx({
+                    [iframeClass]: true,
+                  })}
+                  src={url}
+                  ref={(frame) => (this.frame = frame)}
+                  onLoad={this.onLoad}
+                />
+              </div>
+            </div>
           </Resizable>
 
           {containerChildren}

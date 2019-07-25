@@ -24,6 +24,8 @@ function mountSidebar() {
       url={chrome.extension.getURL('sidebar.html')}
       shrinkBody={shrinkBody}
       viewportWidth={window.innerWidth}
+      sidebarLocation={'left'}
+      toggleButtonLocation={'bottom'}
     />
   );
   ReactDOM.render(App, sidebarRoot);
@@ -39,3 +41,8 @@ function unmountSidebar() {
 }
 
 mountSidebar();
+
+setTimeout(() => {
+  console.log(Frame.isReady());
+  Frame.toggle();
+}, 1000);
