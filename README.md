@@ -1,3 +1,7 @@
+# Vertical Tabs (Chrome Extension)
+
+<hr>
+
 # Chrome Extension Boilerplate with React 16.6+ and Webpack 4+
 
 ## Features
