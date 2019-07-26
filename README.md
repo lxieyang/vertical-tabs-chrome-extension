@@ -2,6 +2,8 @@
 
 <hr>
 
+Built with the following template: 
+
 # Chrome Extension Boilerplate with React 16.6+ and Webpack 4+
 
 ## Features
