@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   padding: 0px;
-  /* background-color: lightgray; */
   font-size: 14px;
+  background-color: rgb(222, 225, 230);
+  height: 100%;
 }

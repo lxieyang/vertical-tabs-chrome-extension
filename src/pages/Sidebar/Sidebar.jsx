@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash';
-import ReactHoverObserver from 'react-hover-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import TabsList from './containers/TabsList/TabsList';
+
 import './Sidebar.css';
 
 class Sidebar extends Component {
@@ -144,81 +146,14 @@ class Sidebar extends Component {
 
   render() {
     const { tabOrders, activeTab, tabsDict } = this.state;
-
     return (
-      <div>
-        <ul style={{ padding: '0px 10px' }}>
-          {tabOrders.map((tabOrder, idx) => {
-            if (tabsDict[tabOrder.id] === undefined) {
-              return null;
-            }
-
-            let tab = tabsDict[tabOrder.id];
-            return (
-              <li
-                key={idx}
-                className={[
-                  'TabContainer',
-                  tabOrder.active
-                    ? 'ActiveTabContainer'
-                    : 'InactiveTabContainer',
-                ].join(' ')}
-                onClick={() => {
-                  chrome.tabs.update(tab.id, { active: true });
-                }}
-                onMouseEnter={() => {
-                  if (tabOrder.index === activeTab.index) {
-                    chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
-                  } else {
-                    chrome.tabs.highlight(
-                      { tabs: [activeTab.index, tabOrder.index] },
-                      null
-                    );
-                  }
-                }}
-              >
-                {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}
-                <img
-                  src={tab.faviconUrl ? tab.faviconUrl : tab.favIconUrl}
-                  alt="favicon"
-                  style={{ marginRight: '5px' }}
-                />{' '}
-                <div style={{ flex: 1 }}>{tab.title}</div>
-                <div
-                  title="Reload"
-                  className="ActionButton"
-                  // style={{ marginRight: 10, cursor: 'pointer' }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    chrome.tabs.reload(tab.id);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faRedo} />
-                </div>
-                <div
-                  title="Close"
-                  className="ActionButton"
-                  // style={{ marginRight: 10, cursor: 'pointer' }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    chrome.tabs.remove(tab.id);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faTimes} />
-                </div>
-              </li>
-            );
-          })}
-          <li
-            className="TabContainer NewTabIconContainer"
-            title="Open a new tab"
-            onClick={() => {
-              chrome.tabs.create({});
-            }}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </li>
-        </ul>
+      <div className="SidebarContainer">
+        <div>title</div>
+        <TabsList
+          tabOrders={tabOrders}
+          activeTab={activeTab}
+          tabsDict={tabsDict}
+        />
       </div>
     );
   }

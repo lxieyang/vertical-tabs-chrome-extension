@@ -4,10 +4,23 @@ import '../../assets/img/icon-128.png';
 console.log('This is the background page.');
 console.log('Put the background scripts here.');
 
-let sidebarOpen = false;
+let sidebarOpen = true;
+
+chrome.storage.local.get(['sidebarOpen'], (result) => {
+  if (result.sidebarOpen !== undefined) {
+    sidebarOpen = result.sidebarOpen === 'true';
+  }
+});
+
+const persistSidebarOpenStatus = (status) => {
+  chrome.storage.local.set({
+    sidebarOpen: status,
+  });
+};
 
 const toggleSidebar = () => {
   sidebarOpen = !sidebarOpen;
+  persistSidebarOpenStatus(sidebarOpen);
   let sidebarOpenCopy = sidebarOpen;
   chrome.tabs.query(
     {
@@ -59,6 +72,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     request.from === 'content' &&
     request.msg === 'REQUEST_SIDEBAR_STATUS'
   ) {
+    console.log('sending', sidebarOpen);
     sendResponse({
       sidebarOpen,
     });
