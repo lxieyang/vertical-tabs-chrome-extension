@@ -70,7 +70,7 @@
   margin-right: 5px;
 }
 
-.ActionButtonContainer {
+.TabItem .ActionButtonContainer {
   flex-shrink: 0;
   cursor: default;
   display: flex;
@@ -78,7 +78,7 @@
   justify-content: center;
 }
 
-.ActionButton {
+.TabItem .ActionButton {
   width: 18px;
   height: 18px;
 
@@ -91,12 +91,12 @@
   color: rgb(86, 91, 94);
 }
 
-.ActionButton:hover {
+.TabItem .ActionButton:hover {
   color: rgb(60, 64, 67);
   background-color: rgb(232, 234, 237);
 }
 
-.ActionButtonSpaceBetween {
+.TabItem .ActionButtonSpaceBetween {
   width: 5px;
 }
 

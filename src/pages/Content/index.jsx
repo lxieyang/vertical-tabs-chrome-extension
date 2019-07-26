@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
 
 const shouldShrinkBody = true;
-const sidebarLocation = 'left';
+let sidebarLocation = 'left';
 const toggleButtonLocation = 'bottom';
 let sidebarWidth = 400;
 
@@ -43,6 +43,7 @@ document.body.appendChild(sidebarRoot);
 sidebarRoot.setAttribute('id', 'vt-sidebar-root');
 
 function mountSidebar() {
+  // console.log('Mounting sidebar on the', sidebarLocation);
   const App = (
     <Frame
       url={chrome.extension.getURL('sidebar.html')}
@@ -65,7 +66,12 @@ function unmountSidebar() {
   }
 }
 
-mountSidebar();
+chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
+  if (result.sidebarOnLeft !== undefined) {
+    sidebarLocation = result.sidebarOnLeft === true ? 'left' : 'right';
+  }
+  mountSidebar();
+});
 
 chrome.runtime.sendMessage(
   {

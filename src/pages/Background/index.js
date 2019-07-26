@@ -1,14 +1,11 @@
 import '../../assets/img/icon-34.png';
 import '../../assets/img/icon-128.png';
 
-console.log('This is the background page.');
-console.log('Put the background scripts here.');
-
-let sidebarOpen = true;
+let sidebarOpen = true; // open -> true  |  close -> false
 
 chrome.storage.local.get(['sidebarOpen'], (result) => {
   if (result.sidebarOpen !== undefined) {
-    sidebarOpen = result.sidebarOpen === 'true';
+    sidebarOpen = result.sidebarOpen === true;
   }
 });
 
@@ -18,8 +15,28 @@ const persistSidebarOpenStatus = (status) => {
   });
 };
 
-const toggleSidebar = () => {
-  sidebarOpen = !sidebarOpen;
+let sidebarOnLeft = true; // left -> true  |  right -> false
+
+chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
+  if (result.sidebarOnLeft !== undefined) {
+    sidebarOnLeft = result.sidebarOnLeft === 'true';
+  } else {
+    persistSidebarOnLeftStatus(true);
+  }
+});
+
+const persistSidebarOnLeftStatus = (status) => {
+  chrome.storage.sync.set({
+    sidebarOnLeft: status,
+  });
+};
+
+const toggleSidebar = (toStatus = null) => {
+  if (toStatus === null || toStatus === undefined) {
+    sidebarOpen = !sidebarOpen;
+  } else {
+    sidebarOpen = toStatus;
+  }
   persistSidebarOpenStatus(sidebarOpen);
   let sidebarOpenCopy = sidebarOpen;
   chrome.tabs.query(
@@ -80,7 +97,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     request.from === 'content' &&
     request.msg === 'REQUEST_TOGGLE_SIDEBAR'
   ) {
-    toggleSidebar();
+    toggleSidebar(request.toStatus);
   } else if (request.from === 'content' && request.msg === 'WIDTH_CHANGED') {
     console.log(request.width);
     // console.log(request.width);

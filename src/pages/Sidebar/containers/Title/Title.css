@@ -1,0 +1,54 @@
+.TitleContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 16px;
+  z-index: 9999999;
+
+  background-color: rgb(245, 245, 245);
+  color: rgb(33, 33, 33);
+
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
+.TitleLogoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.TitleNameContainer {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.TitleContainer .ActionButtonContainer {
+  flex-shrink: 0;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.TitleContainer .ActionButton {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  color: rgb(86, 91, 94);
+  transition: all 0.2s ease-in;
+}
+
+.ActionButton:hover {
+  color: rgb(60, 64, 67);
+  background-color: rgb(232, 234, 237);
+}

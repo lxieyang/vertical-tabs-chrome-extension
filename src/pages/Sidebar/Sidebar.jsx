@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRedo } from '@fortawesome/free-solid-svg-icons';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+import Title from './containers/Title/Title';
 import TabsList from './containers/TabsList/TabsList';
 
 import './Sidebar.css';
@@ -148,7 +145,7 @@ class Sidebar extends Component {
     const { tabOrders, activeTab, tabsDict } = this.state;
     return (
       <div className="SidebarContainer">
-        <div>title</div>
+        <Title />
         <TabsList
           tabOrders={tabOrders}
           activeTab={activeTab}

@@ -4,9 +4,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
-
 import { MdAdd } from 'react-icons/md';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import './TabsList.css';
 
@@ -34,7 +32,7 @@ class TabsList extends Component {
 
     return (
       <div>
-        <ul style={{ padding: 0 }}>
+        <ul style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
           {tabOrders.map((tabOrder, idx) => {
             if (tabsDict[tabOrder.id] === undefined) {
               return null;
