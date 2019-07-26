@@ -19,7 +19,6 @@ chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
 });
 
 document.body.style.transition = 'margin .25s cubic-bezier(0, 0, 0.3, 1)';
-console.log(document.body.style.transition);
 
 function shrinkBody(isOpen) {
   if (shouldShrinkBody) {

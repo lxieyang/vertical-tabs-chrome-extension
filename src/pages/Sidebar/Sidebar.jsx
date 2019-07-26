@@ -178,9 +178,14 @@ class Sidebar extends Component {
                 <div
                   title="Reload"
                   className="ActionButton"
-                  style={{ marginRight: 10, cursor: 'pointer' }}
+                  // style={{ marginRight: 10, cursor: 'pointer' }}
                   onClick={() => {
-                    chrome.tabs.reload(tab.id);
+                    // chrome.tabs.reload(tab.id);
+                    chrome.tabs.update(
+                      tab.id,
+                      { url: tab.url, selected: tab.selected },
+                      null
+                    );
                   }}
                 >
                   <FontAwesomeIcon icon={faRedo} />
@@ -188,7 +193,7 @@ class Sidebar extends Component {
                 <div
                   title="Close"
                   className="ActionButton"
-                  style={{ marginRight: 10, cursor: 'pointer' }}
+                  // style={{ marginRight: 10, cursor: 'pointer' }}
                   onClick={() => this.handleRemoveTab(tab.id)}
                 >
                   <FontAwesomeIcon icon={faTimes} />

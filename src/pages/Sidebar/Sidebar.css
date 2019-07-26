@@ -2,8 +2,9 @@ li.TabContainer {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 8px 5px;
   transition: 0.1s all ease-in;
+  cursor: default;
 }
 
 li.ActiveTabContainer {
@@ -30,6 +31,8 @@ li.NewTabIconContainer:hover {
 }
 
 .ActionButton {
+  margin: 0px 10px;
+  cursor: pointer;
   opacity: 0.5;
   transition: 0.11s all ease-in;
 }

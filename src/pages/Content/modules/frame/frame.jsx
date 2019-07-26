@@ -197,7 +197,10 @@ export class Frame extends Component {
       chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
         let widthObj = result['vt-sidebar-width'];
         if (widthObj !== undefined) {
-          this.setState({ width: JSON.parse(widthObj).width });
+          let width = JSON.parse(widthObj).width;
+          if (width) {
+            this.setState({ width });
+          }
         }
       });
       // let widthObj = localStorage.getItem('vt-sidebar-width');
@@ -208,6 +211,16 @@ export class Frame extends Component {
       chrome.storage.sync.remove(['vt-sidebar-width']);
       // localStorage.removeItem('vt-sidebar-width');
     }
+
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_SIDEBAR_WIDTH'
+      ) {
+        // console.log(parseInt(request.width));
+        this.setState({ width: parseInt(request.width) });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -436,6 +449,12 @@ export class Frame extends Component {
               //   'vt-sidebar-width',
               //   JSON.stringify({ width: width })
               // );
+
+              chrome.runtime.sendMessage({
+                from: 'content',
+                msg: 'WIDTH_CHANGED',
+                width,
+              });
             }}
           >
             <div

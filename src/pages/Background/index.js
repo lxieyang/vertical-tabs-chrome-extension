@@ -25,6 +25,23 @@ const toggleSidebar = () => {
   );
 };
 
+const updateSidebarWidth = (width) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_SIDEBAR_WIDTH',
+          width,
+        });
+      });
+    }
+  );
+};
+
 chrome.browserAction.onClicked.addListener((senderTab) => {
   toggleSidebar();
 
@@ -50,5 +67,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     request.msg === 'REQUEST_TOGGLE_SIDEBAR'
   ) {
     toggleSidebar();
+  } else if (request.from === 'content' && request.msg === 'WIDTH_CHANGED') {
+    console.log(request.width);
+    // console.log(request.width);
+    updateSidebarWidth(request.width);
   }
 });
