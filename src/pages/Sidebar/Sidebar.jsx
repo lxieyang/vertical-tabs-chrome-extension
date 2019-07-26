@@ -142,20 +142,6 @@ class Sidebar extends Component {
 
   handleTabHighlighted = (highlightInfo) => {};
 
-  handleRemoveTab = (tabId) => {
-    let currentTabId;
-    chrome.tabs.getCurrent((tab) => {
-      currentTabId = tab.id;
-      chrome.tabs.remove(tabId);
-      chrome.tabs.update(currentTabId, { active: true });
-    });
-    // chrome.runtime.sendMessage({
-    //   from: 'sidebar',
-    //   msg: 'CLOSE_TAB_WITH_ID',
-    //   tabId,
-    // });
-  };
-
   render() {
     const { tabOrders, activeTab, tabsDict } = this.state;
 
@@ -202,13 +188,9 @@ class Sidebar extends Component {
                   title="Reload"
                   className="ActionButton"
                   // style={{ marginRight: 10, cursor: 'pointer' }}
-                  onClick={() => {
-                    // chrome.tabs.reload(tab.id);
-                    chrome.tabs.update(
-                      tab.id,
-                      { url: tab.url, selected: tab.selected },
-                      null
-                    );
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    chrome.tabs.reload(tab.id);
                   }}
                 >
                   <FontAwesomeIcon icon={faRedo} />
@@ -217,7 +199,10 @@ class Sidebar extends Component {
                   title="Close"
                   className="ActionButton"
                   // style={{ marginRight: 10, cursor: 'pointer' }}
-                  onClick={() => this.handleRemoveTab(tab.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    chrome.tabs.remove(tab.id);
+                  }}
                 >
                   <FontAwesomeIcon icon={faTimes} />
                 </div>
