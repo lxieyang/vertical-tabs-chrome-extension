@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { sortBy } from 'lodash';
+import ReactHoverObserver from 'react-hover-observer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRedo } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +10,7 @@ import './Sidebar.css';
 class Sidebar extends Component {
   state = {
     tabOrders: [],
+    activeTab: {},
     tabsDict: {},
   };
 
@@ -29,6 +31,15 @@ class Sidebar extends Component {
           index: tab.index,
           active: tab.active,
         });
+        if (tab.active) {
+          this.setState({
+            activeTab: {
+              id: tab.id,
+              index: tab.index,
+              active: tab.active,
+            },
+          });
+        }
       });
       tabOrders = sortBy(tabOrders, ['index']);
       // console.log(tabOrders, tabsDict);
@@ -77,11 +88,15 @@ class Sidebar extends Component {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
       let tabOrders = [];
       tabs.forEach((tab) => {
-        tabOrders.push({
+        let tabObj = {
           id: tab.id,
           index: tab.index,
           active: tab.active,
-        });
+        };
+        tabOrders.push(tabObj);
+        if (tab.active) {
+          this.setState({ activeTab: tabObj });
+        }
       });
       tabOrders = sortBy(tabOrders, ['index']);
       this.setState({ tabOrders });
@@ -89,7 +104,6 @@ class Sidebar extends Component {
   };
 
   handleTabCreated = (tab) => {
-    console.log(tab);
     this.updateTabsDictWithTab(tab);
     this.updateTabOrders();
   };
@@ -126,9 +140,7 @@ class Sidebar extends Component {
     this.updateTabOrders();
   };
 
-  handleTabHighlighted = (highlightInfo) => {
-    // console.log(highlightInfo);
-  };
+  handleTabHighlighted = (highlightInfo) => {};
 
   handleRemoveTab = (tabId) => {
     let currentTabId;
@@ -145,7 +157,8 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { tabOrders, tabsDict } = this.state;
+    const { tabOrders, activeTab, tabsDict } = this.state;
+
     return (
       <div>
         <ul style={{ padding: '0px 10px' }}>
@@ -166,6 +179,16 @@ class Sidebar extends Component {
                 ].join(' ')}
                 onClick={() => {
                   chrome.tabs.update(tab.id, { active: true });
+                }}
+                onMouseEnter={() => {
+                  if (tabOrder.index === activeTab.index) {
+                    chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
+                  } else {
+                    chrome.tabs.highlight(
+                      { tabs: [activeTab.index, tabOrder.index] },
+                      null
+                    );
+                  }
                 }}
               >
                 {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}

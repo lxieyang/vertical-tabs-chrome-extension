@@ -27,7 +27,8 @@
     "re-resizable": "^5.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-hot-loader": "^4.12.8"
+    "react-hot-loader": "^4.12.8",
+    "react-hover-observer": "^2.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
