@@ -6,8 +6,24 @@ let sidebarOpen = true; // open -> true  |  close -> false
 chrome.storage.local.get(['sidebarOpen'], (result) => {
   if (result.sidebarOpen !== undefined) {
     sidebarOpen = result.sidebarOpen === true;
+    changeBrowserIconBadgeWithSidebarOpenStatus(sidebarOpen);
   }
 });
+
+const changeBrowserIconBadgeWithSidebarOpenStatus = (status) => {
+  if (status) {
+    chrome.browserAction.setBadgeText({
+      text: '👀',
+    });
+    chrome.browserAction.setBadgeBackgroundColor({
+      color: [255, 255, 255, 100],
+    });
+  } else {
+    chrome.browserAction.setBadgeText({
+      text: '',
+    });
+  }
+};
 
 const persistSidebarOpenStatus = (status) => {
   chrome.storage.local.set({
@@ -19,7 +35,7 @@ let sidebarOnLeft = true; // left -> true  |  right -> false
 
 chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
   if (result.sidebarOnLeft !== undefined) {
-    sidebarOnLeft = result.sidebarOnLeft === 'true';
+    sidebarOnLeft = result.sidebarOnLeft === true;
   } else {
     persistSidebarOnLeftStatus(true);
   }
@@ -38,6 +54,7 @@ const toggleSidebar = (toStatus = null) => {
     sidebarOpen = toStatus;
   }
   persistSidebarOpenStatus(sidebarOpen);
+  changeBrowserIconBadgeWithSidebarOpenStatus(sidebarOpen);
   let sidebarOpenCopy = sidebarOpen;
   chrome.tabs.query(
     {
