@@ -19,6 +19,10 @@ li.NewTabIconContainer {
   cursor: pointer;
 }
 
+li.NewTabIconContainer:hover {
+  background-color: rgb(218, 221, 222);
+}
+
 .Ordinal {
   width: 20px;
   text-align: right;

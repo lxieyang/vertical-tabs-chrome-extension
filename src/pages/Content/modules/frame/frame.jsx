@@ -29,7 +29,7 @@ const containerClass = css({
   boxSizing: 'border-box',
   borderRadius: '3px',
   boxShadow: '-1px 1px 8px rgba(0,0,0,.15)',
-  transform: 'translateX(115%)',
+  // transform: 'translateX(115%)',
   transition: 'transform .25s cubic-bezier(0, 0, 0.3, 1)',
   zIndex: 99999999,
 });
@@ -247,8 +247,8 @@ export class Frame extends Component {
         return { isMinimized: !prevState.isMinimized };
       });
     } else {
-      this.props.shrinkBody(!to);
-      this.setState({ isMinimized: to });
+      this.props.shrinkBody(to);
+      this.setState({ isMinimized: !to });
     }
   };
 
@@ -278,7 +278,7 @@ export class Frame extends Component {
 
     return (
       <React.Fragment>
-        {!isDragging && (
+        {/* {!isDragging && (
           <div
             className={cx({
               [toggleButtonClass]: true,
@@ -361,7 +361,8 @@ export class Frame extends Component {
               </div>
             </div>
           </div>
-        )}
+        )} */}
+
         <div
           id="nice"
           className={cx({

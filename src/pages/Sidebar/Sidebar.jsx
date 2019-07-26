@@ -127,7 +127,7 @@ class Sidebar extends Component {
   };
 
   handleTabHighlighted = (highlightInfo) => {
-    console.log(highlightInfo);
+    // console.log(highlightInfo);
   };
 
   handleRemoveTab = (tabId) => {
