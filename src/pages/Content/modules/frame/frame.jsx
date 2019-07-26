@@ -147,7 +147,7 @@ export class Frame extends Component {
     isMinimized: true, // default is minimized,
 
     isDragging: false,
-    width: 250,
+    width: 280,
     height: '100%',
   };
 

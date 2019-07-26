@@ -1,6 +1,5 @@
 {
   "name": "Vertical Tabs",
-  "options_page": "options.html",
   "background": {
     "page": "background.html"
   },

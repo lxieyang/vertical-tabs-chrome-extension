@@ -5,7 +5,7 @@ import Frame from './modules/frame/frame';
 const shouldShrinkBody = true;
 let sidebarLocation = 'left';
 const toggleButtonLocation = 'bottom';
-let sidebarWidth = 400;
+let sidebarWidth = 280;
 
 const setSidebarWidth = (width) => {
   sidebarWidth = width;
