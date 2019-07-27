@@ -16,5 +16,7 @@
 .env.test.local
 .env.production.local
 
+*.zip
+
 # secrets
 secrets.*.js
