@@ -1,0 +1,13 @@
+language: node_js
+os: osx
+node_js:
+  - 'lts/*'
+cache:
+  directories:
+    - node_modules
+
+before_script:
+  - 'npm i'
+script:
+  - 'npm run test'
+  - 'npm run build'
