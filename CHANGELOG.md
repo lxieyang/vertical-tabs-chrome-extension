@@ -16,3 +16,4 @@ All notable changes to this project will be documented in this file.
   - Toggle the sidebar by clicking on the extension icon.
   - Toggle the sidebar using the keyboard shortcut: `Ctrl` + `` ` ``  or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `` Esc `` or `Alt` + `Esc`
     - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
+  - The sidebar is resizable.
