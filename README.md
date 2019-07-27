@@ -27,6 +27,14 @@ Chrome web store link: ***pending review***
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
 - The sidebar is resizable.
 
+## Planned Features
+
+- Place the sidebar on either the left or the right side of the browser window
+- Context menus on tabs
+- Drag and Drop to reorder tabs
+- Dark theme
+- Filter tabs
+
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)
 
 -------------
