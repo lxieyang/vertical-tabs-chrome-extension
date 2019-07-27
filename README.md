@@ -7,6 +7,10 @@
 
 -------------
 
+![preview](/preview/chrome-store/preview-1.png)
+
+-------------
+
 ## Features
 
 - Display tabs vertically in a sidebar on web pages.
