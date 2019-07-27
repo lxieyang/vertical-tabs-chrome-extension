@@ -5,7 +5,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/V0.1.0) (2019-07-27)
+## [0.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.0) (2019-07-27)
 
 
 ### Initial Release! 🎆🔥❤
