@@ -12,6 +12,8 @@
 
 Chrome web store link: [Vertical Tabs](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm) [(https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
+Chrome store version: v0.1.0
+
 ---
 
 ![preview](/preview/chrome-store/preview-1.png)
