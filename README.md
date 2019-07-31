@@ -18,6 +18,9 @@ Chrome store version: v0.1.0
 
 ![preview](/preview/chrome-store/preview-1.png)
 
+Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6A)
+
+
 ---
 
 ## Features
