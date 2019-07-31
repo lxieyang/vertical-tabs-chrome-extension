@@ -72,6 +72,7 @@ class TabsList extends Component {
                     >
                       <div className={'TabContainerLeftPadInner'}></div>
                     </div>
+
                     <div
                       className={[
                         'TabContainer',
@@ -98,7 +99,12 @@ class TabsList extends Component {
                         /> */}
                         {tab.title}
                       </div>
-                      <div title="Reload" className="ActionButtonContainer">
+
+                      <div
+                        title="Reload tab"
+                        className="ActionButtonContainer"
+                        style={{ opacity: isHovering ? 1 : 0 }}
+                      >
                         <div
                           className="ActionButton"
                           onClick={(e) =>
@@ -108,8 +114,10 @@ class TabsList extends Component {
                           <MdRefresh size={'16px'} />
                         </div>
                       </div>
+
                       <div className="ActionButtonSpaceBetween"></div>
-                      <div title="Close" className="ActionButtonContainer">
+
+                      <div title="Close tab" className="ActionButtonContainer">
                         <div
                           className="ActionButton"
                           onClick={(e) =>
@@ -120,6 +128,7 @@ class TabsList extends Component {
                         </div>
                       </div>
                     </div>
+
                     <div
                       className={[
                         'TabContainerPad',
