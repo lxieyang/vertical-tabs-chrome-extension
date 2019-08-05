@@ -9,8 +9,8 @@ import { MdAdd } from 'react-icons/md';
 import './TabsList.css';
 
 class TabsList extends Component {
-  setTabAsActive = (tabId) => {
-    chrome.tabs.update(tabId, { active: true });
+  setTabAsActive = (event, tab) => {
+    chrome.tabs.update(tab.id, { active: true });
   };
 
   reloadTabClickedHandler = (e, tabId) => {
@@ -44,7 +44,7 @@ class TabsList extends Component {
                 {({ isHovering }) => (
                   <li
                     className="TabItem"
-                    onClick={() => this.setTabAsActive(tab.id)}
+                    onClick={(event) => this.setTabAsActive(event, tab)}
                     onMouseOver={() => {
                       if (isHovering) {
                         if (tabOrder.index === activeTab.index) {
@@ -61,7 +61,9 @@ class TabsList extends Component {
                       }
                     }}
                     onMouseLeave={() => {
-                      chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
+                      if (tabOrder.index !== activeTab.index) {
+                        chrome.tabs.update(tab.id, { highlighted: false });
+                      }
                     }}
                   >
                     <div
