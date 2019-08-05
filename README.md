@@ -1,5 +1,6 @@
 # Vertical Tabs (Chrome Extension)
 
+
 [![Build Status](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension.svg?branch=master)](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension)
 [![dependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension)
 [![devDependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/dev-status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension?type=dev)
@@ -12,7 +13,7 @@
 
 Chrome web store link: [Vertical Tabs](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm) [(https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
-Chrome store version: v0.1.1
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
 ---
 

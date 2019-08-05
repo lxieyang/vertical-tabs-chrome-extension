@@ -4,6 +4,8 @@ import { sortBy } from 'lodash';
 import Title from './containers/Title/Title';
 import TabsList from './containers/TabsList/TabsList';
 
+import { getFavicon } from '../../shared/utils';
+
 import './Sidebar.css';
 
 class Sidebar extends Component {
@@ -18,7 +20,7 @@ class Sidebar extends Component {
       const tabsDict = {};
       let tabOrders = [];
       tabs.forEach((tab) => {
-        tab.faviconUrl = `chrome://favicon/${tab.url}`;
+        tab.faviconUrl = getFavicon(tab.url);
         tabsDict[tab.id] = {
           faviconUrl: tab.faviconUrl,
           id: tab.id,
@@ -107,10 +109,7 @@ class Sidebar extends Component {
     }, 66);
   };
 
-  updateTabsDictWithTab = (
-    tab,
-    favicon = 'chrome://favicon/chrome://newtab/'
-  ) => {
+  updateTabsDictWithTab = (tab, favicon = getFavicon('chrome://newtab/')) => {
     let tabsDict = { ...this.state.tabsDict };
     tabsDict[tab.id] = {
       faviconUrl: favicon,
@@ -147,11 +146,11 @@ class Sidebar extends Component {
 
   handleTabUpdated = (tabId, changes, tab) => {
     if (changes.status === 'complete' || changes.title) {
-      this.updateTabsDictWithTab(tab, `chrome://favicon/${tab.url}`);
+      this.updateTabsDictWithTab(tab, getFavicon(tab.url));
       if (changes.status === 'complete') {
         setTimeout(() => {
           // make the 'chrome://favicon/' API more reliable
-          this.updateTabsDictWithTab(tab, `chrome://favicon/${tab.url}`);
+          this.updateTabsDictWithTab(tab, getFavicon(tab.url));
         }, 5000);
       }
     }

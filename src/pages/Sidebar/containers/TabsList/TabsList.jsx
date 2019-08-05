@@ -88,6 +88,7 @@ class TabsList extends Component {
                       {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}
                       <div className="TabFaviconContainer">
                         <img
+                          style={{ width: 16, height: 16 }}
                           src={tab.faviconUrl ? tab.faviconUrl : tab.favIconUrl}
                           alt="favicon"
                         />
