@@ -58,6 +58,26 @@ class Sidebar extends Component {
     chrome.tabs.onMoved.addListener(this.tabMovedHandler);
     chrome.tabs.onActivated.addListener(this.tabActivatedHandler);
     chrome.tabs.onHighlighted.addListener(this.tabHighlightedHandler);
+
+    // sync scroll positions
+    window.addEventListener('scroll', this.handleScroll, false);
+    chrome.runtime.sendMessage(
+      {
+        from: 'sidebar',
+        msg: 'REQUEST_SIDEBAR_SCROLL_POSITION',
+      },
+      (response) => {
+        window.scroll(response.scrollPositionX, response.scrollPositionY);
+      }
+    );
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_SIDEBAR_SCROLL_POSITION'
+      ) {
+        window.scroll(request.scrollPositionX, request.scrollPositionY);
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -67,7 +87,25 @@ class Sidebar extends Component {
     chrome.tabs.onMoved.removeListener(this.tabMovedHandler);
     chrome.tabs.onActivated.removeListener(this.tabActivatedHandler);
     chrome.tabs.onHighlighted.removeListener(this.tabHighlightedHandler);
+
+    window.removeEventListener('scroll', this.handleScroll);
   }
+
+  handleScroll = (event) => {
+    // https://gomakethings.com/detecting-when-a-visitor-has-stopped-scrolling-with-vanilla-javascript/
+    // Clear our timeout throughout the scroll
+    window.clearTimeout(this.isScrolling);
+
+    // Set a timeout to run after scrolling ends
+    this.isScrolling = setTimeout(function() {
+      chrome.runtime.sendMessage({
+        from: 'sidebar',
+        msg: 'SIDEBAR_SCROLL_POSITION_CHANGED',
+        scrollPositionX: window.pageXOffset,
+        scrollPositionY: window.pageYOffset,
+      });
+    }, 66);
+  };
 
   updateTabsDictWithTab = (
     tab,

@@ -2,6 +2,10 @@ import '../../assets/img/icon-34.png';
 import '../../assets/img/icon-128.png';
 
 let sidebarOpen = true; // open -> true  |  close -> false
+let sidebarScrollPosition = {
+  scrollPositionX: 0,
+  scrollPositionY: 0,
+};
 
 chrome.storage.local.get(['sidebarOpen'], (result) => {
   if (result.sidebarOpen !== undefined) {
@@ -89,6 +93,24 @@ const updateSidebarWidth = (width) => {
   );
 };
 
+const updateSidebarScrollPosition = () => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_SIDEBAR_SCROLL_POSITION',
+          scrollPositionX: sidebarScrollPosition.scrollPositionX,
+          scrollPositionY: sidebarScrollPosition.scrollPositionY,
+        });
+      });
+    }
+  );
+};
+
 chrome.browserAction.onClicked.addListener((senderTab) => {
   toggleSidebar();
 
@@ -99,14 +121,27 @@ chrome.browserAction.onClicked.addListener((senderTab) => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.from === 'sidebar' && request.msg === 'CLOSE_TAB_WITH_ID') {
-    let tabId = request.tabId;
-    chrome.tabs.remove(tabId);
+  if (
+    request.from === 'sidebar' &&
+    request.msg === 'SIDEBAR_SCROLL_POSITION_CHANGED'
+  ) {
+    sidebarScrollPosition = {
+      scrollPositionX: request.scrollPositionX,
+      scrollPositionY: request.scrollPositionY,
+    };
+    updateSidebarScrollPosition();
+  } else if (
+    request.from === 'sidebar' &&
+    request.msg === 'REQUEST_SIDEBAR_SCROLL_POSITION'
+  ) {
+    sendResponse({
+      scrollPositionX: sidebarScrollPosition.scrollPositionX,
+      scrollPositionY: sidebarScrollPosition.scrollPositionY,
+    });
   } else if (
     request.from === 'content' &&
     request.msg === 'REQUEST_SIDEBAR_STATUS'
   ) {
-    console.log('sending', sidebarOpen);
     sendResponse({
       sidebarOpen,
     });
@@ -116,8 +151,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   ) {
     toggleSidebar(request.toStatus);
   } else if (request.from === 'content' && request.msg === 'WIDTH_CHANGED') {
-    console.log(request.width);
-    // console.log(request.width);
     updateSidebarWidth(request.width);
   }
 });
