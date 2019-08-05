@@ -60,6 +60,9 @@ class TabsList extends Component {
                         }
                       }
                     }}
+                    onMouseLeave={() => {
+                      chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
+                    }}
                   >
                     <div
                       className={[
