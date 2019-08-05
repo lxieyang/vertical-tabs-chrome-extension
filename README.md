@@ -1,26 +1,27 @@
 # Vertical Tabs (Chrome Extension)
 
-
 [![Build Status](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension.svg?branch=master)](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension)
 [![dependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension)
 [![devDependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/dev-status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension?type=dev)
-[![MIT License][mit-license-image]][mit-license-url]
+[![MIT License](https://img.shields.io/github/license/lxieyang/vertical-tabs-chrome-extension)](LICENSE)
 
-[mit-license-url]: LICENSE
-[mit-license-image]: https://camo.githubusercontent.com/d59450139b6d354f15a2252a47b457bb2cc43828/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f6c2f7365727665726c6573732e737667
+[![issues open](https://img.shields.io/github/issues-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aopen+is%3Aissue)
+[![issues closed](https://img.shields.io/github/issues-closed-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aissue+is%3Aclosed)
+[![pr open](https://img.shields.io/github/issues-pr-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/pulls?q=is%3Aopen+is%3Apr)
+[![pr closed](https://img.shields.io/github/issues-pr-closed-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/pulls?q=is%3Apr+is%3Aclosed)
 
 ---
 
-Chrome web store link: [Vertical Tabs](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm) [(https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
+Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
+[![users](https://img.shields.io/chrome-web-store/users/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
 ---
 
 ![preview](/preview/chrome-store/preview-1.png)
 
 Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6A)
-
 
 ---
 
