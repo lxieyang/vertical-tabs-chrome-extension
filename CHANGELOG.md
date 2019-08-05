@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Sync the scroll position of the sidebar across all tabs.
 - Fixed a bug where tab highlights won't clear after the cursor leaves the tab.
 - Higher favicon resolution.
+- Fixed an issue where the extension icon was not properly updated upon first installation.
 
 ### [0.1.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.1) (2019-07-31)
 

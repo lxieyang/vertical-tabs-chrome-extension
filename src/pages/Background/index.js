@@ -10,8 +10,8 @@ let sidebarScrollPosition = {
 chrome.storage.local.get(['sidebarOpen'], (result) => {
   if (result.sidebarOpen !== undefined) {
     sidebarOpen = result.sidebarOpen === true;
-    changeBrowserIconBadgeWithSidebarOpenStatus(sidebarOpen);
   }
+  changeBrowserIconBadgeWithSidebarOpenStatus(sidebarOpen);
 });
 
 const changeBrowserIconBadgeWithSidebarOpenStatus = (status) => {
