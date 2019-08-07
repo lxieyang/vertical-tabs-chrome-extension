@@ -13,6 +13,10 @@ All notable changes to this project will be documented in this file.
 
 # v0.x
 
+### [0.2.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.2.0) (2019-08-07)
+
+- Drag and Drop to reorder the tabs.
+
 ### [0.1.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.2) (2019-08-05)
 
 - Sync the scroll position of the sidebar across all tabs.

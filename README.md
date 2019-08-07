@@ -29,6 +29,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.
+- Drag and Drop to reorder tabs. ***NEW!***
 - Toggle the sidebar by clicking on the extension icon.
 - Toggle the sidebar using the keyboard shortcut: `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
@@ -38,7 +39,6 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 - Place the sidebar on either the left or the right side of the browser window
 - Context menus on tabs
-- Drag and Drop to reorder tabs
 - Dark theme
 - Filter tabs
 
