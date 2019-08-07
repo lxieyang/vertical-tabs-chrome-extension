@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import { sortBy } from 'lodash';
 
 import Title from './containers/Title/Title';
 import TabsList from './containers/TabsList/TabsList';
+import Tab from './containers//TabsList/Tab/Tab';
 
 import { getFavicon } from '../../shared/utils';
 
@@ -23,7 +25,7 @@ class Sidebar extends Component {
         tab.faviconUrl = getFavicon(tab.url);
         tabsDict[tab.id] = {
           faviconUrl: tab.faviconUrl,
-          id: tab.id,
+          // id: tab.id,
           title: tab.title,
           url: tab.url,
         };
@@ -113,7 +115,7 @@ class Sidebar extends Component {
     let tabsDict = { ...this.state.tabsDict };
     tabsDict[tab.id] = {
       faviconUrl: favicon,
-      id: tab.id,
+      // id: tab.id,
       title: tab.title,
       url: tab.url,
     };
@@ -178,8 +180,18 @@ class Sidebar extends Component {
 
   handleTabHighlighted = (highlightInfo) => {};
 
+  moveTab = (dragIndex, hoverIndex) => {
+    const dragTab = this.state.tabOrders[dragIndex];
+    this.setState({
+      tabOrders: update(this.state.tabOrders, {
+        $splice: [[dragIndex, 1], [hoverIndex, 0, dragTab]],
+      }),
+    });
+  };
+
   render() {
     const { tabOrders, activeTab, tabsDict } = this.state;
+
     return (
       <div className="SidebarContainer">
         <Title />
@@ -187,6 +199,7 @@ class Sidebar extends Component {
           tabOrders={tabOrders}
           activeTab={activeTab}
           tabsDict={tabsDict}
+          moveTab={this.moveTab}
         />
       </div>
     );

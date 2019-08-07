@@ -1,168 +1,68 @@
-import React, { Component } from 'react';
-import ReactHoverObserver from 'react-hover-observer';
-import LinesEllipsis from 'react-lines-ellipsis';
+import React from 'react';
 
-import { MdClose } from 'react-icons/md';
-import { MdRefresh } from 'react-icons/md';
 import { MdAdd } from 'react-icons/md';
+
+import Tab from './Tab/Tab';
 
 import './TabsList.css';
 
-class TabsList extends Component {
-  setTabAsActive = (event, tab) => {
-    chrome.tabs.update(tab.id, { active: true });
-  };
-
-  reloadTabClickedHandler = (e, tabId) => {
-    e.stopPropagation();
-    chrome.tabs.reload(tabId);
-  };
-
-  clostTabClickedHandler = (e, tabId) => {
-    e.stopPropagation();
-    chrome.tabs.remove(tabId);
-  };
-
-  openNewTabClickedHandler = (e) => {
+const TabsList = ({ tabOrders, activeTab, tabsDict, moveTab }) => {
+  const openNewTabClickedHandler = (e) => {
     chrome.tabs.create({});
   };
 
-  render() {
-    const { tabOrders, activeTab, tabsDict } = this.props;
+  const tabOrdersCopy = [];
+  tabOrders.forEach((tabOrder) => {
+    if (tabsDict[tabOrder.id] !== undefined) {
+      const { id, index, active } = tabOrder;
+      const { faviconUrl, title, url } = tabsDict[tabOrder.id];
+      tabOrdersCopy.push({
+        id,
+        index,
+        active,
+        faviconUrl,
+        title,
+        url,
+      });
+    }
+  });
 
-    return (
-      <div>
-        <ul style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
-          {tabOrders.map((tabOrder, idx) => {
-            if (tabsDict[tabOrder.id] === undefined) {
-              return null;
-            }
+  return (
+    <div>
+      <ul style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
+        {tabOrdersCopy.map((tabOrder, idx) => {
+          if (tabsDict[tabOrder.id] === undefined) {
+            return null;
+          }
 
-            let tab = tabsDict[tabOrder.id];
-            return (
-              <ReactHoverObserver key={idx}>
-                {({ isHovering }) => (
-                  <li
-                    className="TabItem"
-                    onClick={(event) => this.setTabAsActive(event, tab)}
-                    onMouseOver={() => {
-                      if (isHovering) {
-                        if (tabOrder.index === activeTab.index) {
-                          chrome.tabs.highlight(
-                            { tabs: [activeTab.index] },
-                            null
-                          );
-                        } else {
-                          chrome.tabs.highlight(
-                            { tabs: [activeTab.index, tabOrder.index] },
-                            null
-                          );
-                        }
-                      }
-                    }}
-                    onMouseLeave={() => {
-                      if (tabOrder.index !== activeTab.index) {
-                        chrome.tabs.update(tab.id, { highlighted: false });
-                      }
-                    }}
-                  >
-                    <div
-                      className={[
-                        'TabContainerPad',
-                        tabOrder.active ? 'TabContainerPadActive' : null,
-                        !tabOrder.active && isHovering
-                          ? 'TabContainerPadInactiveHovering'
-                          : null,
-                      ].join(' ')}
-                    >
-                      <div className={'TabContainerLeftPadInner'}></div>
-                    </div>
+          // let tab = { ...tabsDict[tabOrder.id] };
+          return (
+            <Tab
+              key={tabOrder.id}
+              idx={idx}
+              id={tabOrder.id}
+              index={tabOrder.index}
+              active={tabOrder.active}
+              faviconUrl={tabOrder.faviconUrl}
+              title={tabOrder.title}
+              url={tabOrder.url}
+              activeTab={activeTab}
+              moveTab={moveTab}
+            />
+          );
+        })}
 
-                    <div
-                      className={[
-                        'TabContainer',
-                        tabOrder.active ? 'ActiveTabContainer' : null,
-                        !tabOrder.active && isHovering
-                          ? 'InactiveTabContainerHovering'
-                          : null,
-                      ].join(' ')}
-                    >
-                      {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}
-                      <div className="TabFaviconContainer">
-                        <img
-                          style={{ width: 16, height: 16 }}
-                          src={tab.faviconUrl ? tab.faviconUrl : tab.favIconUrl}
-                          alt="favicon"
-                        />
-                      </div>
-                      <div className="TabTitleContainer" title={tab.title}>
-                        {/* <LinesEllipsis
-                          text={tab.title}
-                          maxLine="1"
-                          ellipsis="..."
-                          trimRight
-                          basedOn="letters"
-                        /> */}
-                        {tab.title}
-                      </div>
-
-                      <div
-                        title="Reload tab"
-                        className="ActionButtonContainer"
-                        style={{ opacity: isHovering ? 1 : 0 }}
-                      >
-                        <div
-                          className="ActionButton"
-                          onClick={(e) =>
-                            this.reloadTabClickedHandler(e, tab.id)
-                          }
-                        >
-                          <MdRefresh size={'16px'} />
-                        </div>
-                      </div>
-
-                      <div className="ActionButtonSpaceBetween"></div>
-
-                      <div title="Close tab" className="ActionButtonContainer">
-                        <div
-                          className="ActionButton"
-                          onClick={(e) =>
-                            this.clostTabClickedHandler(e, tab.id)
-                          }
-                        >
-                          <MdClose size={'16px'} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div
-                      className={[
-                        'TabContainerPad',
-                        tabOrder.active ? 'TabContainerPadActive' : null,
-                        !tabOrder.active && isHovering
-                          ? 'TabContainerPadInactiveHovering'
-                          : null,
-                      ].join(' ')}
-                    >
-                      <div className={'TabContainerRightPadInner'}></div>
-                    </div>
-                  </li>
-                )}
-              </ReactHoverObserver>
-            );
-          })}
-          <li className="NewTabButtonContainer" title="Open a new tab">
-            <div
-              className="NewTabButton"
-              onClick={(e) => this.openNewTabClickedHandler(e)}
-            >
-              <MdAdd size={'22px'} />
-            </div>
-          </li>
-        </ul>
-      </div>
-    );
-  }
-}
+        <li className="NewTabButtonContainer" title="Open a new tab">
+          <div
+            className="NewTabButton"
+            onClick={(e) => openNewTabClickedHandler(e)}
+          >
+            <MdAdd size={'22px'} />
+          </div>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
 export default TabsList;
