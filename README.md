@@ -1,7 +1,7 @@
 # Vertical Tabs (Chrome Extension)
 
 [![Build Status](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension.svg?branch=master)](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension)
-![package.json version](https://img.shields.io/github/package-json/v/lxieyang/vertical-tabs-chrome-extension?label=current%20build%20version)
+![package.json version](https://img.shields.io/github/package-json/v/lxieyang/vertical-tabs-chrome-extension/master)
 [![MIT License](https://img.shields.io/github/license/lxieyang/vertical-tabs-chrome-extension)](LICENSE)
 
 [![dependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension)
