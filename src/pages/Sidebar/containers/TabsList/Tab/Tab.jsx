@@ -20,8 +20,11 @@ const Tab = ({
   url,
   activeTab,
   moveTab,
+  isSearching,
+  clearSearchBoxInputText,
 }) => {
   const setTabAsActive = (event, id) => {
+    clearSearchBoxInputText();
     chrome.tabs.update(id, { active: true });
   };
 
@@ -30,7 +33,7 @@ const Tab = ({
     chrome.tabs.reload(tabId);
   };
 
-  const clostTabClickedHandler = (e, tabId) => {
+  const closeTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
     chrome.tabs.remove(tabId);
   };
@@ -90,6 +93,9 @@ const Tab = ({
     end: (item, monitor) => {
       moveTabToIndex(id, item.idx);
     },
+    canDrag(monitor) {
+      return !isSearching;
+    },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -127,7 +133,8 @@ const Tab = ({
             className={[
               'TabContainerPad',
               active ? 'TabContainerPadActive' : null,
-              !active && !isDragging && isHovering && idx === index
+              (!active && isHovering && idx === index) ||
+              (!active && isHovering && isSearching)
                 ? 'TabContainerPadInactiveHovering'
                 : null,
             ].join(' ')}
@@ -139,7 +146,8 @@ const Tab = ({
             className={[
               'TabContainer',
               active ? 'ActiveTabContainer' : null,
-              !active && !isDragging && isHovering && idx === index
+              (!active && isHovering && idx === index) ||
+              (!active && isHovering && isSearching)
                 ? 'InactiveTabContainerHovering'
                 : null,
             ].join(' ')}
@@ -152,14 +160,19 @@ const Tab = ({
                 alt="favicon"
               />
             </div>
-            <div className="TabTitleContainer" title={title}>
+            <div className="TabTitleContainer" title={url}>
               {title}
             </div>
 
             <div
               title="Reload tab"
               className="ActionButtonContainer"
-              style={{ opacity: isHovering && idx === index ? 1 : 0 }}
+              style={{
+                opacity:
+                  (isHovering && idx === index) || (isSearching && isHovering)
+                    ? 1
+                    : 0,
+              }}
             >
               <div
                 className="ActionButton"
@@ -174,7 +187,7 @@ const Tab = ({
             <div title="Close tab" className="ActionButtonContainer">
               <div
                 className="ActionButton"
-                onClick={(e) => clostTabClickedHandler(e, id)}
+                onClick={(e) => closeTabClickedHandler(e, id)}
               >
                 <MdClose size={'16px'} />
               </div>
@@ -185,7 +198,8 @@ const Tab = ({
             className={[
               'TabContainerPad',
               active ? 'TabContainerPadActive' : null,
-              !active && !isDragging && isHovering && idx === index
+              (!active && isHovering && idx === index) ||
+              (!active && isHovering && isSearching)
                 ? 'TabContainerPadInactiveHovering'
                 : null,
             ].join(' ')}
