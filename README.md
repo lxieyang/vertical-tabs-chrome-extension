@@ -1,15 +1,20 @@
 # Vertical Tabs (Chrome Extension)
 
 [![Build Status](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension.svg?branch=master)](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension)
+![package.json version](https://img.shields.io/github/package-json/v/lxieyang/vertical-tabs-chrome-extension?label=current%20build%20version)
+[![MIT License](https://img.shields.io/github/license/lxieyang/vertical-tabs-chrome-extension)](LICENSE)
+
 [![dependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension)
 [![devDependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/dev-status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension?type=dev)
-[![MIT License](https://img.shields.io/github/license/lxieyang/vertical-tabs-chrome-extension)](LICENSE)
+
 
 [![issues open](https://img.shields.io/github/issues-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aopen+is%3Aissue)
 [![issues closed](https://img.shields.io/github/issues-closed-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aissue+is%3Aclosed)
 [![pr open](https://img.shields.io/github/issues-pr-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/pulls?q=is%3Aopen+is%3Apr)
 [![pr closed](https://img.shields.io/github/issues-pr-closed-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/pulls?q=is%3Apr+is%3Aclosed)
 
+![last commit](https://img.shields.io/github/last-commit/lxieyang/vertical-tabs-chrome-extension/master)
+![commit freq](https://img.shields.io/github/commit-activity/w/lxieyang/vertical-tabs-chrome-extension)
 ---
 
 Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
