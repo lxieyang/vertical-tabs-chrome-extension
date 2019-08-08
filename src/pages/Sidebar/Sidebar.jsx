@@ -23,12 +23,20 @@ class Sidebar extends Component {
       let tabOrders = [];
       tabs.forEach((tab) => {
         tab.faviconUrl = getFavicon(tab.url);
+
         tabsDict[tab.id] = {
           faviconUrl: tab.faviconUrl,
           // id: tab.id,
           title: tab.title,
           url: tab.url,
+          combinedText: [
+            tab.title, // title
+            new URL(tab.url).hostname.replace('www.', ''), // hostname
+          ]
+            .join(' ')
+            .toLowerCase(),
         };
+
         tabOrders.push({
           id: tab.id,
           index: tab.index,
@@ -118,6 +126,12 @@ class Sidebar extends Component {
       // id: tab.id,
       title: tab.title,
       url: tab.url,
+      combinedText: [
+        tab.title, // title
+        new URL(tab.url).hostname.replace('www.', ''), // hostname
+      ]
+        .join(' ')
+        .toLowerCase(),
     };
     this.setState({ tabsDict });
   };
