@@ -13,9 +13,17 @@ All notable changes to this project will be documented in this file.
 
 # v0.x
 
+### [0.3.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.3.0) (2019-08-07)
+
+- Search and filter tabs.
+
+<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="250" />
+
 ### [0.2.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.2.0) (2019-08-07)
 
 - Drag and Drop to reorder the tabs.
+
+![dnd tabs](./preview/repo/dnd-tabs.gif)
 
 ### [0.1.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.2) (2019-08-05)
 

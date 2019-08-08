@@ -28,13 +28,18 @@ Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail
 
 Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6A)
 
+![dnd tabs](./preview/repo/dnd-tabs.gif)
+
+<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="200" />
+
 ---
 
 ## Features
 
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.
-- Drag and Drop to reorder tabs. ***NEW!***
+- Drag and Drop to reorder tabs. ***NEW in v0.2.0!***
+- Search and filter tabs. ***NEW in v0.3.0!***
 - Toggle the sidebar by clicking on the extension icon.
 - Toggle the sidebar using the keyboard shortcut: `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
@@ -45,7 +50,6 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 - Place the sidebar on either the left or the right side of the browser window
 - Context menus on tabs
 - Dark theme
-- Filter tabs
 
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)
 
