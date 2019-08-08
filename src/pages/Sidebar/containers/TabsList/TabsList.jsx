@@ -2,6 +2,7 @@ import React from 'react';
 
 import { MdAdd } from 'react-icons/md';
 
+import SearchBar from './SearchBar/SearchBar';
 import Tab from './Tab/Tab';
 
 import './TabsList.css';
@@ -28,8 +29,10 @@ const TabsList = ({ tabOrders, activeTab, tabsDict, moveTab }) => {
   });
 
   return (
-    <div>
-      <ul style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
+    <div style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
+      <SearchBar searchCount={tabOrders.length} />
+
+      <ul style={{ margin: 0, padding: 0 }}>
         {tabOrdersCopy.map((tabOrder, idx) => {
           if (tabsDict[tabOrder.id] === undefined) {
             return null;
