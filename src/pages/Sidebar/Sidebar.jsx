@@ -41,6 +41,7 @@ class Sidebar extends Component {
           id: tab.id,
           index: tab.index,
           active: tab.active,
+          pinned: tab.pinned,
         });
         if (tab.active) {
           this.setState({
@@ -48,6 +49,7 @@ class Sidebar extends Component {
               id: tab.id,
               index: tab.index,
               active: tab.active,
+              pinned: tab.pinned,
             },
           });
         }
@@ -144,6 +146,7 @@ class Sidebar extends Component {
           id: tab.id,
           index: tab.index,
           active: tab.active,
+          pinned: tab.pinned,
         };
         tabOrders.push(tabObj);
         if (tab.active) {

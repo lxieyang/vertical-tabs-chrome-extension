@@ -45,6 +45,7 @@ input[type='search']::-webkit-search-cancel-button {
 
 .SearchResultsCountContainer {
   flex-shrink: 0;
+  margin-right: 6px;
   width: 36px;
   height: 100%;
 
