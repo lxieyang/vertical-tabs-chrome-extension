@@ -121,7 +121,7 @@ chrome.browserAction.onClicked.addListener((senderTab) => {
 });
 
 chrome.commands.onCommand.addListener(function(command) {
-  if (command === 'toggle_sidebar_with_shortcut') {
+  if (command === 'toggle_sidebar_with_shortcut_1') {
     toggleSidebar();
   }
 });
