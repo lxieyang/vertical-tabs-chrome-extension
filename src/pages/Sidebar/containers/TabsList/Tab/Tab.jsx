@@ -272,7 +272,6 @@ const Tab = ({
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
               Close Tab
             </MenuItem>
-            <MenuItem>Close Tab</MenuItem>
           </ContextMenu>
         </React.Fragment>
       )}
