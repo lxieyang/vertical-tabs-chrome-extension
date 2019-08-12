@@ -4,12 +4,31 @@ import { MdAdd } from 'react-icons/md';
 
 import SearchBar from './SearchBar/SearchBar';
 import Tab from './Tab/Tab';
+import './react-contextmenu.css';
 
 import './TabsList.css';
 
 class TabsList extends Component {
   state = {
     searchBarInputText: '',
+    contextMenuShow: false,
+    contextMenuShowPrev: null,
+  };
+
+  setContextMenuShow = (toStatus) => {
+    if (toStatus === false) {
+      this.setState({
+        contextMenuShow: false,
+        contextMenuShowPrev: true,
+      });
+    }
+  };
+
+  clearContextMenuShow = () => {
+    this.setState({
+      contextMenuShow: false,
+      contextMenuShowPrev: null,
+    });
   };
 
   constructor(props) {
@@ -53,25 +72,30 @@ class TabsList extends Component {
   };
 
   render() {
-    const { tabOrders, activeTab, tabsDict, moveTab } = this.props;
-    const { searchBarInputText } = this.state;
+    const {
+      tabOrders,
+      activeTab,
+      tabsDict,
+      moveTab,
+      setTabAsLoading,
+    } = this.props;
+    const {
+      searchBarInputText,
+      contextMenuShow,
+      contextMenuShowPrev,
+    } = this.state;
 
     const inputText = searchBarInputText.toLowerCase();
 
     const tabOrdersCopy = [];
     tabOrders.forEach((tabOrder) => {
-      const { id, index, active } = tabOrder;
+      const { id } = tabOrder;
       if (tabsDict[id] !== undefined) {
-        const { faviconUrl, title, url, combinedText } = tabsDict[id];
+        const { combinedText } = tabsDict[id];
         if (combinedText.includes(inputText)) {
           tabOrdersCopy.push({
-            id,
-            index,
-            active,
-            faviconUrl,
-            title,
-            url,
-            combinedText,
+            ...tabOrder,
+            ...tabsDict[id],
           });
         }
       }
@@ -105,13 +129,22 @@ class TabsList extends Component {
                 id={tabOrder.id}
                 index={tabOrder.index}
                 active={tabOrder.active}
+                pinned={tabOrder.pinned}
+                muted={tabOrder.muted}
                 faviconUrl={tabOrder.faviconUrl}
                 title={tabOrder.title}
                 url={tabOrder.url}
+                status={tabOrder.status}
                 activeTab={activeTab}
+                contextMenuShow={contextMenuShow}
+                contextMenuShowPrev={contextMenuShowPrev}
                 moveTab={moveTab}
+                setTabAsLoading={setTabAsLoading}
                 clearSearchBoxInputText={this.clearSearchBoxInputText}
                 isSearching={searchBarInputText.length > 0}
+                setContextMenuShow={this.setContextMenuShow}
+                clearContextMenuShow={this.clearContextMenuShow}
+                openNewTabClickedHandler={this.openNewTabClickedHandler}
               />
             );
           })}

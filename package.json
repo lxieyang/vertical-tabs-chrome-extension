@@ -1,6 +1,6 @@
 {
   "name": "vertical-tabs-chrome-extension",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A chrome extension that presents your tabs vertically.",
   "license": "MIT",
   "repository": {
@@ -27,13 +27,15 @@
     "prop-types": "^15.7.2",
     "re-resizable": "^5.0.1",
     "react": "^16.8.6",
+    "react-contextmenu": "^2.11.0",
     "react-dnd": "^9.3.4",
     "react-dnd-html5-backend": "^9.3.4",
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.12.8",
     "react-hover-observer": "^2.1.1",
     "react-icons": "^3.7.0",
-    "react-lines-ellipsis": "^0.14.1"
+    "react-lines-ellipsis": "^0.14.1",
+    "react-loader-spinner": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",

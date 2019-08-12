@@ -7,7 +7,6 @@
 [![dependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension)
 [![devDependencies Status](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension/dev-status.svg)](https://david-dm.org/lxieyang/vertical-tabs-chrome-extension?type=dev)
 
-
 [![issues open](https://img.shields.io/github/issues-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aopen+is%3Aissue)
 [![issues closed](https://img.shields.io/github/issues-closed-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues?q=is%3Aissue+is%3Aclosed)
 [![pr open](https://img.shields.io/github/issues-pr-raw/lxieyang/vertical-tabs-chrome-extension)](https://github.com/lxieyang/vertical-tabs-chrome-extension/pulls?q=is%3Aopen+is%3Apr)
@@ -15,6 +14,7 @@
 
 ![last commit](https://img.shields.io/github/last-commit/lxieyang/vertical-tabs-chrome-extension/master)
 ![commit freq](https://img.shields.io/github/commit-activity/w/lxieyang/vertical-tabs-chrome-extension)
+
 ---
 
 Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
@@ -30,7 +30,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 ![dnd tabs](./preview/repo/dnd-tabs.gif)
 
-<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="200" />
+<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="250" />
 
 ---
 
@@ -38,8 +38,9 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.
-- Drag and Drop to reorder tabs. ***NEW in v0.2.0!***
-- Search and filter tabs. ***NEW in v0.3.0!***
+- Drag and Drop to reorder tabs. **_NEW in v0.2.0!_**
+- Search and filter tabs. **_NEW in v0.3.0!_**
+- Context menu on tabs. **_NEW in v0.4.0!_**
 - Toggle the sidebar by clicking on the extension icon.
 - Toggle the sidebar using the keyboard shortcut: `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
@@ -48,7 +49,6 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 ## Planned Features
 
 - Place the sidebar on either the left or the right side of the browser window
-- Context menus on tabs
 - Dark theme
 
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)
