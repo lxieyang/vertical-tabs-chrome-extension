@@ -72,7 +72,13 @@ class TabsList extends Component {
   };
 
   render() {
-    const { tabOrders, activeTab, tabsDict, moveTab } = this.props;
+    const {
+      tabOrders,
+      activeTab,
+      tabsDict,
+      moveTab,
+      setTabAsLoading,
+    } = this.props;
     const {
       searchBarInputText,
       contextMenuShow,
@@ -83,19 +89,13 @@ class TabsList extends Component {
 
     const tabOrdersCopy = [];
     tabOrders.forEach((tabOrder) => {
-      const { id, index, active, pinned } = tabOrder;
+      const { id } = tabOrder;
       if (tabsDict[id] !== undefined) {
-        const { faviconUrl, title, url, combinedText } = tabsDict[id];
+        const { combinedText } = tabsDict[id];
         if (combinedText.includes(inputText)) {
           tabOrdersCopy.push({
-            id,
-            index,
-            active,
-            pinned,
-            faviconUrl,
-            title,
-            url,
-            combinedText,
+            ...tabOrder,
+            ...tabsDict[id],
           });
         }
       }
@@ -130,13 +130,16 @@ class TabsList extends Component {
                 index={tabOrder.index}
                 active={tabOrder.active}
                 pinned={tabOrder.pinned}
+                muted={tabOrder.muted}
                 faviconUrl={tabOrder.faviconUrl}
                 title={tabOrder.title}
                 url={tabOrder.url}
+                status={tabOrder.status}
                 activeTab={activeTab}
                 contextMenuShow={contextMenuShow}
                 contextMenuShowPrev={contextMenuShowPrev}
                 moveTab={moveTab}
+                setTabAsLoading={setTabAsLoading}
                 clearSearchBoxInputText={this.clearSearchBoxInputText}
                 isSearching={searchBarInputText.length > 0}
                 setContextMenuShow={this.setContextMenuShow}

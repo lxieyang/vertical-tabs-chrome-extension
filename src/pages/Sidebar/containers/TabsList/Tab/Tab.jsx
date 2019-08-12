@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-
+import React, { useRef } from 'react';
+import Loader from 'react-loader-spinner';
 import { useDrag, useDrop } from 'react-dnd';
 import ItemTypes from '../ItemTypes';
 
@@ -17,13 +17,16 @@ const Tab = ({
   index,
   active,
   pinned,
+  muted,
   faviconUrl,
   title,
   url,
+  status,
   activeTab,
   contextMenuShow,
   contextMenuShowPrev,
   moveTab,
+  setTabAsLoading,
   isSearching,
   clearSearchBoxInputText,
   setContextMenuShow,
@@ -78,13 +81,14 @@ const Tab = ({
   /* End of --> Drag and Drop support */
 
   /* Start of --> Utility functions */
-  const setTabAsActive = (event, id) => {
+  const setTabAsActive = (event, tabId) => {
     clearSearchBoxInputText();
-    chrome.tabs.update(id, { active: true });
+    chrome.tabs.update(tabId, { active: true });
   };
 
   const reloadTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
+    setTabAsLoading(tabId);
     chrome.tabs.reload(tabId);
   };
 
@@ -94,6 +98,10 @@ const Tab = ({
 
   const pinTabClickedHandler = (e, tabId) => {
     chrome.tabs.update(id, { pinned: !pinned });
+  };
+
+  const muteTabClickedHandler = (e, tabId) => {
+    chrome.tabs.update(id, { muted: !muted });
   };
 
   const closeTabClickedHandler = (e, tabId) => {
@@ -167,11 +175,20 @@ const Tab = ({
               >
                 {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}
                 <div className="TabFaviconContainer">
-                  <img
-                    style={{ width: 16, height: 16 }}
-                    src={faviconUrl}
-                    alt="favicon"
-                  />
+                  {status === 'loading' ? (
+                    <Loader
+                      type="TailSpin"
+                      color="rgb(0, 102, 228)"
+                      height={16}
+                      width={16}
+                    />
+                  ) : (
+                    <img
+                      style={{ width: 16, height: 16 }}
+                      src={faviconUrl}
+                      alt="favicon"
+                    />
+                  )}
                 </div>
                 <div className="TabTitleContainer" title={url}>
                   {title}
@@ -243,15 +260,19 @@ const Tab = ({
             <MenuItem onClick={(e) => deplicateTabClickedHandler(e, id)}>
               Duplicate
             </MenuItem>
-            <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
+            {/* <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
               {pinned ? 'Unpin' : 'Pin'} Tab
             </MenuItem>
+            <MenuItem onClick={(e) => muteTabClickedHandler(e, id)}>
+              {muted ? 'Unmute' : 'Mute'} Tab
+            </MenuItem> */}
 
             <MenuItem divider />
 
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
               Close Tab
             </MenuItem>
+            <MenuItem>Close Tab</MenuItem>
           </ContextMenu>
         </React.Fragment>
       )}

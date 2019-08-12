@@ -120,6 +120,12 @@ chrome.browserAction.onClicked.addListener((senderTab) => {
   // });
 });
 
+chrome.commands.onCommand.addListener(function(command) {
+  if (command === 'toggle_sidebar_with_shortcut') {
+    toggleSidebar();
+  }
+});
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (
     request.from === 'sidebar' &&

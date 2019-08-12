@@ -13,6 +13,7 @@
   pointer-events: none;
   text-align: left;
   transition: opacity 250ms ease !important;
+  z-index: 10000000;
 }
 
 .react-contextmenu.react-contextmenu--visible {
@@ -33,13 +34,23 @@
   white-space: nowrap;
 }
 
-.react-contextmenu-item.react-contextmenu-item--active,
+.react-contextmenu-item:hover {
+  color: #fff;
+  background-color: #20a0ff;
+  border-color: #20a0ff;
+}
+
+.react-contextmenu-item::selection {
+  outline: none;
+}
+
+/* .react-contextmenu-item.react-contextmenu-item--active,
 .react-contextmenu-item.react-contextmenu-item--selected {
   color: #fff;
   background-color: #20a0ff;
   border-color: #20a0ff;
   text-decoration: none;
-}
+} */
 
 .react-contextmenu-item.react-contextmenu-item--disabled,
 .react-contextmenu-item.react-contextmenu-item--disabled:hover {

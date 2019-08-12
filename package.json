@@ -34,7 +34,8 @@
     "react-hot-loader": "^4.12.8",
     "react-hover-observer": "^2.1.1",
     "react-icons": "^3.7.0",
-    "react-lines-ellipsis": "^0.14.1"
+    "react-lines-ellipsis": "^0.14.1",
+    "react-loader-spinner": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",

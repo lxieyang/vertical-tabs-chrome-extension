@@ -17,47 +17,8 @@ class Sidebar extends Component {
     tabsDict: {},
   };
 
-  componentDidMount() {
-    chrome.tabs.query({ currentWindow: true }, (tabs) => {
-      const tabsDict = {};
-      let tabOrders = [];
-      tabs.forEach((tab) => {
-        tab.faviconUrl = getFavicon(tab.url);
-
-        tabsDict[tab.id] = {
-          faviconUrl: tab.faviconUrl,
-          // id: tab.id,
-          title: tab.title,
-          url: tab.url,
-          combinedText: [
-            tab.title, // title
-            new URL(tab.url).hostname.replace('www.', ''), // hostname
-          ]
-            .join(' ')
-            .toLowerCase(),
-        };
-
-        tabOrders.push({
-          id: tab.id,
-          index: tab.index,
-          active: tab.active,
-          pinned: tab.pinned,
-        });
-        if (tab.active) {
-          this.setState({
-            activeTab: {
-              id: tab.id,
-              index: tab.index,
-              active: tab.active,
-              pinned: tab.pinned,
-            },
-          });
-        }
-      });
-      tabOrders = sortBy(tabOrders, ['index']);
-      // console.log(tabOrders, tabsDict);
-      this.setState({ tabOrders, tabsDict });
-    });
+  constructor(props) {
+    super(props);
 
     this.tabCreatedHandler = this.handleTabCreated.bind(this);
     this.tabRemovedHandler = this.handleTabRemoved.bind(this);
@@ -72,6 +33,25 @@ class Sidebar extends Component {
     chrome.tabs.onMoved.addListener(this.tabMovedHandler);
     chrome.tabs.onActivated.addListener(this.tabActivatedHandler);
     chrome.tabs.onHighlighted.addListener(this.tabHighlightedHandler);
+  }
+
+  componentDidMount() {
+    this.retrieveTabs();
+
+    window.addEventListener('keydown', (event) => {
+      if (
+        (event.ctrlKey && event.key === '`') ||
+        (event.ctrlKey && event.key === 'Escape') ||
+        (event.metaKey && event.key === 'Escape') ||
+        (event.altKey && event.key === '`') ||
+        (event.altKey && event.key === 'Escape')
+      ) {
+        chrome.runtime.sendMessage({
+          from: 'content',
+          msg: 'REQUEST_TOGGLE_SIDEBAR',
+        });
+      }
+    });
 
     // sync scroll positions
     window.addEventListener('scroll', this.handleScroll, false);
@@ -105,6 +85,50 @@ class Sidebar extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  retrieveTabs = () => {
+    chrome.tabs.query({ currentWindow: true }, (tabs) => {
+      const tabsDict = {};
+      let tabOrders = [];
+      tabs.forEach((tab) => {
+        tab.faviconUrl = getFavicon(tab.url);
+
+        tabsDict[tab.id] = {
+          faviconUrl: tab.faviconUrl,
+          title: tab.title,
+          url: tab.url,
+          status: 'complete',
+          combinedText: [
+            tab.title, // title
+            new URL(tab.url).hostname.replace('www.', ''), // hostname
+          ]
+            .join(' ')
+            .toLowerCase(),
+        };
+
+        tabOrders.push({
+          id: tab.id,
+          index: tab.index,
+          active: tab.active,
+          pinned: tab.pinned,
+          muted: tab.muted,
+        });
+        if (tab.active) {
+          this.setState({
+            activeTab: {
+              id: tab.id,
+              index: tab.index,
+              active: tab.active,
+              pinned: tab.pinned,
+              muted: tab.muted,
+            },
+          });
+        }
+      });
+      tabOrders = sortBy(tabOrders, ['index']);
+      this.setState({ tabOrders, tabsDict });
+    });
+  };
+
   handleScroll = (event) => {
     // https://gomakethings.com/detecting-when-a-visitor-has-stopped-scrolling-with-vanilla-javascript/
     // Clear our timeout throughout the scroll
@@ -125,15 +149,25 @@ class Sidebar extends Component {
     let tabsDict = { ...this.state.tabsDict };
     tabsDict[tab.id] = {
       faviconUrl: favicon,
-      // id: tab.id,
       title: tab.title,
       url: tab.url,
+      status: tab.status,
       combinedText: [
         tab.title, // title
         new URL(tab.url).hostname.replace('www.', ''), // hostname
       ]
         .join(' ')
         .toLowerCase(),
+    };
+    this.setState({ tabsDict });
+  };
+
+  setTabAsLoading = (tabId) => {
+    let tabsDict = { ...this.state.tabsDict };
+    let targetTab = tabsDict[tabId];
+    tabsDict[tabId] = {
+      ...targetTab,
+      status: 'loading',
     };
     this.setState({ tabsDict });
   };
@@ -147,6 +181,7 @@ class Sidebar extends Component {
           index: tab.index,
           active: tab.active,
           pinned: tab.pinned,
+          muted: tab.muted,
         };
         tabOrders.push(tabObj);
         if (tab.active) {
@@ -217,6 +252,7 @@ class Sidebar extends Component {
           activeTab={activeTab}
           tabsDict={tabsDict}
           moveTab={this.moveTab}
+          setTabAsLoading={this.setTabAsLoading}
         />
       </div>
     );
