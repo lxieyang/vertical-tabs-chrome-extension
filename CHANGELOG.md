@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 # v0.x
 
+### [0.4.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.1) (2019-08-19)
+
+- Fixed a bug where long press could trigger the context menu.
+
 ### [0.4.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.0) (2019-08-12)
 
 #### New Features:

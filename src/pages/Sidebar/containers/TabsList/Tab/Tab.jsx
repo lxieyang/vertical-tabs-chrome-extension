@@ -118,7 +118,7 @@ const Tab = ({
     <ReactHoverObserver>
       {({ isHovering }) => (
         <React.Fragment>
-          <ContextMenuTrigger id={id.toString()}>
+          <ContextMenuTrigger id={id.toString()} holdToDisplay={-1}>
             <li
               // style={{ opacity: isDragging ? 0 : 1 }}
               ref={ref}
