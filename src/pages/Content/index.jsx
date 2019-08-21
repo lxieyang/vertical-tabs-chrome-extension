@@ -73,24 +73,37 @@ chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
   mountSidebar();
 });
 
-chrome.runtime.sendMessage(
-  {
-    from: 'content',
-    msg: 'REQUEST_SIDEBAR_STATUS',
-  },
-  (response) => {
-    let sidebarOpen = response.sidebarOpen;
-    if (Frame.isReady()) {
-      Frame.toggle(sidebarOpen);
+const checkSidebarStatus = () => {
+  chrome.runtime.sendMessage(
+    {
+      from: 'content',
+      msg: 'REQUEST_SIDEBAR_STATUS',
+    },
+    (response) => {
+      let sidebarOpen = response.sidebarOpen;
+      if (Frame.isReady()) {
+        Frame.toggle(sidebarOpen);
+      }
     }
-  }
-);
+  );
+};
+
+checkSidebarStatus();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.from === 'background' && request.msg === 'TOGGLE_SIDEBAR') {
     if (Frame.isReady()) {
       Frame.toggle(request.toStatus);
     }
+  } else if (
+    request.from === 'background' &&
+    request.msg === 'UPDATE_SIDEBAR_ON_LEFT_STATUS'
+  ) {
+    const { toStatus } = request;
+    sidebarLocation = toStatus === true ? 'left' : 'right';
+    unmountSidebar();
+    mountSidebar();
+    checkSidebarStatus();
   }
 });
 

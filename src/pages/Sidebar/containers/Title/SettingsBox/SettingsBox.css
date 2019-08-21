@@ -1,0 +1,35 @@
+/* Popover */
+.PopoverTitle {
+  padding: 0.5rem 0.75rem;
+  background-color: #f2f0f0;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+}
+
+.PopoverContent {
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.SettingEntryDivider {
+  height: 0px;
+  border-bottom: 1px solid #f2f0f0;
+}
+
+.PopoverContent .SettingEntryContainer {
+  padding: 0.5rem 0.75rem;
+}
+
+.PopoverContent .SettingEntryContainer .SettingEntryTitle {
+  font-weight: 400;
+}
+
+.PopoverContent .SettingEntryContainer .SettingEntryContent {
+  margin: 6px 0px 0px 0px;
+}
+
+.PopoverContent .SettingEntryContainer .SettingEntryContent label {
+  margin-right: 15px;
+}

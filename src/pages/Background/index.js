@@ -120,6 +120,23 @@ const updateSidebarScrollPosition = () => {
   );
 };
 
+const updateSidebarOnLeftStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_SIDEBAR_ON_LEFT_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
 chrome.browserAction.onClicked.addListener((senderTab) => {
   toggleSidebar();
 
@@ -167,5 +184,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     toggleSidebar(request.toStatus);
   } else if (request.from === 'content' && request.msg === 'WIDTH_CHANGED') {
     updateSidebarWidth(request.width);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_SIDEBAR_LOCATION'
+  ) {
+    const { toStatus } = request;
+    sidebarOnLeft = toStatus === 'left';
+    persistSidebarOnLeftStatus(sidebarOnLeft);
+    updateSidebarOnLeftStatus(sidebarOnLeft);
   }
 });

@@ -26,6 +26,33 @@
   font-weight: 500;
 }
 
+.SettingIconConainer {
+  margin: 0px 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SettingIcon {
+  opacity: 0.3;
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+
+  transition: all 0.15s ease-in;
+}
+
+.SettingIcon:hover,
+.SettingIcon.Open {
+  opacity: 0.7;
+  width: 18px;
+  height: 18px;
+
+  transform: rotate(120deg);
+}
+
 .TitleContainer .ActionButtonContainer {
   flex-shrink: 0;
   cursor: default;
