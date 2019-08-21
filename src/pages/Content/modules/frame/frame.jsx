@@ -140,7 +140,8 @@ const toggleButtonInnerClass = css({
   },
 });
 
-const FRAME_TOGGLE_FUNCTION = 'chromeIframeSheetToggle';
+const FRAME_TOGGLE_FUNCTION = 'chromeIframeSidebarToggle';
+const FRAME_FIX_SHRINK_BODY_FUNCTION = 'chromeIframeFixShrinkBody';
 
 export class Frame extends Component {
   state = {
@@ -182,6 +183,7 @@ export class Frame extends Component {
     const { delay, onMount } = this.props;
 
     window[FRAME_TOGGLE_FUNCTION] = this.toggleFrame;
+    window[FRAME_FIX_SHRINK_BODY_FUNCTION] = this.fixShrinkBody;
 
     onMount({
       mask: this.mask,
@@ -266,6 +268,10 @@ export class Frame extends Component {
     }
   };
 
+  fixShrinkBody = () => {
+    this.props.fixShrinkBody(!this.state.isMinimized);
+  };
+
   static isReady() {
     return typeof window[FRAME_TOGGLE_FUNCTION] !== 'undefined';
   }
@@ -273,6 +279,12 @@ export class Frame extends Component {
   static toggle(to = undefined) {
     if (window[FRAME_TOGGLE_FUNCTION]) {
       window[FRAME_TOGGLE_FUNCTION](to);
+    }
+  }
+
+  static shrinkBody() {
+    if (window[FRAME_FIX_SHRINK_BODY_FUNCTION]) {
+      window[FRAME_FIX_SHRINK_BODY_FUNCTION]();
     }
   }
 

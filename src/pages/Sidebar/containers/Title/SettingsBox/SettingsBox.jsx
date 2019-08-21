@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import { MdSettings } from 'react-icons/md';
-import { FaAlignJustify, FaAlignRight, FaAlignLeft } from 'react-icons/fa';
+import { TiDownload } from 'react-icons/ti';
+import {
+  FaAlignJustify,
+  FaAlignRight,
+  FaAlignLeft,
+  FaCheck,
+  FaTimes,
+} from 'react-icons/fa';
 
 import './SettingsBox.css';
 
 class SettingsBox extends Component {
   render() {
-    const { settingSidebarLocation, setSettingSidebarLocation } = this.props;
+    const {
+      settingSidebarLocation,
+      setSettingSidebarLocation,
+      settingSidebarShouldShrinkBody,
+      setSettingSidebarShouldShrinkBody,
+    } = this.props;
 
     return (
       <div
@@ -26,10 +38,10 @@ class SettingsBox extends Component {
         <div className="PopoverContent">
           <div className="SettingEntryContainer">
             <div className="SettingEntryTitle">
-              <FaAlignJustify style={{ marginRight: 6 }} />
-              Sidebar Position:
+              <FaAlignJustify className="SettingEntryTitleIcon" />
+              Sidebar position:
             </div>
-            <div className="SettingEntryContent">
+            <form className="SettingEntryContent">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <label>
                   <input
@@ -38,7 +50,7 @@ class SettingsBox extends Component {
                     onChange={() => setSettingSidebarLocation('left')}
                     name="radio"
                   />
-                  <FaAlignLeft style={{ marginRight: 6 }} />
+                  <FaAlignLeft className="SettingEntryOptionIcon" />
                   Left
                 </label>
                 <label>
@@ -48,14 +60,50 @@ class SettingsBox extends Component {
                     onChange={() => setSettingSidebarLocation('right')}
                     name="radio"
                   />
-                  <FaAlignRight style={{ marginRight: 6 }} />
+                  <FaAlignRight className="SettingEntryOptionIcon" />
                   Right
                 </label>
               </div>
-            </div>
+            </form>
           </div>
 
-          {/* <div className="SettingEntryDivider"></div> */}
+          <div className="SettingEntryDivider"></div>
+
+          <div className="SettingEntryContainer">
+            <div className="SettingEntryTitle">
+              <TiDownload
+                className="SettingEntryTitleIcon"
+                style={{
+                  transform: 'rotate(-90deg)',
+                }}
+              />
+              Squeeze webpage when the sidebar opens:
+            </div>
+            <form className="SettingEntryContent">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <label>
+                  <input
+                    type="radio"
+                    checked={settingSidebarShouldShrinkBody}
+                    onChange={() => setSettingSidebarShouldShrinkBody(true)}
+                    name="radio"
+                  />
+                  <FaCheck className="SettingEntryOptionIcon" />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    checked={!settingSidebarShouldShrinkBody}
+                    onChange={() => setSettingSidebarShouldShrinkBody(false)}
+                    name="radio"
+                  />
+                  <FaTimes className="SettingEntryOptionIcon" />
+                  No
+                </label>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

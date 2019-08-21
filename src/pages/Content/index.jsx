@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
 
-const shouldShrinkBody = true;
+let shouldShrinkBody = true;
 let sidebarLocation = 'left';
 const toggleButtonLocation = 'bottom';
 let sidebarWidth = 280;
@@ -38,6 +38,27 @@ function shrinkBody(isOpen) {
   }
 }
 
+function fixShrinkBody(isOpen) {
+  if (isOpen) {
+    if (shouldShrinkBody) {
+      if (sidebarLocation === 'left') {
+        document.body.style.marginLeft = `${sidebarWidth + 10}px`;
+      } else {
+        document.body.style.marginRight = `${sidebarWidth + 10}px`;
+      }
+    } else {
+      if (sidebarLocation === 'left') {
+        document.body.style.marginLeft = '0px';
+      } else {
+        document.body.style.marginRight = '0px';
+      }
+    }
+  } else {
+    document.body.style.marginLeft = '0px';
+    document.body.style.marginRight = '0px';
+  }
+}
+
 let sidebarRoot = document.createElement('div');
 document.body.appendChild(sidebarRoot);
 sidebarRoot.setAttribute('id', 'vt-sidebar-root');
@@ -48,6 +69,7 @@ function mountSidebar() {
     <Frame
       url={chrome.extension.getURL('sidebar.html')}
       shrinkBody={shrinkBody}
+      fixShrinkBody={fixShrinkBody}
       viewportWidth={window.innerWidth}
       sidebarLocation={sidebarLocation}
       toggleButtonLocation={toggleButtonLocation}
@@ -66,6 +88,12 @@ function unmountSidebar() {
     console.log(e);
   }
 }
+
+chrome.storage.sync.get(['shouldShrinkBody'], (result) => {
+  if (result.shouldShrinkBody !== undefined) {
+    shouldShrinkBody = result.shouldShrinkBody === true;
+  }
+});
 
 chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
   if (result.sidebarOnLeft !== undefined) {
@@ -105,6 +133,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     unmountSidebar();
     mountSidebar();
     checkSidebarStatus();
+  } else if (
+    request.from === 'background' &&
+    request.msg === 'UPDATE_SHOULD_SHRINK_BODY_STATUS'
+  ) {
+    const { toStatus } = request;
+    shouldShrinkBody = toStatus;
+    Frame.shrinkBody();
   }
 });
 

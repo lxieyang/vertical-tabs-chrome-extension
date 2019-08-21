@@ -18,6 +18,7 @@ class Title extends Component {
 
     // settings
     settingSidebarLocation: 'left',
+    settingSidebarShouldShrinkBody: true,
   };
 
   componentDidMount() {
@@ -27,6 +28,14 @@ class Title extends Component {
           sidebarOnLeft: result.sidebarOnLeft === true,
           settingSidebarLocation:
             result.sidebarOnLeft === true ? 'left' : 'right',
+        });
+      }
+    });
+
+    chrome.storage.sync.get(['shouldShrinkBody'], (result) => {
+      if (result.shouldShrinkBody !== undefined) {
+        this.setState({
+          settingSidebarShouldShrinkBody: result.shouldShrinkBody === true,
         });
       }
     });
@@ -53,11 +62,25 @@ class Title extends Component {
     });
   };
 
+  setSettingSidebarShouldShrinkBody = (toStatus) => {
+    if (toStatus === this.state.settingSidebarShouldShrinkBody) {
+      return;
+    }
+
+    this.setState({ settingSidebarShouldShrinkBody: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_SIDEBAR_SHOULD_SHRINK_BODY',
+      toStatus,
+    });
+  };
+
   render() {
     const {
       sidebarOnLeft,
       isSettingsPopoverOpen,
       settingSidebarLocation,
+      settingSidebarShouldShrinkBody,
     } = this.state;
 
     return (
@@ -91,6 +114,10 @@ class Title extends Component {
               <SettingsBox
                 settingSidebarLocation={settingSidebarLocation}
                 setSettingSidebarLocation={this.setSettingSidebarLocation}
+                settingSidebarShouldShrinkBody={settingSidebarShouldShrinkBody}
+                setSettingSidebarShouldShrinkBody={
+                  this.setSettingSidebarShouldShrinkBody
+                }
               />
             </ArrowContainer>
           )}
