@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Resizable } from 're-resizable';
+
 import styles from './frame.css';
 
 const iframeClass = css({
@@ -490,10 +491,18 @@ export class Frame extends Component {
                   className={cx({
                     [iframeClass]: true,
                   })}
+                  style={{
+                    backgroundImage: `url(${chrome.extension.getURL(
+                      'iframe-background.gif'
+                    )})`,
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    height: '100vh',
+                  }}
                   src={url}
                   ref={(frame) => (this.frame = frame)}
                   onLoad={this.onLoad}
-                />
+                ></iframe>
               </div>
             </div>
           </Resizable>

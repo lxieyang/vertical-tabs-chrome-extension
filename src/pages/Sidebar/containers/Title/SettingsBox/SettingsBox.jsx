@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MdSettings } from 'react-icons/md';
+import { FaAlignJustify, FaAlignRight, FaAlignLeft } from 'react-icons/fa';
 
 import './SettingsBox.css';
 
@@ -12,7 +13,7 @@ class SettingsBox extends Component {
         style={{
           backgroundColor: '#fff',
           opacity: 1,
-          color: 'inherit',
+          color: 'rgb(32, 33, 36)',
           border: '1px solid #ebebeb',
           borderRadius: 'calc(0.3rem - 1px)',
           boxShadow:
@@ -24,26 +25,31 @@ class SettingsBox extends Component {
         </div>
         <div className="PopoverContent">
           <div className="SettingEntryContainer">
-            <div className="SettingEntryTitle">Sidebar Position:</div>
+            <div className="SettingEntryTitle">
+              <FaAlignJustify style={{ marginRight: 6 }} />
+              Sidebar Position:
+            </div>
             <div className="SettingEntryContent">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <label>
-                  Left
                   <input
                     type="radio"
                     checked={settingSidebarLocation === 'left'}
                     onChange={() => setSettingSidebarLocation('left')}
                     name="radio"
                   />
+                  <FaAlignLeft style={{ marginRight: 6 }} />
+                  Left
                 </label>
                 <label>
-                  Right
                   <input
                     type="radio"
                     checked={settingSidebarLocation !== 'left'}
                     onChange={() => setSettingSidebarLocation('right')}
                     name="radio"
                   />
+                  <FaAlignRight style={{ marginRight: 6 }} />
+                  Right
                 </label>
               </div>
             </div>

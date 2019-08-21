@@ -59,6 +59,7 @@ function mountSidebar() {
 
 function unmountSidebar() {
   try {
+    document.body.style.marginLeft = '0px';
     document.body.style.marginRight = '0px';
     ReactDOM.unmountComponentAtNode(sidebarRoot);
   } catch (e) {

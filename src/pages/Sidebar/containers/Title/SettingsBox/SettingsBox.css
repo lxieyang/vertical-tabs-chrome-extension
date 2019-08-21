@@ -22,14 +22,23 @@
   padding: 0.5rem 0.75rem;
 }
 
-.PopoverContent .SettingEntryContainer .SettingEntryTitle {
+.PopoverContent .SettingEntryTitle {
   font-weight: 400;
+  display: flex;
+  align-items: center;
 }
 
-.PopoverContent .SettingEntryContainer .SettingEntryContent {
-  margin: 6px 0px 0px 0px;
+.PopoverContent .SettingEntryContent {
+  margin: 6px 0px 0px 18px;
 }
 
-.PopoverContent .SettingEntryContainer .SettingEntryContent label {
+.PopoverContent .SettingEntryContent label {
   margin-right: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.PopoverContent .SettingEntryContent label input {
+  margin-right: 6px;
 }
