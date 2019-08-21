@@ -30,7 +30,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 ![dnd tabs](./preview/repo/dnd-tabs.gif)
 
-<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="250" />
+<img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="250" /> &nbsp; <img src="./preview/repo/settings-popover.png" alt="settings" width="250" />
 
 ---
 
@@ -38,17 +38,16 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.
-- Drag and Drop to reorder tabs. **_NEW in v0.2.0!_**
-- Search and filter tabs. **_NEW in v0.3.0!_**
-- Context menu on tabs. **_NEW in v0.4.0!_**
+- Drag and Drop to reorder tabs.
+- Search and filter tabs.
+- Context menu on tabs.
 - Toggle the sidebar by clicking on the extension icon.
-- Toggle the sidebar using the keyboard shortcut: `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`
+- Toggle the sidebar using the keyboard shortcut: **`Cmd + E`** (**`Ctrl + E`** on PC) ~~or `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`~~
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
-- The sidebar is resizable.
+- The sidebar is resizable, and can be put on either the left or right of the browser window.
 
 ## Planned Features
 
-- Place the sidebar on either the left or the right side of the browser window
 - Dark theme
 
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)

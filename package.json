@@ -1,6 +1,6 @@
 {
   "name": "vertical-tabs-chrome-extension",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "A chrome extension that presents your tabs vertically.",
   "license": "MIT",
   "repository": {

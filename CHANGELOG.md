@@ -10,7 +10,22 @@
 
 All notable changes to this project will be documented in this file.
 
-# v0.x
+# v1.x (official releases)
+
+### [1.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.0) (2019-08-21)
+
+#### Official release! 🎆🎆🎆🔥🔥🔥❤❤❤
+
+- Added a settings menu where you could customize:
+
+  - whether to put the sidebar on the **left** or the **right** side of the browser window
+  - whether to have the sidebar squeeze the webpage you're viewing when it opens
+  - whether to display the tab titles in full or truncated (in one line, overflow hidden)
+
+<img src="./preview/repo/settings-popover.png" alt="settings" width="250" />
+
+
+# v0.x  (preview releases)
 
 ### [0.4.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.1) (2019-08-19)
 
