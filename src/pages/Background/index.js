@@ -45,6 +45,9 @@ const persistSidebarOpenStatus = (status) => {
   });
 };
 
+/**
+ * Sidebar on Left
+ */
 let sidebarOnLeft = true; // left -> true  |  right -> false
 
 chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
@@ -61,6 +64,9 @@ const persistSidebarOnLeftStatus = (status) => {
   });
 };
 
+/**
+ * Should Shrink Body
+ */
 let shouldShrinkBody = true;
 
 chrome.storage.sync.get(['shouldShrinkBody'], (result) => {
@@ -74,6 +80,25 @@ chrome.storage.sync.get(['shouldShrinkBody'], (result) => {
 const persistShouldShrinkBodyStatus = (status) => {
   chrome.storage.sync.set({
     shouldShrinkBody: status,
+  });
+};
+
+/**
+ * Display Tab in Full
+ */
+let displayTabInFull = true;
+
+chrome.storage.sync.get(['displayTabInFull'], (result) => {
+  if (result.displayTabInFull !== undefined) {
+    displayTabInFull = result.displayTabInFull === true;
+  } else {
+    persistdisplayTabInFullStatus(true); // default to display tab in full
+  }
+});
+
+const persistdisplayTabInFullStatus = (status) => {
+  chrome.storage.sync.set({
+    displayTabInFull: status,
   });
 };
 
@@ -171,6 +196,23 @@ const updateShouldShrinkBodyStatus = (toStatus) => {
   );
 };
 
+const updateDisplayTabInFullStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_DISPLAY_TAB_IN_FULL_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
 chrome.browserAction.onClicked.addListener((senderTab) => {
   toggleSidebar();
 
@@ -234,5 +276,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     shouldShrinkBody = toStatus;
     persistShouldShrinkBodyStatus(shouldShrinkBody);
     updateShouldShrinkBodyStatus(shouldShrinkBody);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_DISPLAY_TAB_TITLE_IN_FULL'
+  ) {
+    const { toStatus } = request;
+    displayTabInFull = toStatus;
+    persistdisplayTabInFullStatus(displayTabInFull);
+    updateDisplayTabInFullStatus(displayTabInFull);
   }
 });

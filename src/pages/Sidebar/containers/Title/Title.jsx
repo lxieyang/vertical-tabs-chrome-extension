@@ -19,6 +19,7 @@ class Title extends Component {
     // settings
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
+    settingDisplayTabTitleInFull: true,
   };
 
   componentDidMount() {
@@ -37,6 +38,28 @@ class Title extends Component {
         this.setState({
           settingSidebarShouldShrinkBody: result.shouldShrinkBody === true,
         });
+      }
+    });
+
+    chrome.storage.sync.get(['displayTabInFull'], (result) => {
+      if (result.displayTabInFull !== undefined) {
+        this.setState({
+          settingDisplayTabTitleInFull: result.displayTabInFull === true,
+        });
+        this.props.setDisplayTabInFull(result.displayTabInFull === true);
+      }
+    });
+
+    chrome.runtime.onMessage.addListener((request, sender, response) => {
+      if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_DISPLAY_TAB_IN_FULL_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({
+          settingDisplayTabTitleInFull: toStatus === true,
+        });
+        this.props.setDisplayTabInFull(toStatus === true);
       }
     });
   }
@@ -75,12 +98,26 @@ class Title extends Component {
     });
   };
 
+  setSettingDisplayTabTitleInFull = (toStatus) => {
+    if (toStatus === this.state.settingDisplayTabTitleInFull) {
+      return;
+    }
+
+    this.setState({ settingDisplayTabTitleInFull: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_DISPLAY_TAB_TITLE_IN_FULL',
+      toStatus,
+    });
+  };
+
   render() {
     const {
       sidebarOnLeft,
       isSettingsPopoverOpen,
       settingSidebarLocation,
       settingSidebarShouldShrinkBody,
+      settingDisplayTabTitleInFull,
     } = this.state;
 
     return (
@@ -117,6 +154,10 @@ class Title extends Component {
                 settingSidebarShouldShrinkBody={settingSidebarShouldShrinkBody}
                 setSettingSidebarShouldShrinkBody={
                   this.setSettingSidebarShouldShrinkBody
+                }
+                settingDisplayTabTitleInFull={settingDisplayTabTitleInFull}
+                setSettingDisplayTabTitleInFull={
+                  this.setSettingDisplayTabTitleInFull
                 }
               />
             </ArrowContainer>

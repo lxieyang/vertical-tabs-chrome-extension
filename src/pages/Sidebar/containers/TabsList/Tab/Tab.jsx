@@ -23,6 +23,7 @@ const Tab = ({
   url,
   status,
   activeTab,
+  displayTabInFull,
   contextMenuShow,
   contextMenuShowPrev,
   moveTab,
@@ -190,8 +191,13 @@ const Tab = ({
                     />
                   )}
                 </div>
-                <div className="TabTitleContainer" title={url}>
-                  {title}
+                <div
+                  className="TabTitleContainer"
+                  title={displayTabInFull ? url : `${title}\n\n${url}`}
+                >
+                  <div className={displayTabInFull ? null : 'TabTitle'}>
+                    {title}
+                  </div>
                 </div>
 
                 <div

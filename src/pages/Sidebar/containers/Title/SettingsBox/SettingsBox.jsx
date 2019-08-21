@@ -8,6 +8,8 @@ import {
   FaCheck,
   FaTimes,
 } from 'react-icons/fa';
+import { IoIosBarcode } from 'react-icons/io';
+import { WiMoonAltNew, WiMoonAltWaxingCrescent3 } from 'react-icons/wi';
 
 import './SettingsBox.css';
 
@@ -18,6 +20,8 @@ class SettingsBox extends Component {
       setSettingSidebarLocation,
       settingSidebarShouldShrinkBody,
       setSettingSidebarShouldShrinkBody,
+      settingDisplayTabTitleInFull,
+      setSettingDisplayTabTitleInFull,
     } = this.props;
 
     return (
@@ -43,7 +47,11 @@ class SettingsBox extends Component {
             </div>
             <form className="SettingEntryContent">
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label>
+                <label
+                  className={
+                    settingSidebarLocation === 'left' ? 'Active' : null
+                  }
+                >
                   <input
                     type="radio"
                     checked={settingSidebarLocation === 'left'}
@@ -53,7 +61,11 @@ class SettingsBox extends Component {
                   <FaAlignLeft className="SettingEntryOptionIcon" />
                   Left
                 </label>
-                <label>
+                <label
+                  className={
+                    settingSidebarLocation !== 'left' ? 'Active' : null
+                  }
+                >
                   <input
                     type="radio"
                     checked={settingSidebarLocation !== 'left'}
@@ -81,7 +93,9 @@ class SettingsBox extends Component {
             </div>
             <form className="SettingEntryContent">
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label>
+                <label
+                  className={settingSidebarShouldShrinkBody ? 'Active' : null}
+                >
                   <input
                     type="radio"
                     checked={settingSidebarShouldShrinkBody}
@@ -91,7 +105,9 @@ class SettingsBox extends Component {
                   <FaCheck className="SettingEntryOptionIcon" />
                   Yes
                 </label>
-                <label>
+                <label
+                  className={!settingSidebarShouldShrinkBody ? 'Active' : null}
+                >
                   <input
                     type="radio"
                     checked={!settingSidebarShouldShrinkBody}
@@ -100,6 +116,43 @@ class SettingsBox extends Component {
                   />
                   <FaTimes className="SettingEntryOptionIcon" />
                   No
+                </label>
+              </div>
+            </form>
+          </div>
+
+          <div className="SettingEntryDivider"></div>
+
+          <div className="SettingEntryContainer">
+            <div className="SettingEntryTitle">
+              <IoIosBarcode className="SettingEntryTitleIcon" />
+              Display tab title:
+            </div>
+            <form className="SettingEntryContent">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <label
+                  className={settingDisplayTabTitleInFull ? 'Active' : null}
+                >
+                  <input
+                    type="radio"
+                    checked={settingDisplayTabTitleInFull}
+                    onChange={() => setSettingDisplayTabTitleInFull(true)}
+                    name="radio"
+                  />
+                  <WiMoonAltNew className="SettingEntryOptionIcon" />
+                  Full
+                </label>
+                <label
+                  className={!settingDisplayTabTitleInFull ? 'Active' : null}
+                >
+                  <input
+                    type="radio"
+                    checked={!settingDisplayTabTitleInFull}
+                    onChange={() => setSettingDisplayTabTitleInFull(false)}
+                    name="radio"
+                  />
+                  <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
+                  Truncated
                 </label>
               </div>
             </form>

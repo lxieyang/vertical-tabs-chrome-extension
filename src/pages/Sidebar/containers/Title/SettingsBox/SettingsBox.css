@@ -34,16 +34,17 @@
 }
 
 .PopoverContent .SettingEntryContent label {
-  margin-right: 15px;
+  margin-right: 8px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 2px;
+  padding: 2px 4px;
 
   transition: all 0.1s ease-in;
 }
 
-.PopoverContent .SettingEntryContent label:hover {
+.PopoverContent .SettingEntryContent label:hover,
+.PopoverContent .SettingEntryContent label.Active {
   background-color: #f2f0f0;
 }
 

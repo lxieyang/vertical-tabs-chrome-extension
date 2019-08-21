@@ -78,6 +78,7 @@ class TabsList extends Component {
       tabsDict,
       moveTab,
       setTabAsLoading,
+      displayTabInFull,
     } = this.props;
     const {
       searchBarInputText,
@@ -136,6 +137,7 @@ class TabsList extends Component {
                 url={tabOrder.url}
                 status={tabOrder.status}
                 activeTab={activeTab}
+                displayTabInFull={displayTabInFull}
                 contextMenuShow={contextMenuShow}
                 contextMenuShowPrev={contextMenuShowPrev}
                 moveTab={moveTab}

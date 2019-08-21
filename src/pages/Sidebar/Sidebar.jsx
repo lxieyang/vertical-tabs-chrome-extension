@@ -15,6 +15,8 @@ class Sidebar extends Component {
     tabOrders: [],
     activeTab: {},
     tabsDict: {},
+
+    displayTabInFull: true,
   };
 
   constructor(props) {
@@ -241,13 +243,18 @@ class Sidebar extends Component {
     });
   };
 
+  setDisplayTabInFull = (toStatus) => {
+    this.setState({ displayTabInFull: toStatus });
+  };
+
   render() {
-    const { tabOrders, activeTab, tabsDict } = this.state;
+    const { tabOrders, activeTab, tabsDict, displayTabInFull } = this.state;
 
     return (
       <div className="SidebarContainer">
-        <Title />
+        <Title setDisplayTabInFull={this.setDisplayTabInFull} />
         <TabsList
+          displayTabInFull={displayTabInFull}
           tabOrders={tabOrders}
           activeTab={activeTab}
           tabsDict={tabsDict}
