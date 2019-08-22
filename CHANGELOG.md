@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.0.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.1) (2019-08-22)
+
+- Updated dependencies
+
 ### [1.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.0) (2019-08-21)
 
 #### Official release! 🎆🎆🎆🔥🔥🔥❤❤❤
@@ -24,8 +28,7 @@ All notable changes to this project will be documented in this file.
 
 <img src="./preview/repo/settings-popover.png" alt="settings" width="250" />
 
-
-# v0.x  (preview releases)
+# v0.x (preview releases)
 
 ### [0.4.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.1) (2019-08-19)
 
