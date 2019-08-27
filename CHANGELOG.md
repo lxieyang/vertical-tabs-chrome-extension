@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.0.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.2) (2019-08-27)
+
+- Fixed a bug where settings could go out of sync across tabs
+- Added a tip for using `Command + E` (`Ctrl + E` on PCs) to toggle the sidebar
+
 ### [1.0.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.1) (2019-08-22)
 
 - Updated dependencies

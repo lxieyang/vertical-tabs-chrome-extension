@@ -2,6 +2,7 @@ import '../../assets/img/icon-34.png';
 import '../../assets/img/icon-128.png';
 import '../../assets/img/icon-128-eye.png';
 import '../../assets/img/iframe-background.gif';
+import './modules/installationHelper';
 
 let sidebarOpen = true; // open -> true  |  close -> false
 let sidebarScrollPosition = {
@@ -18,21 +19,10 @@ chrome.storage.local.get(['sidebarOpen'], (result) => {
 
 const changeBrowserIconBadgeWithSidebarOpenStatus = (status) => {
   if (status) {
-    // chrome.browserAction.setBadgeText({
-    //   text: '👀',
-    // });
-    // chrome.browserAction.setBadgeBackgroundColor({
-    //   color: [255, 255, 255, 100],
-    // });
-
     chrome.browserAction.setIcon({
       path: chrome.extension.getURL('icon-128-eye.png'),
     });
   } else {
-    // chrome.browserAction.setBadgeText({
-    //   text: '',
-    // });
-
     chrome.browserAction.setIcon({
       path: chrome.extension.getURL('icon-128.png'),
     });

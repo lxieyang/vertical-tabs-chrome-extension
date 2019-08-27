@@ -50,7 +50,12 @@ class Title extends Component {
       }
     });
 
+    // sync settings across tabs
     chrome.runtime.onMessage.addListener((request, sender, response) => {
+      // no need to sync sidebarOnLeft here,
+      // since the sidebar will be unmounted and remounted every time
+      // the sidebarOnLeft status changes
+      // by the content scripts
       if (
         request.from === 'background' &&
         request.msg === 'UPDATE_DISPLAY_TAB_IN_FULL_STATUS'
@@ -60,6 +65,12 @@ class Title extends Component {
           settingDisplayTabTitleInFull: toStatus === true,
         });
         this.props.setDisplayTabInFull(toStatus === true);
+      } else if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_SHOULD_SHRINK_BODY_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({ settingSidebarShouldShrinkBody: toStatus === true });
       }
     });
   }
