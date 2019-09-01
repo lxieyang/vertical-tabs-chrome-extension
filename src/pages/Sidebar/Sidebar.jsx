@@ -98,6 +98,7 @@ class Sidebar extends Component {
           faviconUrl: tab.faviconUrl,
           title: tab.title,
           url: tab.url,
+          pinned: tab.pinned,
           status: 'complete',
           combinedText: [
             tab.title, // title
@@ -111,7 +112,6 @@ class Sidebar extends Component {
           id: tab.id,
           index: tab.index,
           active: tab.active,
-          pinned: tab.pinned,
           muted: tab.muted,
         });
         if (tab.active) {
@@ -120,7 +120,6 @@ class Sidebar extends Component {
               id: tab.id,
               index: tab.index,
               active: tab.active,
-              pinned: tab.pinned,
               muted: tab.muted,
             },
           });
@@ -153,6 +152,7 @@ class Sidebar extends Component {
       faviconUrl: favicon,
       title: tab.title,
       url: tab.url,
+      pinned: tab.pinned,
       status: tab.status,
       combinedText: [
         tab.title, // title
@@ -182,7 +182,6 @@ class Sidebar extends Component {
           id: tab.id,
           index: tab.index,
           active: tab.active,
-          pinned: tab.pinned,
           muted: tab.muted,
         };
         tabOrders.push(tabObj);
@@ -201,7 +200,12 @@ class Sidebar extends Component {
   };
 
   handleTabUpdated = (tabId, changes, tab) => {
-    if (changes.status === 'complete' || changes.title) {
+    if (
+      changes.status === 'complete' ||
+      changes.title ||
+      changes.pinned === true ||
+      changes.pinned === false
+    ) {
       this.updateTabsDictWithTab(tab, getFavicon(tab.url));
       if (changes.status === 'complete') {
         setTimeout(() => {

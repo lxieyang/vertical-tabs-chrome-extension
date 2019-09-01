@@ -8,6 +8,7 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
+import { FaThumbtack } from 'react-icons/fa';
 
 import './Tab.css';
 
@@ -174,7 +175,12 @@ const Tab = ({
                     : null,
                 ].join(' ')}
               >
-                {/* <div className="Ordinal">{tabOrder.index + 1}</div> */}
+                {pinned && (
+                  <div className="PinnedIconContainer">
+                    <FaThumbtack className="PinnedIcon" />
+                  </div>
+                )}
+
                 <div className="TabFaviconContainer">
                   {status === 'loading' ? (
                     <Loader

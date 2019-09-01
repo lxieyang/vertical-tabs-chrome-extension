@@ -46,6 +46,8 @@
   /* border-radius: 6px; */
 
   transition: 0.1s all ease-in;
+
+  position: relative;
 }
 
 .ActiveTabContainer {
@@ -54,6 +56,22 @@
 
 .InactiveTabContainerHovering {
   background-color: rgb(244, 245, 247);
+}
+
+.PinnedIconContainer {
+  position: absolute;
+  top: -3px;
+  left: 1px;
+  padding-left: 1px;
+  padding-top: 0px;
+}
+
+.PinnedIcon {
+  width: 8px;
+  height: 8px;
+  opacity: 0.7;
+  color: rgb(66, 66, 66);
+  transform: rotate(-45deg);
 }
 
 .TabFaviconContainer {
