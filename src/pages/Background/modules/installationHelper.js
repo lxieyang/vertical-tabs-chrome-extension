@@ -1,6 +1,14 @@
 let isFirstInstall = false;
 let currentVersion = chrome.runtime.getManifest().version;
 
+localStorage.setItem('vt-version', chrome.runtime.getManifest().version);
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.msg === 'GET_VERSION_NUMBER') {
+    sendResponse({ version: chrome.runtime.getManifest().version });
+  }
+});
+
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install') {
     console.log('This is a first install!');
