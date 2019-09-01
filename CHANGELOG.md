@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.1.0) (2019-09-01)
+
+- Support pinning/unpinning tabs in the context menu
+- Visual indication for pinned tabs
+
 ### [1.0.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.2) (2019-08-27)
 
 - Fixed a bug where settings could go out of sync across tabs
