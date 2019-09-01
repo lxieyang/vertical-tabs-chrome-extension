@@ -272,9 +272,10 @@ const Tab = ({
             <MenuItem onClick={(e) => deplicateTabClickedHandler(e, id)}>
               Duplicate
             </MenuItem>
-            {/* <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
+            <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
               {pinned ? 'Unpin' : 'Pin'} Tab
             </MenuItem>
+            {/* 
             <MenuItem onClick={(e) => muteTabClickedHandler(e, id)}>
               {muted ? 'Unmute' : 'Mute'} Tab
             </MenuItem> */}
