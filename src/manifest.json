@@ -26,12 +26,11 @@
   ],
   "manifest_version": 2,
   "commands": {
-    "toggle_sidebar_with_shortcut_1": {
+    "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+E",
         "mac": "Command+E"
-      },
-      "description": "Toggle sidebar"
+      }
     }
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr72k/NjWLsQ2Fp7RRSAXCWDLQbeto8D+7qQMOkVXdlTEk9DslAte7UaNNQ+5CTjtmWxhSLN9r/yzLwlKamEqy5LTiGg8rI/lPc033jjdv6E9I00sFd/NMqFmH3BAYyZ3rLlrRC5j+w1PvLtGjZ+fBBX+6XvN5knnmlQfFEmf8EwM9Qrao0H5ydddBfLUaiSKZIEP3s6OykTAwsedHAnMTO922Z/aEJnoqKC8MG2D27AlNOvJdbVeuzy/5RB8HwcReEwkYhXf7jITcOjsxlEUQTYeQ6WXcu9g6KpvaqrdPtlo+ePocLjH43QvPpDSqwWGf/+7F+S6FJhSrJYRXIVDdwIDAQAB",

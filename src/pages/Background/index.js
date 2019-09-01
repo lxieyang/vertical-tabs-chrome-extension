@@ -203,17 +203,24 @@ const updateDisplayTabInFullStatus = (toStatus) => {
   );
 };
 
-chrome.browserAction.onClicked.addListener((senderTab) => {
-  toggleSidebar();
+// chrome.browserAction.setPopup({
+//   popup: chrome.extension.getURL('sidebar.html'),
+// });
 
-  // chrome.tabs.sendMessage(senderTab.id, {
-  //   from: 'background',
-  //   msg: 'TOGGLE_SIDEBAR',
-  // });
+// setTimeout(() => {
+//   console.log('reset popup');
+//   chrome.browserAction.setPopup({
+//     popup: '',
+//   });
+// }, 3000);
+
+chrome.browserAction.onClicked.addListener((senderTab) => {
+  console.log('browser icon clicked');
+  toggleSidebar();
 });
 
 chrome.commands.onCommand.addListener(function(command) {
-  if (command === 'toggle_sidebar_with_shortcut_1') {
+  if (command === '_execute_browser_action') {
     toggleSidebar();
   }
 });
