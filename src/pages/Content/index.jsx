@@ -31,11 +31,6 @@ document.addEventListener('visibilitychange', (info) => {
   }
 });
 
-// let updateNoticeRoot = document.createElement('div');
-// document.body.appendChild(updateNoticeRoot);
-// updateNoticeRoot.setAttribute('id', 'vt-update-notice');
-// ReactDOM.render(<UpdateNotice />, updateNoticeRoot);
-
 const setSidebarWidth = (width) => {
   sidebarWidth = width;
 };

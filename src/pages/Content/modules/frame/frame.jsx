@@ -3,14 +3,7 @@ import cx from 'classnames';
 import { css } from 'glamor';
 import { node, object, string, number, func } from 'prop-types';
 
-import { APP_NAME_SHORT } from '../../../../shared/constants';
-import Logo from '../../../../components/Logo/Logo';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Resizable } from 're-resizable';
-
-import styles from './frame.css';
 
 const iframeClass = css({
   border: 'none',
@@ -65,78 +58,6 @@ const containerLeftMinimizedClass = css({
   transform: 'translateX(-100%)',
   ':hover': {
     transform: `translateX(-94%)`,
-  },
-});
-
-const toggleButtonClass = css({
-  position: 'fixed',
-  zIndex: 9999999999,
-});
-
-const toggleButtonBottomRightClass = css({
-  bottom: '40px',
-  right: '30px',
-});
-
-const toggleButtonBottomRightInnerClass = css({
-  bottom: '0px',
-  right: '0px',
-});
-
-const toggleButtonTopRightClass = css({
-  top: '40px',
-  right: '30px',
-});
-
-const toggleButtonTopRightInnerClass = css({
-  top: '0px',
-  right: '0px',
-});
-
-const toggleButtonBottomLeftClass = css({
-  bottom: '40px',
-  left: '30px',
-});
-
-const toggleButtonBottomLeftInnerClass = css({
-  bottom: '0px',
-  left: '0px',
-});
-
-const toggleButtonTopLeftClass = css({
-  top: '40px',
-  left: '30px',
-});
-
-const toggleButtonTopLeftInnerClass = css({
-  top: '0px',
-  left: '0px',
-});
-
-const toggleButtonInnerClass = css({
-  position: 'absolute',
-  // right: '0px',
-  // bottom: '0px',
-  width: '45px',
-  height: '35px',
-  boxSizing: 'border-box',
-  cursor: 'pointer',
-  padding: '2px 5px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  fontSize: '16px',
-  fontFamily: 'arial',
-  backgroundColor: 'white',
-  color: 'black',
-  userSelect: 'none',
-  borderRadius: '6px',
-  boxShadow: '-1px 1px 8px rgba(0,0,0,.2)',
-  transition: 'all 0.3s',
-  opacity: 0.3,
-  ':hover': {
-    width: '200px',
-    opacity: 1,
   },
 });
 
@@ -304,91 +225,6 @@ export class Frame extends Component {
 
     return (
       <React.Fragment>
-        {/* {!isDragging && (
-          <div
-            className={cx({
-              [toggleButtonClass]: true,
-              [toggleButtonTopRightClass]:
-                toggleButtonLocation === 'top' && sidebarLocation === 'right',
-              [toggleButtonBottomRightClass]:
-                toggleButtonLocation === 'bottom' &&
-                sidebarLocation === 'right',
-              [toggleButtonTopLeftClass]:
-                toggleButtonLocation === 'top' && sidebarLocation === 'left',
-              [toggleButtonBottomLeftClass]:
-                toggleButtonLocation === 'bottom' && sidebarLocation === 'left',
-            })}
-            // title={`${
-            //   this.state.isMinimized ? 'Open' : 'Hide'
-            // } ${APP_NAME_SHORT} sidebar`}
-          >
-            <div
-              className={cx({
-                [toggleButtonInnerClass]: true,
-                [toggleButtonTopRightInnerClass]:
-                  toggleButtonLocation === 'top' && sidebarLocation === 'right',
-                [toggleButtonBottomRightInnerClass]:
-                  toggleButtonLocation === 'bottom' &&
-                  sidebarLocation === 'right',
-                [toggleButtonTopLeftInnerClass]:
-                  toggleButtonLocation === 'top' && sidebarLocation === 'left',
-                [toggleButtonBottomLeftInnerClass]:
-                  toggleButtonLocation === 'bottom' &&
-                  sidebarLocation === 'left',
-              })}
-              style={{ margin: '3px' }}
-              onClick={this.onFrameClick}
-            >
-              <div
-                style={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                {sidebarLocation === 'left' && (
-                  <>
-                    <div style={{ width: '20px' }}>
-                      <Logo size={'20px'} />
-                    </div>
-                    <FontAwesomeIcon
-                      icon={
-                        this.state.isMinimized ? faChevronRight : faChevronLeft
-                      }
-                      style={{ marginLeft: '5px', color: 'rgb(233, 115, 46)' }}
-                    />
-                    <div style={{ marginLeft: '5px' }}>
-                      {` ${
-                        this.state.isMinimized ? 'Open' : 'Hide'
-                      } Vertical Tabs`}
-                    </div>
-                  </>
-                )}
-
-                {sidebarLocation === 'right' && (
-                  <>
-                    <FontAwesomeIcon
-                      icon={
-                        this.state.isMinimized ? faChevronLeft : faChevronRight
-                      }
-                      style={{ marginRight: '5px', color: 'rgb(233, 115, 46)' }}
-                    />
-                    <div style={{ width: '20px' }}>
-                      <Logo size={'20px'} />
-                    </div>
-                    <div style={{ marginLeft: '5px' }}>
-                      {` ${
-                        this.state.isMinimized ? 'Open' : 'Hide'
-                      } Vertical Tabs`}
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        )} */}
-
         <div
           id="nice"
           className={cx({
