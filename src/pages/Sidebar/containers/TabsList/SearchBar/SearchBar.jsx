@@ -24,7 +24,7 @@ class SearchBar extends Component {
     return (
       <div className="SearchBarContainer">
         <input
-          autoFocus
+          // autoFocus
           ref={(input) => {
             this.searchInput = input;
           }}

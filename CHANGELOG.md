@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.2.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.2.1) (2019-12-01)
+
+- Remove `AutoFocus` feature.
+- Updated dependencies.
+
 ### [1.2.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.2.0) (2019-09-01)
 
 - Prompt users to refresh pages after the extension got updated to a newer version.
