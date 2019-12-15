@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
+import DarkModeContext from '../../../context/dark-mode-context';
 import Loader from 'react-loader-spinner';
 import { useDrag, useDrop } from 'react-dnd';
 import ItemTypes from '../ItemTypes';
@@ -37,6 +38,9 @@ const Tab = ({
 }) => {
   /* Start of --> Drag and Drop support */
   const ref = useRef(null);
+
+  const darkModeContext = useContext(DarkModeContext);
+  const { isDark } = darkModeContext;
 
   const [, drop] = useDrop({
     accept: ItemTypes.TABCARD,
@@ -155,6 +159,7 @@ const Tab = ({
               <div
                 className={[
                   'TabContainerPad',
+                  isDark ? 'Dark' : null,
                   active ? 'TabContainerPadActive' : null,
                   (!active && isHovering && idx === index) ||
                   (!active && isHovering && isSearching)
@@ -162,12 +167,18 @@ const Tab = ({
                     : null,
                 ].join(' ')}
               >
-                <div className={'TabContainerLeftPadInner'}></div>
+                <div
+                  className={[
+                    'TabContainerLeftPadInner',
+                    isDark ? 'Dark' : null,
+                  ].join(' ')}
+                ></div>
               </div>
 
               <div
                 className={[
                   'TabContainer',
+                  isDark ? 'Dark' : null,
                   active ? 'ActiveTabContainer' : null,
                   (!active && isHovering && idx === index) ||
                   (!active && isHovering && isSearching)
@@ -177,7 +188,11 @@ const Tab = ({
               >
                 {pinned && (
                   <div className="PinnedIconContainer">
-                    <FaThumbtack className="PinnedIcon" />
+                    <FaThumbtack
+                      className={['PinnedIcon', isDark ? 'Dark' : null].join(
+                        ' '
+                      )}
+                    />
                   </div>
                 )}
 
@@ -218,7 +233,10 @@ const Tab = ({
                   }}
                 >
                   <div
-                    className="TabItemActionButton"
+                    className={[
+                      'TabItemActionButton',
+                      isDark ? 'Dark' : null,
+                    ].join(' ')}
                     onClick={(e) => reloadTabClickedHandler(e, id)}
                   >
                     <MdRefresh size={'16px'} />
@@ -229,7 +247,10 @@ const Tab = ({
 
                 <div title="Close tab" className="TabItemActionButtonContainer">
                   <div
-                    className="TabItemActionButton"
+                    className={[
+                      'TabItemActionButton',
+                      isDark ? 'Dark' : null,
+                    ].join(' ')}
                     onClick={(e) => closeTabClickedHandler(e, id)}
                   >
                     <MdClose size={'16px'} />
@@ -240,6 +261,7 @@ const Tab = ({
               <div
                 className={[
                   'TabContainerPad',
+                  isDark ? 'Dark' : null,
                   active ? 'TabContainerPadActive' : null,
                   (!active && isHovering && idx === index) ||
                   (!active && isHovering && isSearching)
@@ -247,7 +269,12 @@ const Tab = ({
                     : null,
                 ].join(' ')}
               >
-                <div className={'TabContainerRightPadInner'}></div>
+                <div
+                  className={[
+                    'TabContainerRightPadInner',
+                    isDark ? 'Dark' : null,
+                  ].join(' ')}
+                ></div>
               </div>
             </li>
           </ContextMenuTrigger>

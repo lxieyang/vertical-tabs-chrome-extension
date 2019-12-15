@@ -14,8 +14,16 @@
   background-color: rgb(255, 255, 255);
 }
 
+.TabContainerPadActive.Dark {
+  background-color: rgb(53, 54, 58);
+}
+
 .TabContainerPadInactiveHovering {
   background-color: rgb(244, 245, 247);
+}
+
+.TabContainerPadInactiveHovering.Dark {
+  background-color: rgb(46, 47, 50);
 }
 
 .TabContainerLeftPadInner {
@@ -25,11 +33,19 @@
   border-bottom-right-radius: 8px;
 }
 
+.TabContainerLeftPadInner.Dark {
+  background-color: rgb(36, 36, 36);
+}
+
 .TabContainerRightPadInner {
   width: 100%;
   height: 100%;
   background-color: rgb(222, 225, 230);
   border-bottom-left-radius: 8px;
+}
+
+.TabContainerRightPadInner.Dark {
+  background-color: rgb(36, 36, 36);
 }
 
 .TabContainer {
@@ -50,12 +66,24 @@
   position: relative;
 }
 
+.TabContainer.Dark {
+  color: rgb(190, 193, 198);
+}
+
 .ActiveTabContainer {
   background-color: rgb(255, 255, 255);
 }
 
+.ActiveTabContainer.Dark {
+  background-color: rgb(53, 54, 58);
+}
+
 .InactiveTabContainerHovering {
   background-color: rgb(244, 245, 247);
+}
+
+.InactiveTabContainerHovering.Dark {
+  background-color: rgb(46, 47, 50);
 }
 
 .PinnedIconContainer {
@@ -72,6 +100,10 @@
   opacity: 0.5;
   color: rgb(66, 66, 66);
   transform: rotate(-45deg);
+}
+
+.PinnedIcon.Dark {
+  color: rgb(190, 193, 198);
 }
 
 .TabFaviconContainer {
@@ -121,9 +153,18 @@
   color: rgb(124, 128, 130);
 }
 
+.TabItemActionButton.Dark {
+  color: rgb(190, 193, 198);
+}
+
 .TabItemActionButton:hover {
   color: rgb(60, 64, 67);
   background-color: rgb(232, 234, 237);
+}
+
+.TabItemActionButton.Dark:hover {
+  color: rgb(190, 193, 198);
+  background-color: rgb(68, 69, 71);
 }
 
 .TabItemActionButtonSpaceBetween {
@@ -137,48 +178,5 @@
 @keyframes blinker {
   50% {
     opacity: 0;
-  }
-}
-
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .TabContainerPadActive {
-    background-color: rgb(53, 54, 58);
-  }
-
-  .TabContainerPadInactiveHovering {
-    background-color: rgb(46, 47, 50);
-  }
-  .TabContainerLeftPadInner {
-    background-color: rgb(36, 36, 36);
-  }
-
-  .TabContainerRightPadInner {
-    background-color: rgb(36, 36, 36);
-  }
-
-  .TabContainer {
-    color: rgb(190, 193, 198);
-  }
-
-  .ActiveTabContainer {
-    background-color: rgb(53, 54, 58);
-  }
-
-  .InactiveTabContainerHovering {
-    background-color: rgb(46, 47, 50);
-  }
-
-  .PinnedIcon {
-    color: rgb(190, 193, 198);
-  }
-
-  .TabItemActionButton {
-    color: rgb(190, 193, 198);
-  }
-
-  .TabItemActionButton:hover {
-    color: rgb(190, 193, 198);
-    background-color: rgb(68, 69, 71);
   }
 }

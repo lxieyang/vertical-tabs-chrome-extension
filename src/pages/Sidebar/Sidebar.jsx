@@ -5,7 +5,6 @@ import { sortBy } from 'lodash';
 
 import Title from './containers/Title/Title';
 import TabsList from './containers/TabsList/TabsList';
-import Tab from './containers//TabsList/Tab/Tab';
 
 import { getFavicon } from '../../shared/utils';
 

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
+import DarkModeContext from '../../../context/dark-mode-context';
 import { MdSettings } from 'react-icons/md';
 import { TiDownload } from 'react-icons/ti';
 import {
@@ -13,144 +14,164 @@ import { WiMoonAltNew, WiMoonAltWaxingCrescent3 } from 'react-icons/wi';
 
 import './SettingsBox.css';
 
-class SettingsBox extends Component {
-  render() {
-    const {
-      settingSidebarLocation,
-      setSettingSidebarLocation,
-      settingSidebarShouldShrinkBody,
-      setSettingSidebarShouldShrinkBody,
-      settingDisplayTabTitleInFull,
-      setSettingDisplayTabTitleInFull,
-    } = this.props;
+const SettingsBox = ({
+  settingSidebarLocation,
+  setSettingSidebarLocation,
+  settingSidebarShouldShrinkBody,
+  setSettingSidebarShouldShrinkBody,
+  settingDisplayTabTitleInFull,
+  setSettingDisplayTabTitleInFull,
+}) => {
+  const darkModeContext = useContext(DarkModeContext);
 
-    return (
-      <div className="PopoverContainer">
-        <div className="PopoverTitle">
-          <MdSettings style={{ marginRight: 6 }} /> Settings
+  const { isDark } = darkModeContext;
+
+  const divider = (
+    <div
+      className={['SettingEntryDivider', isDark ? 'Dark' : null].join(' ')}
+    ></div>
+  );
+
+  return (
+    <div className={['PopoverContainer', isDark ? 'Dark' : null].join(' ')}>
+      <div className={['PopoverTitle', isDark ? 'Dark' : null].join(' ')}>
+        <MdSettings style={{ marginRight: 6 }} /> Settings
+      </div>
+      <div className={['PopoverContent', isDark ? 'Dark' : null].join(' ')}>
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <FaAlignJustify className="SettingEntryTitleIcon" />
+            Sidebar position:
+          </div>
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={[
+                  settingSidebarLocation === 'left' ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingSidebarLocation === 'left'}
+                  onChange={() => setSettingSidebarLocation('left')}
+                  name="radio"
+                />
+                <FaAlignLeft className="SettingEntryOptionIcon" />
+                Left
+              </label>
+              <label
+                className={[
+                  settingSidebarLocation !== 'left' ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingSidebarLocation !== 'left'}
+                  onChange={() => setSettingSidebarLocation('right')}
+                  name="radio"
+                />
+                <FaAlignRight className="SettingEntryOptionIcon" />
+                Right
+              </label>
+            </div>
+          </form>
         </div>
-        <div className="PopoverContent">
-          <div className="SettingEntryContainer">
-            <div className="SettingEntryTitle">
-              <FaAlignJustify className="SettingEntryTitleIcon" />
-              Sidebar position:
-            </div>
-            <form className="SettingEntryContent">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label
-                  className={
-                    settingSidebarLocation === 'left' ? 'Active' : null
-                  }
-                >
-                  <input
-                    type="radio"
-                    checked={settingSidebarLocation === 'left'}
-                    onChange={() => setSettingSidebarLocation('left')}
-                    name="radio"
-                  />
-                  <FaAlignLeft className="SettingEntryOptionIcon" />
-                  Left
-                </label>
-                <label
-                  className={
-                    settingSidebarLocation !== 'left' ? 'Active' : null
-                  }
-                >
-                  <input
-                    type="radio"
-                    checked={settingSidebarLocation !== 'left'}
-                    onChange={() => setSettingSidebarLocation('right')}
-                    name="radio"
-                  />
-                  <FaAlignRight className="SettingEntryOptionIcon" />
-                  Right
-                </label>
-              </div>
-            </form>
+
+        {divider}
+
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <TiDownload
+              className="SettingEntryTitleIcon"
+              style={{
+                transform: 'rotate(-90deg)',
+              }}
+            />
+            Squeeze webpage when the sidebar opens:
           </div>
-
-          <div className="SettingEntryDivider"></div>
-
-          <div className="SettingEntryContainer">
-            <div className="SettingEntryTitle">
-              <TiDownload
-                className="SettingEntryTitleIcon"
-                style={{
-                  transform: 'rotate(-90deg)',
-                }}
-              />
-              Squeeze webpage when the sidebar opens:
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={[
+                  settingSidebarShouldShrinkBody ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingSidebarShouldShrinkBody}
+                  onChange={() => setSettingSidebarShouldShrinkBody(true)}
+                  name="radio"
+                />
+                <FaCheck className="SettingEntryOptionIcon" />
+                Yes
+              </label>
+              <label
+                className={[
+                  !settingSidebarShouldShrinkBody ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={!settingSidebarShouldShrinkBody}
+                  onChange={() => setSettingSidebarShouldShrinkBody(false)}
+                  name="radio"
+                />
+                <FaTimes className="SettingEntryOptionIcon" />
+                No
+              </label>
             </div>
-            <form className="SettingEntryContent">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label
-                  className={settingSidebarShouldShrinkBody ? 'Active' : null}
-                >
-                  <input
-                    type="radio"
-                    checked={settingSidebarShouldShrinkBody}
-                    onChange={() => setSettingSidebarShouldShrinkBody(true)}
-                    name="radio"
-                  />
-                  <FaCheck className="SettingEntryOptionIcon" />
-                  Yes
-                </label>
-                <label
-                  className={!settingSidebarShouldShrinkBody ? 'Active' : null}
-                >
-                  <input
-                    type="radio"
-                    checked={!settingSidebarShouldShrinkBody}
-                    onChange={() => setSettingSidebarShouldShrinkBody(false)}
-                    name="radio"
-                  />
-                  <FaTimes className="SettingEntryOptionIcon" />
-                  No
-                </label>
-              </div>
-            </form>
+          </form>
+        </div>
+
+        {divider}
+
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <IoIosBarcode className="SettingEntryTitleIcon" />
+            Display tab title:
           </div>
-
-          <div className="SettingEntryDivider"></div>
-
-          <div className="SettingEntryContainer">
-            <div className="SettingEntryTitle">
-              <IoIosBarcode className="SettingEntryTitleIcon" />
-              Display tab title:
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={[
+                  settingDisplayTabTitleInFull ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingDisplayTabTitleInFull}
+                  onChange={() => setSettingDisplayTabTitleInFull(true)}
+                  name="radio"
+                />
+                <WiMoonAltNew className="SettingEntryOptionIcon" />
+                Full
+              </label>
+              <label
+                className={[
+                  !settingDisplayTabTitleInFull ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={!settingDisplayTabTitleInFull}
+                  onChange={() => setSettingDisplayTabTitleInFull(false)}
+                  name="radio"
+                />
+                <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
+                Truncated
+              </label>
             </div>
-            <form className="SettingEntryContent">
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <label
-                  className={settingDisplayTabTitleInFull ? 'Active' : null}
-                >
-                  <input
-                    type="radio"
-                    checked={settingDisplayTabTitleInFull}
-                    onChange={() => setSettingDisplayTabTitleInFull(true)}
-                    name="radio"
-                  />
-                  <WiMoonAltNew className="SettingEntryOptionIcon" />
-                  Full
-                </label>
-                <label
-                  className={!settingDisplayTabTitleInFull ? 'Active' : null}
-                >
-                  <input
-                    type="radio"
-                    checked={!settingDisplayTabTitleInFull}
-                    onChange={() => setSettingDisplayTabTitleInFull(false)}
-                    name="radio"
-                  />
-                  <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
-                  Truncated
-                </label>
-              </div>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default SettingsBox;

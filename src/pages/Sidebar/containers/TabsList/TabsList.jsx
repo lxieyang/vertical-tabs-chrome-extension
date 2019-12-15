@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DarkModeContext from '../../context/dark-mode-context';
 
 import { MdAdd } from 'react-icons/md';
 
@@ -109,58 +110,72 @@ class TabsList extends Component {
     }
 
     return (
-      <div style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
-        <SearchBar
-          searchBarInputText={searchBarInputText}
-          handleSearchBarInputText={this.handleSearchBarInputText}
-          searchCount={tabOrdersCopy.length}
-        />
-
-        <ul style={{ margin: 0, padding: 0 }}>
-          {tabOrdersCopy.map((tabOrder, idx) => {
-            if (tabsDict[tabOrder.id] === undefined) {
-              return null;
-            }
-
-            // let tab = { ...tabsDict[tabOrder.id] };
-            return (
-              <Tab
-                key={tabOrder.id}
-                idx={idx}
-                id={tabOrder.id}
-                index={tabOrder.index}
-                active={tabOrder.active}
-                pinned={tabOrder.pinned}
-                muted={tabOrder.muted}
-                faviconUrl={tabOrder.faviconUrl}
-                title={tabOrder.title}
-                url={tabOrder.url}
-                status={tabOrder.status}
-                activeTab={activeTab}
-                displayTabInFull={displayTabInFull}
-                contextMenuShow={contextMenuShow}
-                contextMenuShowPrev={contextMenuShowPrev}
-                moveTab={moveTab}
-                setTabAsLoading={setTabAsLoading}
-                clearSearchBoxInputText={this.clearSearchBoxInputText}
-                isSearching={searchBarInputText.length > 0}
-                setContextMenuShow={this.setContextMenuShow}
-                clearContextMenuShow={this.clearContextMenuShow}
-                openNewTabClickedHandler={this.openNewTabClickedHandler}
+      <DarkModeContext.Consumer>
+        {({ isDark }) => {
+          return (
+            <div style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
+              <SearchBar
+                searchBarInputText={searchBarInputText}
+                handleSearchBarInputText={this.handleSearchBarInputText}
+                searchCount={tabOrdersCopy.length}
               />
-            );
-          })}
 
-          <li className="NewTabButtonContainer" title="Open a new tab">
-            <div
-              className="NewTabButton"
-              onClick={(e) => this.openNewTabClickedHandler(e)}
-            >
-              <MdAdd size={'22px'} />
+              <ul style={{ margin: 0, padding: 0 }}>
+                {tabOrdersCopy.map((tabOrder, idx) => {
+                  if (tabsDict[tabOrder.id] === undefined) {
+                    return null;
+                  }
+
+                  // let tab = { ...tabsDict[tabOrder.id] };
+                  return (
+                    <Tab
+                      key={tabOrder.id}
+                      idx={idx}
+                      id={tabOrder.id}
+                      index={tabOrder.index}
+                      active={tabOrder.active}
+                      pinned={tabOrder.pinned}
+                      muted={tabOrder.muted}
+                      faviconUrl={tabOrder.faviconUrl}
+                      title={tabOrder.title}
+                      url={tabOrder.url}
+                      status={tabOrder.status}
+                      activeTab={activeTab}
+                      displayTabInFull={displayTabInFull}
+                      contextMenuShow={contextMenuShow}
+                      contextMenuShowPrev={contextMenuShowPrev}
+                      moveTab={moveTab}
+                      setTabAsLoading={setTabAsLoading}
+                      clearSearchBoxInputText={this.clearSearchBoxInputText}
+                      isSearching={searchBarInputText.length > 0}
+                      setContextMenuShow={this.setContextMenuShow}
+                      clearContextMenuShow={this.clearContextMenuShow}
+                      openNewTabClickedHandler={this.openNewTabClickedHandler}
+                    />
+                  );
+                })}
+
+                <li
+                  className={[
+                    'NewTabButtonContainer',
+                    isDark ? 'Dark' : null,
+                  ].join(' ')}
+                  title="Open a new tab"
+                >
+                  <div
+                    className={['NewTabButton', isDark ? 'Dark' : null].join(
+                      ' '
+                    )}
+                    onClick={(e) => this.openNewTabClickedHandler(e)}
+                  >
+                    <MdAdd size={'22px'} />
+                  </div>
+                </li>
+              </ul>
             </div>
-          </li>
-        </ul>
-      </div>
+          );
+        }}
+      </DarkModeContext.Consumer>
     );
   }
 }
