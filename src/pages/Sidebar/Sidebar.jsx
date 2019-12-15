@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import DarkModeContext from './context/dark-mode-context';
 import { sortBy } from 'lodash';
 
 import Title from './containers/Title/Title';
@@ -255,17 +256,28 @@ class Sidebar extends Component {
     const { tabOrders, activeTab, tabsDict, displayTabInFull } = this.state;
 
     return (
-      <div className="SidebarContainer">
-        <Title setDisplayTabInFull={this.setDisplayTabInFull} />
-        <TabsList
-          displayTabInFull={displayTabInFull}
-          tabOrders={tabOrders}
-          activeTab={activeTab}
-          tabsDict={tabsDict}
-          moveTab={this.moveTab}
-          setTabAsLoading={this.setTabAsLoading}
-        />
-      </div>
+      <DarkModeContext.Consumer>
+        {(darkModeContext) => {
+          return (
+            <div
+              className={[
+                'SidebarContainer',
+                darkModeContext.isDark ? 'Dark' : null,
+              ].join(' ')}
+            >
+              <Title setDisplayTabInFull={this.setDisplayTabInFull} />
+              <TabsList
+                displayTabInFull={displayTabInFull}
+                tabOrders={tabOrders}
+                activeTab={activeTab}
+                tabsDict={tabsDict}
+                moveTab={this.moveTab}
+                setTabAsLoading={this.setTabAsLoading}
+              />
+            </div>
+          );
+        }}
+      </DarkModeContext.Consumer>
     );
   }
 }
