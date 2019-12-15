@@ -79,3 +79,37 @@
   color: rgb(60, 64, 67);
   background-color: rgb(232, 234, 237);
 }
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  .TitleContainer {
+    background-color: rgb(245, 245, 245);
+    color: rgb(33, 33, 33);
+  }
+
+  .ActionButton {
+    color: rgb(86, 91, 94);
+  }
+
+  .ActionButton:hover {
+    color: rgb(60, 64, 67);
+    background-color: rgb(232, 234, 237);
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .TitleContainer {
+    background-color: rgb(51, 51, 51);
+    color: rgb(162, 162, 162);
+  }
+
+  .ActionButton {
+    color: rgb(235, 235, 235);
+  }
+
+  .ActionButton:hover {
+    color: rgb(167, 167, 167);
+    background-color: rgb(32, 32, 32);
+  }
+}

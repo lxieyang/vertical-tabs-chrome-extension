@@ -5,3 +5,17 @@ body {
   background-color: rgb(222, 225, 230);
   height: 100%;
 }
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: rgb(222, 225, 230);
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(36, 36, 36);
+  }
+}
