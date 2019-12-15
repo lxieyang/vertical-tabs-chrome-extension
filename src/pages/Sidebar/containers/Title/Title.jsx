@@ -14,7 +14,7 @@ import './Title.css';
 class Title extends Component {
   state = {
     sidebarOnLeft: null,
-    isSettingsPopoverOpen: true,
+    isSettingsPopoverOpen: false,
 
     // settings
     settingSidebarLocation: 'left',

@@ -208,7 +208,7 @@ const Tab = ({
 
                 <div
                   title="Reload tab"
-                  className="ActionButtonContainer"
+                  className="TabItemActionButtonContainer"
                   style={{
                     opacity:
                       (isHovering && idx === index) ||
@@ -218,18 +218,18 @@ const Tab = ({
                   }}
                 >
                   <div
-                    className="ActionButton"
+                    className="TabItemActionButton"
                     onClick={(e) => reloadTabClickedHandler(e, id)}
                   >
                     <MdRefresh size={'16px'} />
                   </div>
                 </div>
 
-                <div className="ActionButtonSpaceBetween"></div>
+                <div className="TabItemActionButtonSpaceBetween"></div>
 
-                <div title="Close tab" className="ActionButtonContainer">
+                <div title="Close tab" className="TabItemActionButtonContainer">
                   <div
-                    className="ActionButton"
+                    className="TabItemActionButton"
                     onClick={(e) => closeTabClickedHandler(e, id)}
                   >
                     <MdClose size={'16px'} />

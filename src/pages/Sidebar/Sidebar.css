@@ -1,3 +1,11 @@
 .SidebarContainer {
   background-color: rgb(222, 225, 230);
 }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .SidebarContainer {
+    color: rgb(167, 167, 167);
+    background-color: rgb(36, 36, 36);
+  }
+}

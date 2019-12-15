@@ -99,7 +99,7 @@
   margin-right: 5px;
 }
 
-.TabItem .ActionButtonContainer {
+.TabItemActionButtonContainer {
   flex-shrink: 0;
   cursor: default;
   display: flex;
@@ -108,7 +108,7 @@
   transition: all 0.1s ease-in;
 }
 
-.TabItem .ActionButton {
+.TabItemActionButton {
   width: 18px;
   height: 18px;
 
@@ -121,12 +121,12 @@
   color: rgb(124, 128, 130);
 }
 
-.TabItem .ActionButton:hover {
+.TabItemActionButton:hover {
   color: rgb(60, 64, 67);
   background-color: rgb(232, 234, 237);
 }
 
-.TabItem .ActionButtonSpaceBetween {
+.TabItemActionButtonSpaceBetween {
   width: 5px;
 }
 
@@ -137,5 +137,48 @@
 @keyframes blinker {
   50% {
     opacity: 0;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .TabContainerPadActive {
+    background-color: rgb(53, 54, 58);
+  }
+
+  .TabContainerPadInactiveHovering {
+    background-color: rgb(46, 47, 50);
+  }
+  .TabContainerLeftPadInner {
+    background-color: rgb(36, 36, 36);
+  }
+
+  .TabContainerRightPadInner {
+    background-color: rgb(36, 36, 36);
+  }
+
+  .TabContainer {
+    color: rgb(190, 193, 198);
+  }
+
+  .ActiveTabContainer {
+    background-color: rgb(53, 54, 58);
+  }
+
+  .InactiveTabContainerHovering {
+    background-color: rgb(46, 47, 50);
+  }
+
+  .PinnedIcon {
+    color: rgb(190, 193, 198);
+  }
+
+  .TabItemActionButton {
+    color: rgb(190, 193, 198);
+  }
+
+  .TabItemActionButton:hover {
+    color: rgb(190, 193, 198);
+    background-color: rgb(68, 69, 71);
   }
 }

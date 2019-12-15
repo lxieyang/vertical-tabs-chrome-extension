@@ -22,3 +22,18 @@
 .NewTabButton:hover {
   background-color: rgb(203, 206, 211);
 }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .NewTabButtonContainer {
+    color: rgb(190, 193, 198);
+  }
+
+  .NewTabButton {
+    color: rgb(190, 193, 198);
+  }
+
+  .NewTabButton:hover {
+    background-color: rgb(68, 69, 71);
+  }
+}
