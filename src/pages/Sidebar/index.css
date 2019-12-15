@@ -6,9 +6,6 @@ body {
   height: 100%;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: rgb(36, 36, 36);
-  }
+body.Dark {
+  background-color: rgb(36, 36, 36);
 }
