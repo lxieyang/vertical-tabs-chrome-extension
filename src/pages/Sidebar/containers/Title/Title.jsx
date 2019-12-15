@@ -14,7 +14,7 @@ import './Title.css';
 class Title extends Component {
   state = {
     sidebarOnLeft: null,
-    isSettingsPopoverOpen: false,
+    isSettingsPopoverOpen: true,
 
     // settings
     settingSidebarLocation: 'left',
@@ -153,11 +153,12 @@ class Title extends Component {
           }}
           content={({ position, targetRect, popoverRect }) => (
             <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
+              className="123"
               position={position}
               targetRect={targetRect}
               popoverRect={popoverRect}
               arrowColor={'#ebebeb'}
-              arrowSize={10}
+              arrowSize={4}
             >
               <SettingsBox
                 settingSidebarLocation={settingSidebarLocation}

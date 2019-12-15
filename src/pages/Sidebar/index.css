@@ -6,13 +6,6 @@ body {
   height: 100%;
 }
 
-/* Light mode */
-@media (prefers-color-scheme: light) {
-  body {
-    background-color: rgb(222, 225, 230);
-  }
-}
-
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   body {

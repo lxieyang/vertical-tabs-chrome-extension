@@ -24,6 +24,7 @@
 .TitleNameContainer {
   font-size: 16px;
   font-weight: 500;
+  user-select: none;
 }
 
 .SettingIconConainer {
@@ -78,23 +79,6 @@
 .ActionButton:hover {
   color: rgb(60, 64, 67);
   background-color: rgb(232, 234, 237);
-}
-
-/* Light mode */
-@media (prefers-color-scheme: light) {
-  .TitleContainer {
-    background-color: rgb(245, 245, 245);
-    color: rgb(33, 33, 33);
-  }
-
-  .ActionButton {
-    color: rgb(86, 91, 94);
-  }
-
-  .ActionButton:hover {
-    color: rgb(60, 64, 67);
-    background-color: rgb(232, 234, 237);
-  }
 }
 
 /* Dark mode */

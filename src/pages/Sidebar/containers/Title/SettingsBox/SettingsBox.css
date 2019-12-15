@@ -1,4 +1,14 @@
 /* Popover */
+.PopoverContainer {
+  background-color: #fff;
+  opacity: 1;
+  color: rgb(32, 33, 36);
+  border: 1px solid #ebebeb;
+  border-radius: 0px;
+  box-shadow: 0px 2px 2px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.08), 0px 1px 2px 0px rgba(0, 0, 0, 0.08);
+}
+
 .PopoverTitle {
   padding: 0.5rem 0.75rem;
   background-color: #f2f0f0;
@@ -38,7 +48,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 4px 6px;
 
   transition: all 0.1s ease-in;
 }
@@ -64,4 +74,31 @@
   height: 12px;
   margin-right: 6px;
   flex-shrink: 0;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .PopoverContainer {
+    border: 1px solid rgb(82, 82, 82);
+  }
+
+  .PopoverTitle {
+    background-color: rgb(51, 51, 51);
+    color: rgb(162, 162, 162);
+  }
+
+  .SettingEntryDivider {
+    border-bottom: 1px solid rgb(82, 82, 82);
+  }
+
+  .PopoverContent {
+    background-color: rgb(36, 36, 36);
+    color: rgb(162, 162, 162);
+  }
+
+  .PopoverContent .SettingEntryContent label:hover,
+  .PopoverContent .SettingEntryContent label.Active {
+    background-color: #000;
+    color: #fff;
+  }
 }
