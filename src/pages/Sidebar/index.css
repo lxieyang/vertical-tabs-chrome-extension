@@ -5,3 +5,7 @@ body {
   background-color: rgb(222, 225, 230);
   height: 100%;
 }
+
+body.Dark {
+  background-color: rgb(36, 36, 36);
+}

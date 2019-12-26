@@ -11,6 +11,8 @@ import SettingsBox from './SettingsBox/SettingsBox';
 
 import './Title.css';
 
+import DarkModeContext from '../../context/dark-mode-context';
+
 class Title extends Component {
   state = {
     sidebarOnLeft: null,
@@ -20,6 +22,7 @@ class Title extends Component {
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
     settingDisplayTabTitleInFull: true,
+    settingDarkMode: 'auto',
   };
 
   componentDidMount() {
@@ -50,6 +53,20 @@ class Title extends Component {
       }
     });
 
+    chrome.storage.sync.get(['darkMode'], (result) => {
+      if (result.darkMode !== undefined) {
+        this.setState({
+          settingDarkMode: result.darkMode,
+        });
+
+        if (result.darkMode !== 'auto') {
+          this.context.setDarkStatus(result.darkMode === 'dark');
+        } else {
+          this.context.setDarkStatus(this.context.mediaQueryDark);
+        }
+      }
+    });
+
     // sync settings across tabs
     chrome.runtime.onMessage.addListener((request, sender, response) => {
       // no need to sync sidebarOnLeft here,
@@ -71,6 +88,12 @@ class Title extends Component {
       ) {
         const { toStatus } = request;
         this.setState({ settingSidebarShouldShrinkBody: toStatus === true });
+      } else if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_DARK_MODE_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({ settingDarkMode: toStatus });
       }
     });
   }
@@ -122,6 +145,27 @@ class Title extends Component {
     });
   };
 
+  static contextType = DarkModeContext;
+
+  setSettingDarkMode = (toStatus) => {
+    if (toStatus === this.state.settingDarkMode) {
+      return;
+    }
+
+    if (toStatus !== 'auto') {
+      this.context.setDarkStatus(toStatus === 'dark');
+    } else {
+      this.context.setDarkStatus(this.context.mediaQueryDark);
+    }
+
+    this.setState({ settingDarkMode: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_DARK_MODE',
+      toStatus,
+    });
+  };
+
   render() {
     const {
       sidebarOnLeft,
@@ -129,80 +173,106 @@ class Title extends Component {
       settingSidebarLocation,
       settingSidebarShouldShrinkBody,
       settingDisplayTabTitleInFull,
+      settingDarkMode,
     } = this.state;
 
     return (
-      <div className="TitleContainer">
-        <div className="TitleLogoContainer">
-          <Logo size={'20px'} />
-        </div>
-        <div className="TitleNameContainer">{APP_NAME_FULL}</div>
-
-        <Popover
-          isOpen={isSettingsPopoverOpen}
-          position={['bottom']}
-          padding={0}
-          // windowBorderPadding={10}
-          disableReposition={false}
-          onClickOutside={() => this.setState({ isSettingsPopoverOpen: false })}
-          containerStyle={{
-            zIndex: 999999999,
-            minWidth: '180px',
-            maxWidth: '220px',
-            padding: '0px 2px 2px 2px',
-          }}
-          content={({ position, targetRect, popoverRect }) => (
-            <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
-              position={position}
-              targetRect={targetRect}
-              popoverRect={popoverRect}
-              arrowColor={'#ebebeb'}
-              arrowSize={10}
-            >
-              <SettingsBox
-                settingSidebarLocation={settingSidebarLocation}
-                setSettingSidebarLocation={this.setSettingSidebarLocation}
-                settingSidebarShouldShrinkBody={settingSidebarShouldShrinkBody}
-                setSettingSidebarShouldShrinkBody={
-                  this.setSettingSidebarShouldShrinkBody
-                }
-                settingDisplayTabTitleInFull={settingDisplayTabTitleInFull}
-                setSettingDisplayTabTitleInFull={
-                  this.setSettingDisplayTabTitleInFull
-                }
-              />
-            </ArrowContainer>
-          )}
-        >
-          <div title="Settings" className="SettingIconConainer">
-            <MdSettings
-              className={[
-                'SettingIcon',
-                isSettingsPopoverOpen ? 'Open' : null,
-              ].join(' ')}
-              onClick={() =>
-                this.setState({ isSettingsPopoverOpen: !isSettingsPopoverOpen })
-              }
-            />
-          </div>
-        </Popover>
-
-        <div style={{ flex: 1 }}></div>
-        <div title="Hide" className="ActionButtonContainer">
-          {sidebarOnLeft !== null && (
+      <DarkModeContext.Consumer>
+        {(darkModeContext) => {
+          return (
             <div
-              className="ActionButton"
-              onClick={this.closeSidebarClickedHandler}
+              className={[
+                'TitleContainer',
+                darkModeContext.isDark ? 'Dark' : null,
+              ].join(' ')}
             >
-              {sidebarOnLeft ? (
-                <MdChevronLeft size={'22px'} />
-              ) : (
-                <MdChevronRight size={'22px'} />
-              )}
+              <div className="TitleLogoContainer">
+                <Logo size={'20px'} />
+              </div>
+              <div className="TitleNameContainer">{APP_NAME_FULL}</div>
+
+              <Popover
+                isOpen={isSettingsPopoverOpen}
+                position={['bottom']}
+                padding={0}
+                // windowBorderPadding={10}
+                disableReposition={false}
+                onClickOutside={() =>
+                  this.setState({ isSettingsPopoverOpen: false })
+                }
+                containerStyle={{
+                  zIndex: 999999999,
+                  minWidth: '180px',
+                  maxWidth: '290px',
+                  padding: '0px 2px 2px 2px',
+                }}
+                content={({ position, targetRect, popoverRect }) => (
+                  <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
+                    className="123"
+                    position={position}
+                    targetRect={targetRect}
+                    popoverRect={popoverRect}
+                    arrowColor={'#ebebeb'}
+                    arrowSize={4}
+                  >
+                    <SettingsBox
+                      settingSidebarLocation={settingSidebarLocation}
+                      setSettingSidebarLocation={this.setSettingSidebarLocation}
+                      settingSidebarShouldShrinkBody={
+                        settingSidebarShouldShrinkBody
+                      }
+                      setSettingSidebarShouldShrinkBody={
+                        this.setSettingSidebarShouldShrinkBody
+                      }
+                      settingDisplayTabTitleInFull={
+                        settingDisplayTabTitleInFull
+                      }
+                      setSettingDisplayTabTitleInFull={
+                        this.setSettingDisplayTabTitleInFull
+                      }
+                      settingDarkMode={settingDarkMode}
+                      setSettingDarkMode={this.setSettingDarkMode}
+                    />
+                  </ArrowContainer>
+                )}
+              >
+                <div title="Settings" className="SettingIconConainer">
+                  <MdSettings
+                    className={[
+                      'SettingIcon',
+                      isSettingsPopoverOpen ? 'Open' : null,
+                    ].join(' ')}
+                    onClick={() =>
+                      this.setState({
+                        isSettingsPopoverOpen: !isSettingsPopoverOpen,
+                      })
+                    }
+                  />
+                </div>
+              </Popover>
+
+              <div style={{ flex: 1 }}></div>
+              <div title="Hide" className="ActionButtonContainer">
+                {sidebarOnLeft !== null && (
+                  <div
+                    className={[
+                      'ActionButton',
+                      darkModeContext.isDark ? 'Dark' : null,
+                    ].join(' ')}
+                    onClick={this.closeSidebarClickedHandler}
+                  >
+                    {sidebarOnLeft ? (
+                      <MdChevronLeft size={'22px'} />
+                    ) : (
+                      <MdChevronRight size={'22px'} />
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
-      </div>
+          );
+        }}
+      </DarkModeContext.Consumer>
     );
   }
 }
