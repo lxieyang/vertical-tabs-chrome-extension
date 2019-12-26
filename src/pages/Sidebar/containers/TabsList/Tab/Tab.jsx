@@ -286,12 +286,13 @@ const Tab = ({
             onHide={(e) => {
               setContextMenuShow(false);
             }}
+            className={[isDark ? 'Dark' : null].join(' ')}
           >
             <MenuItem onClick={(e) => openNewTabClickedHandler()}>
               New Tab
             </MenuItem>
 
-            <MenuItem divider />
+            <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
             <MenuItem onClick={(e) => reloadTabClickedHandler(e, id)}>
               Reload
@@ -307,7 +308,7 @@ const Tab = ({
               {muted ? 'Unmute' : 'Mute'} Tab
             </MenuItem> */}
 
-            <MenuItem divider />
+            <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
               Close Tab
