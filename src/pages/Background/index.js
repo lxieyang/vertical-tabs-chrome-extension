@@ -92,6 +92,25 @@ const persistdisplayTabInFullStatus = (status) => {
   });
 };
 
+/**
+ * Dark Mode
+ */
+let darkMode = 'auto';
+
+chrome.storage.sync.get(['darkMode'], (result) => {
+  if (result.darkMode !== undefined) {
+    darkMode = result.darkMode;
+  } else {
+    persistDarkMode('auto'); // default to auto
+  }
+});
+
+const persistDarkMode = (status) => {
+  chrome.storage.sync.set({
+    darkMode: status,
+  });
+};
+
 const toggleSidebar = (toStatus = null) => {
   if (toStatus === null || toStatus === undefined) {
     sidebarOpen = !sidebarOpen;
@@ -203,6 +222,23 @@ const updateDisplayTabInFullStatus = (toStatus) => {
   );
 };
 
+const updateDarkModeStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_DARK_MODE_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
 // chrome.browserAction.setPopup({
 //   popup: chrome.extension.getURL('sidebar.html'),
 // });
@@ -281,5 +317,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     displayTabInFull = toStatus;
     persistdisplayTabInFullStatus(displayTabInFull);
     updateDisplayTabInFullStatus(displayTabInFull);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_DARK_MODE'
+  ) {
+    const { toStatus } = request;
+    darkMode = toStatus;
+    persistDarkMode(darkMode);
+    updateDarkModeStatus(darkMode);
   }
 });

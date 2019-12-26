@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -11,6 +11,8 @@ import DarkModeContext from './context/dark-mode-context';
 
 const App = () => {
   const [isDark, setIsDark] = useState(false);
+  const [mediaQueryDark, setMediaQueryDark] = useState(false);
+  const [darkModeSetting, setDarkModeSetting] = useState(null);
 
   const setDarkStatus = (dark) => {
     setIsDark(dark);
@@ -21,13 +23,43 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    chrome.storage.sync.get(['darkMode'], (result) => {
+      if (result.darkMode !== undefined) {
+        setDarkModeSetting(result.darkMode);
+      } else {
+        setDarkModeSetting('auto');
+      }
+    });
+
+    // sync settings across tabs
+    chrome.runtime.onMessage.addListener((request, sender, response) => {
+      if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_DARK_MODE_STATUS'
+      ) {
+        const { toStatus } = request;
+        setDarkModeSetting(toStatus);
+      }
+    });
+  }, []);
+
+  if (darkModeSetting === null) {
+    return null;
+  }
+
   return (
     <React.Fragment>
-      <DarkModeContext.Provider value={{ isDark, setDarkStatus }}>
+      <DarkModeContext.Provider
+        value={{ mediaQueryDark, isDark, setDarkStatus }}
+      >
         <Media
           query="(prefers-color-scheme: dark)"
           onChange={(dark) => {
-            setDarkStatus(dark);
+            setMediaQueryDark(dark);
+            if (darkModeSetting === 'auto') {
+              setDarkStatus(dark);
+            }
           }}
         />
         <DndProvider backend={HTML5Backend}>

@@ -22,6 +22,7 @@ class Title extends Component {
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
     settingDisplayTabTitleInFull: true,
+    settingDarkMode: 'auto',
   };
 
   componentDidMount() {
@@ -52,6 +53,20 @@ class Title extends Component {
       }
     });
 
+    chrome.storage.sync.get(['darkMode'], (result) => {
+      if (result.darkMode !== undefined) {
+        this.setState({
+          settingDarkMode: result.darkMode,
+        });
+
+        if (result.darkMode !== 'auto') {
+          this.context.setDarkStatus(result.darkMode === 'dark');
+        } else {
+          this.context.setDarkStatus(this.context.mediaQueryDark);
+        }
+      }
+    });
+
     // sync settings across tabs
     chrome.runtime.onMessage.addListener((request, sender, response) => {
       // no need to sync sidebarOnLeft here,
@@ -73,6 +88,12 @@ class Title extends Component {
       ) {
         const { toStatus } = request;
         this.setState({ settingSidebarShouldShrinkBody: toStatus === true });
+      } else if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_DARK_MODE_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({ settingDarkMode: toStatus });
       }
     });
   }
@@ -124,6 +145,27 @@ class Title extends Component {
     });
   };
 
+  static contextType = DarkModeContext;
+
+  setSettingDarkMode = (toStatus) => {
+    if (toStatus === this.state.settingDarkMode) {
+      return;
+    }
+
+    if (toStatus !== 'auto') {
+      this.context.setDarkStatus(toStatus === 'dark');
+    } else {
+      this.context.setDarkStatus(this.context.mediaQueryDark);
+    }
+
+    this.setState({ settingDarkMode: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_DARK_MODE',
+      toStatus,
+    });
+  };
+
   render() {
     const {
       sidebarOnLeft,
@@ -131,6 +173,7 @@ class Title extends Component {
       settingSidebarLocation,
       settingSidebarShouldShrinkBody,
       settingDisplayTabTitleInFull,
+      settingDarkMode,
     } = this.state;
 
     return (
@@ -160,7 +203,7 @@ class Title extends Component {
                 containerStyle={{
                   zIndex: 999999999,
                   minWidth: '180px',
-                  maxWidth: '220px',
+                  maxWidth: '290px',
                   padding: '0px 2px 2px 2px',
                 }}
                 content={({ position, targetRect, popoverRect }) => (
@@ -187,6 +230,8 @@ class Title extends Component {
                       setSettingDisplayTabTitleInFull={
                         this.setSettingDisplayTabTitleInFull
                       }
+                      settingDarkMode={settingDarkMode}
+                      setSettingDarkMode={this.setSettingDarkMode}
                     />
                   </ArrowContainer>
                 )}

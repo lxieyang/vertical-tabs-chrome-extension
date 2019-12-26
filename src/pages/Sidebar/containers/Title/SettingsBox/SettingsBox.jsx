@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import DarkModeContext from '../../../context/dark-mode-context';
-import { MdSettings } from 'react-icons/md';
+import { MdSettings, MdBrightnessAuto } from 'react-icons/md';
 import { TiDownload } from 'react-icons/ti';
 import {
   FaAlignJustify,
@@ -9,7 +9,7 @@ import {
   FaCheck,
   FaTimes,
 } from 'react-icons/fa';
-import { IoIosBarcode } from 'react-icons/io';
+import { IoIosBarcode, IoIosMoon, IoIosSunny } from 'react-icons/io';
 import { WiMoonAltNew, WiMoonAltWaxingCrescent3 } from 'react-icons/wi';
 
 import './SettingsBox.css';
@@ -21,6 +21,8 @@ const SettingsBox = ({
   setSettingSidebarShouldShrinkBody,
   settingDisplayTabTitleInFull,
   setSettingDisplayTabTitleInFull,
+  settingDarkMode,
+  setSettingDarkMode,
 }) => {
   const darkModeContext = useContext(DarkModeContext);
 
@@ -38,6 +40,7 @@ const SettingsBox = ({
         <MdSettings style={{ marginRight: 6 }} /> Settings
       </div>
       <div className={['PopoverContent', isDark ? 'Dark' : null].join(' ')}>
+        {/* SIDEBAR POSITION */}
         <div className="SettingEntryContainer">
           <div className="SettingEntryTitle">
             <FaAlignJustify className="SettingEntryTitleIcon" />
@@ -80,7 +83,7 @@ const SettingsBox = ({
         </div>
 
         {divider}
-
+        {/* SQUEEZE WEB PAGE WHEN SIDEBAR OPENS */}
         <div className="SettingEntryContainer">
           <div className="SettingEntryTitle">
             <TiDownload
@@ -128,7 +131,7 @@ const SettingsBox = ({
         </div>
 
         {divider}
-
+        {/* DISPLAY TAB TITLE IN FULL */}
         <div className="SettingEntryContainer">
           <div className="SettingEntryTitle">
             <IoIosBarcode className="SettingEntryTitleIcon" />
@@ -165,6 +168,64 @@ const SettingsBox = ({
                 />
                 <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
                 Truncated
+              </label>
+            </div>
+          </form>
+        </div>
+
+        {divider}
+        {/* DARK THEME */}
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <IoIosMoon className="SettingEntryTitleIcon" />
+            Dark theme:
+          </div>
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={[
+                  settingDarkMode === 'auto' ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingDarkMode === 'auto'}
+                  onChange={() => setSettingDarkMode('auto')}
+                  name="radio"
+                />
+                <MdBrightnessAuto className="SettingEntryOptionIcon" />
+                Auto
+              </label>
+              <label
+                className={[
+                  settingDarkMode === 'light' ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingDarkMode === 'light'}
+                  onChange={() => setSettingDarkMode('light')}
+                  name="radio"
+                />
+                <IoIosSunny className="SettingEntryOptionIcon" />
+                Light
+              </label>
+              <label
+                className={[
+                  settingDarkMode === 'dark' ? 'Active' : null,
+                  isDark ? 'Dark' : null,
+                ].join(' ')}
+              >
+                <input
+                  type="radio"
+                  checked={settingDarkMode === 'dark'}
+                  onChange={() => setSettingDarkMode('dark')}
+                  name="radio"
+                />
+                <IoIosMoon className="SettingEntryOptionIcon" />
+                Dark
               </label>
             </div>
           </form>

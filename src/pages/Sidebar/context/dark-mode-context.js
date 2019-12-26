@@ -1,7 +1,7 @@
 import React from 'react';
 
 const darkModeContext = React.createContext({
-  shouldFollowSystemDarkMode: false,
+  mediaQueryDark: false,
   isDark: false,
   setDarkStatus: () => {},
 });
