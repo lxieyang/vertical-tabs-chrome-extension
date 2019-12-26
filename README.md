@@ -24,6 +24,12 @@ Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail
 
 ---
 
+**Dark theme support is here 🕶️🕶️🕶️**
+
+<img src="preview/repo/dark-mode.png" width="300"/>
+
+---
+
 ![preview](/preview/chrome-store/preview-1.png)
 
 Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6A)
@@ -36,6 +42,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 ## Features
 
+- Dark theme support.
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.
 - Drag and Drop to reorder tabs.
@@ -48,7 +55,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 ## Planned Features
 
-- Dark theme
+- Tree styled tabs
 
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)
 

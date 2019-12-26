@@ -12,6 +12,12 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.5.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.0) (2019-12-26)
+
+- Dark theme support! 🕶️🕶️🕶️
+
+<img src="preview/repo/dark-mode.png" width="300"/>
+
 ### [1.2.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.2.1) (2019-12-01)
 
 - Remove `AutoFocus` feature.
@@ -21,7 +27,7 @@ All notable changes to this project will be documented in this file.
 
 - Prompt users to refresh pages after the extension got updated to a newer version.
 
-![update-notice](preview/repo/update-notice.png)
+<img src="preview/repo/update-notice.png" width="300"/>
 
 ### [1.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.1.0) (2019-09-01)
 
