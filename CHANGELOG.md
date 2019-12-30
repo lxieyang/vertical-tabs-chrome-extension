@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.5.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.1) (2019-12-29)
+
+- Fixed a bug where the `new URL()` API returns invalid.
+- Removed redundant code on search bar auto focus.
+
 ### [1.5.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.0) (2019-12-26)
 
 - Dark theme support! 🕶️🕶️🕶️

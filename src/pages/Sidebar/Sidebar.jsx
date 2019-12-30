@@ -102,7 +102,7 @@ class Sidebar extends Component {
           status: 'complete',
           combinedText: [
             tab.title, // title
-            new URL(tab.url).hostname.replace('www.', ''), // hostname
+            tab.url !== '' ? new URL(tab.url).hostname.replace('www.', '') : '', // hostname
           ]
             .join(' ')
             .toLowerCase(),
@@ -156,7 +156,7 @@ class Sidebar extends Component {
       status: tab.status,
       combinedText: [
         tab.title, // title
-        new URL(tab.url).hostname.replace('www.', ''), // hostname
+        tab.url !== '' ? new URL(tab.url).hostname.replace('www.', '') : '', // hostname
       ]
         .join(' ')
         .toLowerCase(),

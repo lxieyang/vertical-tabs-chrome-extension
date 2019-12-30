@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useContext } from 'react';
 import DarkModeContext from '../../../context/dark-mode-context';
 import './SearchBar.css';
 
@@ -10,27 +10,10 @@ const SearchBar = ({
   const darkModeContext = useContext(DarkModeContext);
   const { isDark } = darkModeContext;
 
-  useEffect(() => {
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      if (request.from === 'background' && request.msg === 'TOGGLE_SIDEBAR') {
-        if (request.toStatus) {
-          this.searchInput.focus();
-        } else {
-          this.searchInput.blur();
-        }
-      }
-    });
-  }, []);
-
-  let inputRef = useRef(null);
-
   return (
     <div className="SearchBarContainer">
       <input
         // autoFocus
-        ref={(input) => {
-          inputRef = input;
-        }}
         type="search"
         className={['SearchBarInput', isDark ? 'Dark' : null].join(' ')}
         placeholder={'🔍 search tabs here'}
