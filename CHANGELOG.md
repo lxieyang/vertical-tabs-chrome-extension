@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.6.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.6.0) (2020-01-06)
+
+- **Mute** tabs with a single click.
+- Fixed a bug regarding the context menu
+
 ### [1.5.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.1) (2019-12-29)
 
 - Fixed a bug where the `new URL()` API returns invalid.
