@@ -9,7 +9,7 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
-import { MdVolumeOff } from 'react-icons/md';
+import { MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import { FaThumbtack } from 'react-icons/fa';
 
 import './Tab.css';
@@ -108,9 +108,10 @@ const Tab = ({
     chrome.tabs.update(id, { pinned: !pinned });
   };
 
-  // const muteTabClickedHandler = (e, tabId) => {
-  //   chrome.tabs.update(id, { muted: !muted });
-  // };
+  const muteTabClickedHandler = (e, tabId) => {
+    e.stopPropagation();
+    chrome.tabs.update(id, { muted: mutedInfo.muted ? false : true });
+  };
 
   const closeTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
@@ -233,8 +234,20 @@ const Tab = ({
                         'MutedIconContainer',
                         isDark ? 'Dark' : null,
                       ].join(' ')}
+                      onClick={(e) => muteTabClickedHandler(e, id)}
                     >
                       <MdVolumeOff size={'16px'} />
+                    </div>
+                  )}
+                  {!mutedInfo.muted && audible && (
+                    <div
+                      className={[
+                        'MutedIconContainer',
+                        isDark ? 'Dark' : null,
+                      ].join(' ')}
+                      onClick={(e) => muteTabClickedHandler(e, id)}
+                    >
+                      <MdVolumeUp size={'16px'} />
                     </div>
                   )}
                 </div>
@@ -321,10 +334,9 @@ const Tab = ({
             <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
               {pinned ? 'Unpin' : 'Pin'} Tab
             </MenuItem>
-            {/* 
             <MenuItem onClick={(e) => muteTabClickedHandler(e, id)}>
-              {muted ? 'Unmute' : 'Mute'} Tab
-            </MenuItem> */}
+              {mutedInfo.muted ? 'Unmute' : 'Mute'} This Tab
+            </MenuItem>
 
             <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
