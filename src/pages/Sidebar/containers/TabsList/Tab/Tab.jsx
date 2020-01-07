@@ -9,6 +9,7 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
+import { MdVolumeOff } from 'react-icons/md';
 import { FaThumbtack } from 'react-icons/fa';
 
 import './Tab.css';
@@ -19,7 +20,8 @@ const Tab = ({
   index,
   active,
   pinned,
-  muted,
+  mutedInfo,
+  audible,
   faviconUrl,
   title,
   url,
@@ -106,9 +108,9 @@ const Tab = ({
     chrome.tabs.update(id, { pinned: !pinned });
   };
 
-  const muteTabClickedHandler = (e, tabId) => {
-    chrome.tabs.update(id, { muted: !muted });
-  };
+  // const muteTabClickedHandler = (e, tabId) => {
+  //   chrome.tabs.update(id, { muted: !muted });
+  // };
 
   const closeTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
@@ -212,13 +214,29 @@ const Tab = ({
                     />
                   )}
                 </div>
+
                 <div
                   className="TabTitleContainer"
                   title={displayTabInFull ? url : `${title}\n\n${url}`}
                 >
-                  <div className={displayTabInFull ? null : 'TabTitle'}>
+                  <div
+                    className={[
+                      'TabTitle',
+                      displayTabInFull ? null : 'Truncated',
+                    ].join(' ')}
+                  >
                     {title}
                   </div>
+                  {mutedInfo.muted && audible && (
+                    <div
+                      className={[
+                        'MutedIconContainer',
+                        isDark ? 'Dark' : null,
+                      ].join(' ')}
+                    >
+                      <MdVolumeOff size={'16px'} />
+                    </div>
+                  )}
                 </div>
 
                 <div

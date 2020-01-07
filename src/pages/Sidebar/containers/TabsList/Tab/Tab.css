@@ -61,7 +61,7 @@
   border-top-right-radius: 8px;
   /* border-radius: 6px; */
 
-  transition: 0.1s all ease-in;
+  transition: all 0.1s ease-in;
 
   position: relative;
 }
@@ -117,12 +117,32 @@
 .TabTitleContainer {
   flex: 1;
   min-width: 0;
+
+  display: flex;
+  align-items: center;
 }
 
 .TabTitle {
+  flex: 1;
+}
+
+.Truncated {
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+}
+
+.MutedIconContainer {
+  margin-left: 2px;
+  margin-right: 2px;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  color: rgb(124, 128, 130);
+}
+
+.MutedIconContainer.Dark {
+  color: rgb(190, 193, 198);
 }
 
 .Ordinal {

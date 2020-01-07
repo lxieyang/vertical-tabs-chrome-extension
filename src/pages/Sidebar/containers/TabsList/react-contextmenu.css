@@ -42,7 +42,6 @@
 .react-contextmenu-item:hover {
   color: #fff;
   background-color: rgb(31, 92, 209);
-  border-color: rgb(31, 92, 209);
 }
 
 .react-contextmenu-item:focus {

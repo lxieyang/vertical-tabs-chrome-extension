@@ -106,13 +106,14 @@ class Sidebar extends Component {
           ]
             .join(' ')
             .toLowerCase(),
+          mutedInfo: tab.mutedInfo,
+          audible: tab.audible,
         };
 
         tabOrders.push({
           id: tab.id,
           index: tab.index,
           active: tab.active,
-          muted: tab.muted,
         });
         if (tab.active) {
           this.setState({
@@ -120,7 +121,6 @@ class Sidebar extends Component {
               id: tab.id,
               index: tab.index,
               active: tab.active,
-              muted: tab.muted,
             },
           });
         }
@@ -160,6 +160,8 @@ class Sidebar extends Component {
       ]
         .join(' ')
         .toLowerCase(),
+      mutedInfo: tab.mutedInfo,
+      audible: tab.audible,
     };
     this.setState({ tabsDict });
   };
@@ -182,7 +184,6 @@ class Sidebar extends Component {
           id: tab.id,
           index: tab.index,
           active: tab.active,
-          muted: tab.muted,
         };
         tabOrders.push(tabObj);
         if (tab.active) {
@@ -204,7 +205,9 @@ class Sidebar extends Component {
       changes.status === 'complete' ||
       changes.title ||
       changes.pinned === true ||
-      changes.pinned === false
+      changes.pinned === false ||
+      changes.mutedInfo ||
+      changes.audible !== undefined
     ) {
       this.updateTabsDictWithTab(tab, getFavicon(tab.url));
       if (changes.status === 'complete') {
