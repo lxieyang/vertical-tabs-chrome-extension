@@ -72,6 +72,7 @@ export class Frame extends Component {
     isDragging: false,
     width: 320,
     height: '100%',
+    loaded: false,
   };
 
   static defaultProps = {
@@ -161,6 +162,8 @@ export class Frame extends Component {
 
   onLoad = () => {
     const { onLoad } = this.props;
+
+    this.setState({ loaded: true });
 
     onLoad({
       mask: this.mask,
@@ -340,9 +343,11 @@ export class Frame extends Component {
                     [iframeClass]: true,
                   })}
                   style={{
-                    backgroundImage: `url(${chrome.extension.getURL(
-                      'iframe-background.gif'
-                    )})`,
+                    backgroundImage: !this.state.loaded
+                      ? `url(${chrome.extension.getURL(
+                          'iframe-background.gif'
+                        )})`
+                      : null,
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     height: '100vh',
