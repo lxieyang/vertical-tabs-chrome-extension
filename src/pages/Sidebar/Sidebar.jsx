@@ -108,6 +108,7 @@ class Sidebar extends Component {
             .toLowerCase(),
           mutedInfo: tab.mutedInfo,
           audible: tab.audible,
+          openerTabId: tab.openerTabId,
         };
 
         tabOrders.push({
@@ -162,6 +163,7 @@ class Sidebar extends Component {
         .toLowerCase(),
       mutedInfo: tab.mutedInfo,
       audible: tab.audible,
+      openerTabId: tab.openerTabId,
     };
     this.setState({ tabsDict });
   };

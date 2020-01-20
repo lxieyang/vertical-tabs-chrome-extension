@@ -136,6 +136,7 @@ class TabsList extends Component {
                       active={tabOrder.active}
                       pinned={tabOrder.pinned}
                       mutedInfo={tabOrder.mutedInfo}
+                      openerTabId={tabOrder.openerTabId}
                       audible={tabOrder.audible}
                       faviconUrl={tabOrder.faviconUrl}
                       title={tabOrder.title}

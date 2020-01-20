@@ -21,6 +21,7 @@ const Tab = ({
   active,
   pinned,
   mutedInfo,
+  openerTabId,
   audible,
   faviconUrl,
   title,
