@@ -1,4 +1,13 @@
-# Vertical Tabs (Chrome Extension)
+# Vertical Tabs Chrome Extension
+
+---
+
+[<img src="src/assets/img/icon-original.png" height="40"/>](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm) [<img src="preview/repo/chrome-web-store-img.png" height="40"/>](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
+
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
+[![users](https://img.shields.io/chrome-web-store/users/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
+
+---
 
 [![Build Status](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension.svg?branch=master)](https://travis-ci.org/lxieyang/vertical-tabs-chrome-extension)
 ![package.json version](https://img.shields.io/github/package-json/v/lxieyang/vertical-tabs-chrome-extension/master)
@@ -14,13 +23,6 @@
 
 ![last commit](https://img.shields.io/github/last-commit/lxieyang/vertical-tabs-chrome-extension/master)
 ![commit freq](https://img.shields.io/github/commit-activity/w/lxieyang/vertical-tabs-chrome-extension)
-
----
-
-Chrome web store link: [Vertical Tabs (https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
-
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
-[![users](https://img.shields.io/chrome-web-store/users/pddljdmihkpdfpkgmbhdomeeifpklgnm)](https://chrome.google.com/webstore/detail/vertical-tabs/pddljdmihkpdfpkgmbhdomeeifpklgnm)
 
 ---
 
