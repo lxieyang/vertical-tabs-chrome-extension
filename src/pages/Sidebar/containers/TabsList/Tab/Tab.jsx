@@ -257,7 +257,7 @@ const Tab = ({
                   <div
                     className={classNames({
                       TabTitle: true,
-                      Truncated: displayTabInFull,
+                      Truncated: !displayTabInFull,
                     })}
                   >
                     {title}

@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.7.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.7.1) (2020-01-24 Lunar New Year Eve!)
+
+- Optimize dark mode implementation.
+- Add version number in **Settings**.
+
 ### [1.7.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.7.0) (2020-01-23)
 
 - Added **Copy Tab URL** feature in the context menu as suggested in [#24](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/24).

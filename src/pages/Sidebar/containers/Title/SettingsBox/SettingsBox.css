@@ -17,6 +17,7 @@
   padding: 0.5rem 0.75rem;
   background-color: #f2f0f0;
   font-weight: 600;
+  font-size: 15px;
 
   display: flex;
   align-items: center;
@@ -25,6 +26,21 @@
 .PopoverTitle.Dark {
   background-color: rgb(51, 51, 51);
   color: rgb(162, 162, 162);
+}
+
+.VersionBadge {
+  font-weight: 400;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 12px;
+  background-color: rgb(228, 228, 228);
+  color: black;
+  text-decoration: none;
+}
+
+.VersionBadge.Dark {
+  background-color: rgb(98, 98, 99);
+  color: rgb(212, 212, 212);
 }
 
 .PopoverContent {

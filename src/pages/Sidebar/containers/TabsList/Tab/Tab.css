@@ -124,6 +124,7 @@
 
 .TabTitle {
   flex: 1;
+  position: relative;
 }
 
 .Truncated {
@@ -131,6 +132,27 @@
   overflow-x: hidden;
   text-overflow: ellipsis;
 }
+
+/* .FadeOut {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(222, 225, 230, 1) 100%
+  );
+}
+
+.FadeOutHovering {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 20%,
+    rgba(244, 245, 247, 1) 100%
+  );
+} */
 
 .MutedIconContainer {
   margin-left: 2px;

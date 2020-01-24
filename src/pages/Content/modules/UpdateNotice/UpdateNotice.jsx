@@ -23,7 +23,7 @@ const UpdateNoticeContainer = styled.div`
 const ExtensionNameContainerSpan = styled.span`
   background-color: rgb(233, 115, 46);
   color: #fff;
-  padding: 1px 2px;
+  padding: 2px 4px;
   border-radius: 4px;
 `;
 

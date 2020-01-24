@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import { MdSettings, MdBrightnessAuto } from 'react-icons/md';
@@ -38,7 +38,17 @@ const SettingsBox = ({
   return (
     <div className={classNames({ PopoverContainer: true, Dark: isDark })}>
       <div className={classNames({ PopoverTitle: true, Dark: isDark })}>
-        <MdSettings style={{ marginRight: 6 }} /> Settings
+        {/* <MdSettings style={{ marginRight: 6 }} size={'19px'} />  */}
+        Settings <div style={{ flex: 1 }}></div>
+        <a
+          title="Source code"
+          className={classNames({ VersionBadge: true, Dark: isDark })}
+          href={'https://github.com/lxieyang/vertical-tabs-chrome-extension'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          v{chrome.runtime.getManifest().version}
+        </a>
       </div>
       <div className={classNames({ PopoverContent: true, Dark: isDark })}>
         {/* SIDEBAR POSITION */}
