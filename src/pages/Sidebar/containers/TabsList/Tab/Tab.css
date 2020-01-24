@@ -191,6 +191,13 @@
   width: 5px;
 }
 
+.MenuItemIconContainer {
+  height: 16px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+}
+
 .blink {
   animation: blinker 0.8s linear infinite;
 }

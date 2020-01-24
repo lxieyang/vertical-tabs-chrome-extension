@@ -1,6 +1,6 @@
 {
   "name": "vertical-tabs-chrome-extension",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "A chrome extension that presents your tabs vertically.",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,10 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.11.0",
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/lab": "^4.0.0-alpha.40",
     "classnames": "^2.2.6",
+    "clipboard-copy": "^3.1.0",
     "glamor": "^2.20.40",
     "immutability-helper": "^3.0.1",
     "jquery": "^3.4.1",

@@ -6,13 +6,27 @@ import ItemTypes from '../ItemTypes';
 
 import ReactHoverObserver from 'react-hover-observer';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import copy from 'clipboard-copy';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
+import { IoIosRefresh } from 'react-icons/io';
 import { MdVolumeOff, MdVolumeUp } from 'react-icons/md';
-import { FaThumbtack } from 'react-icons/fa';
+import {
+  FaThumbtack,
+  FaRegWindowMaximize,
+  FaRegWindowRestore,
+  FaRegCopy,
+} from 'react-icons/fa';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import './Tab.css';
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const Tab = ({
   idx,
@@ -39,6 +53,16 @@ const Tab = ({
   clearContextMenuShow,
   openNewTabClickedHandler,
 }) => {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
   /* Start of --> Drag and Drop support */
   const ref = useRef(null);
 
@@ -112,6 +136,12 @@ const Tab = ({
   const muteTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
     chrome.tabs.update(id, { muted: mutedInfo.muted ? false : true });
+  };
+
+  const copyTabURLClickedHandler = (e, tabId) => {
+    copy(url).then(() => {
+      setOpenSnackbar(true);
+    });
   };
 
   const closeTabClickedHandler = (e, tabId) => {
@@ -321,30 +351,72 @@ const Tab = ({
             className={[isDark ? 'Dark' : null].join(' ')}
           >
             <MenuItem onClick={(e) => openNewTabClickedHandler()}>
+              <div className="MenuItemIconContainer">
+                <FaRegWindowMaximize size={'15px'} />
+              </div>
               New Tab
             </MenuItem>
 
             <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
             <MenuItem onClick={(e) => reloadTabClickedHandler(e, id)}>
+              <div className="MenuItemIconContainer">
+                <IoIosRefresh size={'15px'} />
+              </div>
               Reload
             </MenuItem>
             <MenuItem onClick={(e) => deplicateTabClickedHandler(e, id)}>
+              <div className="MenuItemIconContainer">
+                <FaRegWindowRestore size={'15px'} />
+              </div>
               Duplicate
             </MenuItem>
             <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
-              {pinned ? 'Unpin' : 'Pin'} Tab
+              <div className="MenuItemIconContainer">
+                <FaThumbtack
+                  size={'16px'}
+                  style={{ transform: 'rotate(-45deg)' }}
+                />
+              </div>
+              {pinned ? 'Unpin' : 'Pin'}
             </MenuItem>
             <MenuItem onClick={(e) => muteTabClickedHandler(e, id)}>
+              <div className="MenuItemIconContainer">
+                {!mutedInfo.muted ? (
+                  <MdVolumeOff size={'15px'} />
+                ) : (
+                  <MdVolumeUp size={'15px'} />
+                )}
+              </div>
               {mutedInfo.muted ? 'Unmute' : 'Mute'} This Tab
+            </MenuItem>
+            <MenuItem onClick={(e) => copyTabURLClickedHandler(e, id)}>
+              <div className="MenuItemIconContainer">
+                <FaRegCopy size={'15px'} />
+              </div>
+              Copy Tab URL
             </MenuItem>
 
             <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
-              Close Tab
+              <div className="MenuItemIconContainer">
+                <MdClose size={'15px'} />
+              </div>
+              Close
             </MenuItem>
           </ContextMenu>
+
+          {/* snackbar */}
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={2500}
+            onClose={handleSnackbarClose}
+          >
+            <Alert onClose={handleSnackbarClose} severity="success">
+              Copied to clipboard!
+            </Alert>
+          </Snackbar>
         </React.Fragment>
       )}
     </ReactHoverObserver>
