@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import update from 'immutability-helper';
 import DarkModeContext from './context/dark-mode-context';
 import { sortBy } from 'lodash';
@@ -264,10 +265,10 @@ class Sidebar extends Component {
         {(darkModeContext) => {
           return (
             <div
-              className={[
-                'SidebarContainer',
-                darkModeContext.isDark ? 'Dark' : null,
-              ].join(' ')}
+              className={classNames({
+                SidebarContainer: true,
+                Dark: darkModeContext.isDark,
+              })}
             >
               <Title setDisplayTabInFull={this.setDisplayTabInFull} />
               <TabsList

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import './SearchBar.css';
 
@@ -15,32 +16,25 @@ const SearchBar = ({
       <input
         // autoFocus
         type="search"
-        className={['SearchBarInput', isDark ? 'Dark' : null].join(' ')}
+        className={classNames({
+          SearchBarInput: true,
+          Dark: isDark,
+        })}
         placeholder={'🔍 search tabs here'}
         value={searchBarInputText}
         onChange={(e) => handleSearchBarInputText(e)}
       />
       <div className="SearchResultsCountContainer">
         <div
-          className={[
-            'SearchResultsCount',
-            isDark ? 'Dark' : null,
-            searchBarInputText.length > 0 && searchCount === 0
-              ? 'NoResults'
-              : null,
-            searchBarInputText.length > 0 && searchCount === 1
-              ? 'Success'
-              : null,
-            searchBarInputText.length > 0 && searchCount > 1
-              ? 'Searching'
-              : null,
-            // searchBarInputText.length > 0 && searchCount > 1 && searchCount <= 3
-            //   ? 'CloseToSuccess'
-            //   : null,
-            // searchBarInputText.length > 0 && searchCount > 3
-            //   ? 'Searching'
-            //   : null,
-          ].join(' ')}
+          className={classNames({
+            SearchResultsCount: true,
+            Dark: isDark,
+            NoResults: searchBarInputText.length > 0 && searchCount === 0,
+            Success: searchBarInputText.length > 0 && searchCount === 1,
+            Searching: searchBarInputText.length > 0 && searchCount > 1,
+            // CloseToSuccess:searchBarInputText.length > 0 && searchCount > 1 && searchCount <= 3,
+            // Searching: searchBarInputText.length > 0 && searchCount > 3,
+          })}
         >
           {searchCount}
         </div>

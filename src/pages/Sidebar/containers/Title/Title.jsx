@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import Popover, { ArrowContainer } from 'react-tiny-popover';
 import { MdChevronLeft } from 'react-icons/md';
 import { MdChevronRight } from 'react-icons/md';
@@ -181,10 +182,10 @@ class Title extends Component {
         {(darkModeContext) => {
           return (
             <div
-              className={[
-                'TitleContainer',
-                darkModeContext.isDark ? 'Dark' : null,
-              ].join(' ')}
+              className={classNames({
+                TitleContainer: true,
+                Dark: darkModeContext.isDark,
+              })}
             >
               <div className="TitleLogoContainer">
                 <Logo size={'20px'} />
@@ -255,10 +256,10 @@ class Title extends Component {
               <div title="Hide" className="ActionButtonContainer">
                 {sidebarOnLeft !== null && (
                   <div
-                    className={[
-                      'ActionButton',
-                      darkModeContext.isDark ? 'Dark' : null,
-                    ].join(' ')}
+                    className={classNames({
+                      ActionButton: true,
+                      Dark: darkModeContext.isDark,
+                    })}
                     onClick={this.closeSidebarClickedHandler}
                   >
                     {sidebarOnLeft ? (

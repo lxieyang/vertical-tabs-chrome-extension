@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import { MdSettings, MdBrightnessAuto } from 'react-icons/md';
 import { TiDownload } from 'react-icons/ti';
@@ -30,16 +31,16 @@ const SettingsBox = ({
 
   const divider = (
     <div
-      className={['SettingEntryDivider', isDark ? 'Dark' : null].join(' ')}
+      className={classNames({ SettingEntryDivider: true, Dark: isDark })}
     ></div>
   );
 
   return (
-    <div className={['PopoverContainer', isDark ? 'Dark' : null].join(' ')}>
-      <div className={['PopoverTitle', isDark ? 'Dark' : null].join(' ')}>
+    <div className={classNames({ PopoverContainer: true, Dark: isDark })}>
+      <div className={classNames({ PopoverTitle: true, Dark: isDark })}>
         <MdSettings style={{ marginRight: 6 }} /> Settings
       </div>
-      <div className={['PopoverContent', isDark ? 'Dark' : null].join(' ')}>
+      <div className={classNames({ PopoverContent: true, Dark: isDark })}>
         {/* SIDEBAR POSITION */}
         <div className="SettingEntryContainer">
           <div className="SettingEntryTitle">
@@ -49,10 +50,10 @@ const SettingsBox = ({
           <form className="SettingEntryContent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label
-                className={[
-                  settingSidebarLocation === 'left' ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingSidebarLocation === 'left',
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -64,10 +65,10 @@ const SettingsBox = ({
                 Left
               </label>
               <label
-                className={[
-                  settingSidebarLocation !== 'left' ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingSidebarLocation !== 'left',
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -97,10 +98,10 @@ const SettingsBox = ({
           <form className="SettingEntryContent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label
-                className={[
-                  settingSidebarShouldShrinkBody ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingSidebarShouldShrinkBody,
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -112,10 +113,10 @@ const SettingsBox = ({
                 Yes
               </label>
               <label
-                className={[
-                  !settingSidebarShouldShrinkBody ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: !settingSidebarShouldShrinkBody,
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -140,10 +141,10 @@ const SettingsBox = ({
           <form className="SettingEntryContent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label
-                className={[
-                  settingDisplayTabTitleInFull ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingDisplayTabTitleInFull,
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -155,10 +156,10 @@ const SettingsBox = ({
                 Full
               </label>
               <label
-                className={[
-                  !settingDisplayTabTitleInFull ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: !settingDisplayTabTitleInFull,
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -183,10 +184,10 @@ const SettingsBox = ({
           <form className="SettingEntryContent">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label
-                className={[
-                  settingDarkMode === 'auto' ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingDarkMode === 'auto',
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -198,10 +199,10 @@ const SettingsBox = ({
                 Auto
               </label>
               <label
-                className={[
-                  settingDarkMode === 'light' ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingDarkMode === 'light',
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"
@@ -213,10 +214,10 @@ const SettingsBox = ({
                 Light
               </label>
               <label
-                className={[
-                  settingDarkMode === 'dark' ? 'Active' : null,
-                  isDark ? 'Dark' : null,
-                ].join(' ')}
+                className={classNames({
+                  Active: settingDarkMode === 'dark',
+                  Dark: isDark,
+                })}
               >
                 <input
                   type="radio"

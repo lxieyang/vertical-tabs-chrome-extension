@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import DarkModeContext from '../../context/dark-mode-context';
 
 import { MdAdd } from 'react-icons/md';
@@ -158,16 +159,17 @@ class TabsList extends Component {
                 })}
 
                 <li
-                  className={[
-                    'NewTabButtonContainer',
-                    isDark ? 'Dark' : null,
-                  ].join(' ')}
+                  className={classNames({
+                    NewTabButtonContainer: true,
+                    Dark: isDark,
+                  })}
                   title="Open a new tab"
                 >
                   <div
-                    className={['NewTabButton', isDark ? 'Dark' : null].join(
-                      ' '
-                    )}
+                    className={classNames({
+                      NewTabButton: true,
+                      Dark: isDark,
+                    })}
                     onClick={(e) => this.openNewTabClickedHandler(e)}
                   >
                     <MdAdd size={'22px'} />

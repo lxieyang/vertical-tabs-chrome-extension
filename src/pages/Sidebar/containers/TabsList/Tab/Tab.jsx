@@ -1,4 +1,5 @@
 import React, { useRef, useContext } from 'react';
+import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import Loader from 'react-loader-spinner';
 import { useDrag, useDrop } from 'react-dnd';
@@ -162,7 +163,10 @@ const Tab = ({
             <li
               // style={{ opacity: isDragging ? 0 : 1 }}
               ref={ref}
-              className={['TabItem', isDragging ? 'blink' : null].join(' ')}
+              className={classNames({
+                TabItem: true,
+                blink: isDragging,
+              })}
               onClick={(event) => {
                 if (contextMenuShowPrev && !contextMenuShow) {
                   clearContextMenuShow();
@@ -191,41 +195,40 @@ const Tab = ({
               }}
             >
               <div
-                className={[
-                  'TabContainerPad',
-                  isDark ? 'Dark' : null,
-                  active ? 'TabContainerPadActive' : null,
-                  (!active && isHovering && idx === index) ||
-                  (!active && isHovering && isSearching)
-                    ? 'TabContainerPadInactiveHovering'
-                    : null,
-                ].join(' ')}
+                className={classNames({
+                  TabContainerPad: true,
+                  Dark: isDark,
+                  TabContainerPadActive: active,
+                  TabContainerPadInactiveHovering:
+                    (!active && isHovering && idx === index) ||
+                    (!active && isHovering && isSearching),
+                })}
               >
                 <div
-                  className={[
-                    'TabContainerLeftPadInner',
-                    isDark ? 'Dark' : null,
-                  ].join(' ')}
+                  className={classNames({
+                    TabContainerLeftPadInner: true,
+                    Dark: isDark,
+                  })}
                 ></div>
               </div>
 
               <div
-                className={[
-                  'TabContainer',
-                  isDark ? 'Dark' : null,
-                  active ? 'ActiveTabContainer' : null,
-                  (!active && isHovering && idx === index) ||
-                  (!active && isHovering && isSearching)
-                    ? 'InactiveTabContainerHovering'
-                    : null,
-                ].join(' ')}
+                className={classNames({
+                  TabContainer: true,
+                  Dark: isDark,
+                  ActiveTabContainer: active,
+                  InactiveTabContainerHovering:
+                    (!active && isHovering && idx === index) ||
+                    (!active && isHovering && isSearching),
+                })}
               >
                 {pinned && (
                   <div className="PinnedIconContainer">
                     <FaThumbtack
-                      className={['PinnedIcon', isDark ? 'Dark' : null].join(
-                        ' '
-                      )}
+                      className={classNames({
+                        PinnedIcon: true,
+                        Dark: isDark,
+                      })}
                     />
                   </div>
                 )}
@@ -252,19 +255,19 @@ const Tab = ({
                   title={displayTabInFull ? url : `${title}\n\n${url}`}
                 >
                   <div
-                    className={[
-                      'TabTitle',
-                      displayTabInFull ? null : 'Truncated',
-                    ].join(' ')}
+                    className={classNames({
+                      TabTitle: true,
+                      Truncated: displayTabInFull,
+                    })}
                   >
                     {title}
                   </div>
                   {mutedInfo.muted && audible && (
                     <div
-                      className={[
-                        'MutedIconContainer',
-                        isDark ? 'Dark' : null,
-                      ].join(' ')}
+                      className={classNames({
+                        MutedIconContainer: true,
+                        Dark: isDark,
+                      })}
                       onClick={(e) => muteTabClickedHandler(e, id)}
                     >
                       <MdVolumeOff size={'16px'} />
@@ -272,10 +275,10 @@ const Tab = ({
                   )}
                   {!mutedInfo.muted && audible && (
                     <div
-                      className={[
-                        'MutedIconContainer',
-                        isDark ? 'Dark' : null,
-                      ].join(' ')}
+                      className={classNames({
+                        MutedIconContainer: true,
+                        Dark: isDark,
+                      })}
                       onClick={(e) => muteTabClickedHandler(e, id)}
                     >
                       <MdVolumeUp size={'16px'} />
@@ -295,10 +298,10 @@ const Tab = ({
                   }}
                 >
                   <div
-                    className={[
-                      'TabItemActionButton',
-                      isDark ? 'Dark' : null,
-                    ].join(' ')}
+                    className={classNames({
+                      TabItemActionButton: true,
+                      Dark: isDark,
+                    })}
                     onClick={(e) => reloadTabClickedHandler(e, id)}
                   >
                     <MdRefresh size={'16px'} />
@@ -309,10 +312,10 @@ const Tab = ({
 
                 <div title="Close tab" className="TabItemActionButtonContainer">
                   <div
-                    className={[
-                      'TabItemActionButton',
-                      isDark ? 'Dark' : null,
-                    ].join(' ')}
+                    className={classNames({
+                      TabItemActionButton: true,
+                      Dark: isDark,
+                    })}
                     onClick={(e) => closeTabClickedHandler(e, id)}
                   >
                     <MdClose size={'16px'} />
@@ -321,21 +324,20 @@ const Tab = ({
               </div>
 
               <div
-                className={[
-                  'TabContainerPad',
-                  isDark ? 'Dark' : null,
-                  active ? 'TabContainerPadActive' : null,
-                  (!active && isHovering && idx === index) ||
-                  (!active && isHovering && isSearching)
-                    ? 'TabContainerPadInactiveHovering'
-                    : null,
-                ].join(' ')}
+                className={classNames({
+                  TabContainerPad: true,
+                  Dark: isDark,
+                  TabContainerPadActive: active,
+                  TabContainerPadInactiveHovering:
+                    (!active && isHovering && idx === index) ||
+                    (!active && isHovering && isSearching),
+                })}
               >
                 <div
-                  className={[
-                    'TabContainerRightPadInner',
-                    isDark ? 'Dark' : null,
-                  ].join(' ')}
+                  className={classNames({
+                    TabContainerRightPadInner: true,
+                    Dark: isDark,
+                  })}
                 ></div>
               </div>
             </li>
@@ -348,7 +350,9 @@ const Tab = ({
             onHide={(e) => {
               setContextMenuShow(false);
             }}
-            className={[isDark ? 'Dark' : null].join(' ')}
+            className={classNames({
+              Dark: isDark,
+            })}
           >
             <MenuItem onClick={(e) => openNewTabClickedHandler()}>
               <div className="MenuItemIconContainer">
@@ -357,7 +361,12 @@ const Tab = ({
               New Tab
             </MenuItem>
 
-            <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
+            <MenuItem
+              divider
+              className={classNames({
+                Dark: isDark,
+              })}
+            />
 
             <MenuItem onClick={(e) => reloadTabClickedHandler(e, id)}>
               <div className="MenuItemIconContainer">
@@ -397,7 +406,12 @@ const Tab = ({
               Copy Tab URL
             </MenuItem>
 
-            <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
+            <MenuItem
+              divider
+              className={classNames({
+                Dark: isDark,
+              })}
+            />
 
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
               <div className="MenuItemIconContainer">
