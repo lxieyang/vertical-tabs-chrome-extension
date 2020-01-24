@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+### [1.7.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.7.0) (2020-01-23)
+
+- Added **Copy Tab URL** feature in the context menu as suggested in [#24](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/24).
+
+- New context menu styles with icons:
+
+  <img src="preview/repo/context-menu-with-icons.png" width="120"/>
+
 ### [1.6.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.6.1) (2020-01-19)
 
 - Fixed [#23](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/23) by removing `iframe-background.gif` after load.
