@@ -6,13 +6,21 @@ import ItemTypes from '../ItemTypes';
 
 import ReactHoverObserver from 'react-hover-observer';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
+import copy from 'clipboard-copy';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
 import { MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 import { FaThumbtack } from 'react-icons/fa';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 import './Tab.css';
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const Tab = ({
   idx,
@@ -38,6 +46,16 @@ const Tab = ({
   clearContextMenuShow,
   openNewTabClickedHandler,
 }) => {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
+
   /* Start of --> Drag and Drop support */
   const ref = useRef(null);
 
@@ -111,6 +129,12 @@ const Tab = ({
   const muteTabClickedHandler = (e, tabId) => {
     e.stopPropagation();
     chrome.tabs.update(id, { muted: mutedInfo.muted ? false : true });
+  };
+
+  const copyTabURLClickedHandler = (e, tabId) => {
+    copy(url).then(() => {
+      setOpenSnackbar(true);
+    });
   };
 
   const closeTabClickedHandler = (e, tabId) => {
@@ -332,18 +356,32 @@ const Tab = ({
               Duplicate
             </MenuItem>
             <MenuItem onClick={(e) => pinTabClickedHandler(e, id)}>
-              {pinned ? 'Unpin' : 'Pin'} Tab
+              {pinned ? 'Unpin' : 'Pin'}
             </MenuItem>
             <MenuItem onClick={(e) => muteTabClickedHandler(e, id)}>
               {mutedInfo.muted ? 'Unmute' : 'Mute'} This Tab
+            </MenuItem>
+            <MenuItem onClick={(e) => copyTabURLClickedHandler(e, id)}>
+              Copy Tab URL
             </MenuItem>
 
             <MenuItem divider className={[isDark ? 'Dark' : null].join(' ')} />
 
             <MenuItem onClick={(e) => closeTabClickedHandler(e, id)}>
-              Close Tab
+              Close
             </MenuItem>
           </ContextMenu>
+
+          {/* snackbar */}
+          <Snackbar
+            open={openSnackbar}
+            autoHideDuration={2500}
+            onClose={handleSnackbarClose}
+          >
+            <Alert onClose={handleSnackbarClose} severity="success">
+              Copied to clipboard!
+            </Alert>
+          </Snackbar>
         </React.Fragment>
       )}
     </ReactHoverObserver>
