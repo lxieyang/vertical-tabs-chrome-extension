@@ -13,7 +13,7 @@
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^16.11.0",
+    "@hot-loader/react-dom": "^16.12.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/lab": "^4.0.0-alpha.40",
     "classnames": "^2.2.6",
@@ -29,10 +29,9 @@
     "react-dnd": "^9.5.1",
     "react-dnd-html5-backend": "^9.5.1",
     "react-dom": "^16.12.0",
-    "react-hot-loader": "^4.12.18",
+    "react-hot-loader": "^4.12.20",
     "react-hover-observer": "^2.1.1",
     "react-icons": "^3.8.0",
-    "react-lines-ellipsis": "^0.14.1",
     "react-loader-spinner": "^3.1.5",
     "react-media": "^1.10.0",
     "react-tiny-popover": "^4.0.0",
@@ -66,9 +65,9 @@
     "prettier": "1.18.2",
     "pretty-quick": "^1.11.1",
     "style-loader": "^1.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.2.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "3.2.1",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "husky": {
