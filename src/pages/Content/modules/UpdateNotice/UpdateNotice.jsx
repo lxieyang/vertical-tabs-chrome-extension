@@ -4,13 +4,14 @@ import { FaSyncAlt, FaTimesCircle } from 'react-icons/fa';
 import { APP_NAME_FULL } from '../../../../shared/constants';
 
 const UpdateNoticeContainer = styled.div`
-  width: 320px;
+  max-width: 560px;
   position: relative;
   background-color: #fff;
-  border: 1px solid rgb(233, 115, 46);
+  border: 1px solid #ffb74d;
   padding: 8px 8px;
   border-radius: 4px;
-  color: rgb(233, 115, 46);
+  color: #000;
+  background-color: #fff3e0;
 
   font-family: sans-serif;
   text-align: center;
@@ -25,6 +26,7 @@ const ExtensionNameContainerSpan = styled.span`
   color: #fff;
   padding: 2px 4px;
   border-radius: 4px;
+  font-weight: 600;
 `;
 
 const ActionButtonsContainer = styled.div`
@@ -58,7 +60,7 @@ const UpdateNotice = () => {
     <div
       style={{
         position: 'fixed',
-        bottom: 50,
+        bottom: 5,
         left: 0,
         right: 0,
         display: 'flex',

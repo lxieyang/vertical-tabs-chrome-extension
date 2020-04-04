@@ -9,6 +9,8 @@ import TabsList from './containers/TabsList/TabsList';
 
 import { getFavicon } from '../../shared/utils';
 
+// import UpdateNotice from '../Content/modules/UpdateNotice/UpdateNotice';
+
 import './Sidebar.css';
 
 class Sidebar extends Component {
@@ -279,6 +281,7 @@ class Sidebar extends Component {
                 moveTab={this.moveTab}
                 setTabAsLoading={this.setTabAsLoading}
               />
+              {/* <UpdateNotice /> */}
             </div>
           );
         }}
