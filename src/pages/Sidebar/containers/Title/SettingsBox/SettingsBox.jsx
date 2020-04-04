@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa';
 import { IoIosBarcode, IoIosMoon, IoIosSunny } from 'react-icons/io';
 import { WiMoonAltNew, WiMoonAltWaxingCrescent3 } from 'react-icons/wi';
+import { MdFontDownload } from 'react-icons/md';
 
 import './SettingsBox.css';
 
@@ -22,6 +23,8 @@ const SettingsBox = ({
   setSettingSidebarShouldShrinkBody,
   settingDisplayTabTitleInFull,
   setSettingDisplayTabTitleInFull,
+  settingAutoShowHide,
+  setSettingAutoShowHide,
   settingDarkMode,
   setSettingDarkMode,
 }) => {
@@ -179,6 +182,49 @@ const SettingsBox = ({
                 />
                 <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
                 Truncated
+              </label>
+            </div>
+          </form>
+        </div>
+
+        {divider}
+        {/* AUTO SHOW HIDE SIDEBAR */}
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <MdFontDownload className="SettingEntryTitleIcon" />
+            Auto show/hide sidebar:
+          </div>
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={classNames({
+                  Active: settingAutoShowHide,
+                  Dark: isDark,
+                })}
+              >
+                <input
+                  type="radio"
+                  checked={settingAutoShowHide}
+                  onChange={() => setSettingAutoShowHide(true)}
+                  name="radio"
+                />
+                <FaCheck className="SettingEntryOptionIcon" />
+                Yes
+              </label>
+              <label
+                className={classNames({
+                  Active: !settingAutoShowHide,
+                  Dark: isDark,
+                })}
+              >
+                <input
+                  type="radio"
+                  checked={!settingAutoShowHide}
+                  onChange={() => setSettingAutoShowHide(false)}
+                  name="radio"
+                />
+                <FaTimes className="SettingEntryOptionIcon" />
+                No
               </label>
             </div>
           </form>

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
@@ -5,6 +6,7 @@ import UpdateNotice from './modules/UpdateNotice/UpdateNotice';
 
 let shouldShrinkBody = true;
 let sidebarLocation = 'left';
+let autoShowHide = false;
 const toggleButtonLocation = 'bottom';
 let sidebarWidth = 280;
 
@@ -126,6 +128,12 @@ chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
   mountSidebar();
 });
 
+chrome.storage.sync.get(['autoShowHide'], (result) => {
+  if (result.autoShowHide !== undefined) {
+    autoShowHide = result.autoShowHide === true;
+  }
+});
+
 const checkSidebarStatus = () => {
   chrome.runtime.sendMessage(
     {
@@ -164,6 +172,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const { toStatus } = request;
     shouldShrinkBody = toStatus;
     Frame.shrinkBody();
+  } else if (
+    request.from === 'background' &&
+    request.msg === 'UPDATE_AUTO_SHOW_HIDE_STATUS'
+  ) {
+    const { toStatus } = request;
+    autoShowHide = toStatus;
   }
 });
 
@@ -179,5 +193,27 @@ window.addEventListener('keydown', (event) => {
       from: 'content',
       msg: 'REQUEST_TOGGLE_SIDEBAR',
     });
+  }
+});
+
+const openSidebarUponMouseOverWindowEdge = () => {
+  chrome.runtime.sendMessage({
+    from: 'content',
+    msg: 'REQUEST_OPEN_SIDEBAR_UPON_MOUSE_OVER_WINDOW_EDGE',
+  });
+};
+
+$(document).on('mousemove', (event) => {
+  // console.log(event.clientX);
+  const delta = 5;
+  if (sidebarLocation === 'left' && event.clientX < delta) {
+    // console.log('reached left side');
+    openSidebarUponMouseOverWindowEdge();
+  } else if (
+    sidebarLocation === 'right' &&
+    event.clientX > $(document).width() - delta
+  ) {
+    // console.log('reached right side');
+    openSidebarUponMouseOverWindowEdge();
   }
 });

@@ -23,6 +23,7 @@ class Title extends Component {
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
     settingDisplayTabTitleInFull: true,
+    settingAutoShowHide: false,
     settingDarkMode: 'auto',
   };
 
@@ -51,6 +52,14 @@ class Title extends Component {
           settingDisplayTabTitleInFull: result.displayTabInFull === true,
         });
         this.props.setDisplayTabInFull(result.displayTabInFull === true);
+      }
+    });
+
+    chrome.storage.sync.get(['autoShowHide'], (result) => {
+      if (result.autoShowHide !== undefined) {
+        this.setState({
+          settingAutoShowHide: result.autoShowHide === true,
+        });
       }
     });
 
@@ -89,6 +98,12 @@ class Title extends Component {
       ) {
         const { toStatus } = request;
         this.setState({ settingSidebarShouldShrinkBody: toStatus === true });
+      } else if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_AUTO_SHOW_HIDE_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({ settingAutoShowHide: toStatus === true });
       } else if (
         request.from === 'background' &&
         request.msg === 'UPDATE_DARK_MODE_STATUS'
@@ -146,6 +161,19 @@ class Title extends Component {
     });
   };
 
+  setSettingAutoHideShow = (toStatus) => {
+    if (toStatus === this.state.settingAutoShowHide) {
+      return;
+    }
+
+    this.setState({ settingAutoShowHide: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_AUTO_SHOW_HIDE',
+      toStatus,
+    });
+  };
+
   static contextType = DarkModeContext;
 
   setSettingDarkMode = (toStatus) => {
@@ -174,6 +202,7 @@ class Title extends Component {
       settingSidebarLocation,
       settingSidebarShouldShrinkBody,
       settingDisplayTabTitleInFull,
+      settingAutoShowHide,
       settingDarkMode,
     } = this.state;
 
@@ -231,6 +260,8 @@ class Title extends Component {
                       setSettingDisplayTabTitleInFull={
                         this.setSettingDisplayTabTitleInFull
                       }
+                      settingAutoShowHide={settingAutoShowHide}
+                      setSettingAutoShowHide={this.setSettingAutoHideShow}
                       settingDarkMode={settingDarkMode}
                       setSettingDarkMode={this.setSettingDarkMode}
                     />

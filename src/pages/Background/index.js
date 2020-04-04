@@ -93,6 +93,25 @@ const persistdisplayTabInFullStatus = (status) => {
 };
 
 /**
+ * Auto Show Hide
+ */
+let autoShowHide = false;
+
+chrome.storage.sync.get(['autoShowHide'], (result) => {
+  if (result.autoShowHide !== undefined) {
+    autoShowHide = result.autoShowHide === true;
+  } else {
+    persistAutoShowHideStatus(false); // default to not auto show hide
+  }
+});
+
+const persistAutoShowHideStatus = (status) => {
+  chrome.storage.sync.set({
+    autoShowHide: status,
+  });
+};
+
+/**
  * Dark Mode
  */
 let darkMode = 'auto';
@@ -222,6 +241,23 @@ const updateDisplayTabInFullStatus = (toStatus) => {
   );
 };
 
+const updateAutoShowHideStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_AUTO_SHOW_HIDE_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
 const updateDarkModeStatus = (toStatus) => {
   chrome.tabs.query(
     {
@@ -317,6 +353,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     displayTabInFull = toStatus;
     persistdisplayTabInFullStatus(displayTabInFull);
     updateDisplayTabInFullStatus(displayTabInFull);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_AUTO_SHOW_HIDE'
+  ) {
+    const { toStatus } = request;
+    autoShowHide = toStatus;
+    persistAutoShowHideStatus(autoShowHide);
+    updateAutoShowHideStatus(autoShowHide);
   } else if (
     request.from === 'settings' &&
     request.msg === 'USER_CHANGE_DARK_MODE'

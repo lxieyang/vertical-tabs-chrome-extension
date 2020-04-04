@@ -355,6 +355,14 @@ export class Frame extends Component {
                   src={url}
                   ref={(frame) => (this.frame = frame)}
                   onLoad={this.onLoad}
+                  onMouseEnter={() => {
+                    // TODO: implement auto show/hide here
+                    console.log('mouse entered');
+                  }}
+                  onMouseLeave={() => {
+                    // TODO: implement auto show/hide here
+                    console.log('mouse left');
+                  }}
                 ></iframe>
               </div>
             </div>
