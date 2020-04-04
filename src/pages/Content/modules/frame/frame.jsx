@@ -49,16 +49,16 @@ const containerMinimizedClass = css({
 
 const containerRightMinimizedClass = css({
   transform: 'translateX(100%)',
-  ':hover': {
-    transform: `translateX(94%)`,
-  },
+  // ':hover': {
+  //   transform: `translateX(94%)`,
+  // },
 });
 
 const containerLeftMinimizedClass = css({
   transform: 'translateX(-100%)',
-  ':hover': {
-    transform: `translateX(-94%)`,
-  },
+  // ':hover': {
+  //   transform: `translateX(-94%)`,
+  // },
 });
 
 const FRAME_TOGGLE_FUNCTION = 'chromeIframeSidebarToggle';
