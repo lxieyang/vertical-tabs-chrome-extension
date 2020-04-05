@@ -5,6 +5,8 @@ import { node, object, string, number, func } from 'prop-types';
 
 import { Resizable } from 're-resizable';
 
+import { SIDEBAR_CONTAINER_ID } from '../../../../shared/constants';
+
 const iframeClass = css({
   border: 'none',
   width: '100%',
@@ -22,7 +24,7 @@ const containerClass = css({
   padding: '0px 0px 0px 0px',
   boxSizing: 'border-box',
   borderRadius: '3px',
-  boxShadow: '-1px 1px 8px rgba(0,0,0,.15)',
+  boxShadow: '0px 0px 8px rgba(0,0,0,.15)',
   // transform: 'translateX(115%)',
   transition: 'transform .25s cubic-bezier(0, 0, 0.3, 1)',
   zIndex: 99999999,
@@ -48,14 +50,14 @@ const containerMinimizedClass = css({
 });
 
 const containerRightMinimizedClass = css({
-  transform: 'translateX(100%)',
+  transform: 'translateX(105%)',
   // ':hover': {
   //   transform: `translateX(94%)`,
   // },
 });
 
 const containerLeftMinimizedClass = css({
-  transform: 'translateX(-100%)',
+  transform: 'translateX(-105%)',
   // ':hover': {
   //   transform: `translateX(-94%)`,
   // },
@@ -229,7 +231,7 @@ export class Frame extends Component {
     return (
       <React.Fragment>
         <div
-          id="nice"
+          id={SIDEBAR_CONTAINER_ID}
           className={cx({
             [containerClass]: true,
             [containerLeftClass]: sidebarLocation === 'left',
@@ -355,14 +357,6 @@ export class Frame extends Component {
                   src={url}
                   ref={(frame) => (this.frame = frame)}
                   onLoad={this.onLoad}
-                  onMouseEnter={() => {
-                    // TODO: implement auto show/hide here
-                    console.log('mouse entered');
-                  }}
-                  onMouseLeave={() => {
-                    // TODO: implement auto show/hide here
-                    console.log('mouse left');
-                  }}
                 ></iframe>
               </div>
             </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Frame from './modules/frame/frame';
 import UpdateNotice from './modules/UpdateNotice/UpdateNotice';
+import { SIDEBAR_CONTAINER_ID } from '../../shared/constants';
 
 let shouldShrinkBody = true;
 let sidebarLocation = 'left';
@@ -131,6 +132,11 @@ chrome.storage.sync.get(['sidebarOnLeft'], (result) => {
 chrome.storage.sync.get(['autoShowHide'], (result) => {
   if (result.autoShowHide !== undefined) {
     autoShowHide = result.autoShowHide === true;
+    if (autoShowHide) {
+      mountAutoShowHideListener();
+    }
+  } else {
+    unmountAutoShowHideListener();
   }
 });
 
@@ -151,9 +157,128 @@ const checkSidebarStatus = () => {
 
 checkSidebarStatus();
 
+/**
+ * Auto Show Hide
+ */
+let mouseLeftSidebarTimer = null;
+const openSidebarUponMouseOverWindowEdge = () => {
+  chrome.runtime.sendMessage(
+    {
+      from: 'content',
+      msg: 'REQUEST_SIDEBAR_STATUS',
+    },
+    (response) => {
+      let sidebarOpen = response.sidebarOpen;
+      if (sidebarOpen === false) {
+        // open sidebar on this page with timer
+        console.log('should open sidebar');
+        if (Frame.isReady()) {
+          isToggledOpenGloballyFromBackground = false;
+          Frame.toggle(true);
+        }
+      }
+    }
+  );
+};
+
+const mouseEnteredSidebarHandler = (event) => {
+  if (isToggledOpenGloballyFromBackground === true) {
+    return;
+  }
+  console.log('mouse entered');
+  clearTimeout(mouseLeftSidebarTimer);
+};
+
+const mouseLeftSidebarHandler = (event) => {
+  if (isToggledOpenGloballyFromBackground === true) {
+    return;
+  }
+  console.log('mouse left');
+  mouseLeftSidebarTimer = setTimeout(() => {
+    if (Frame.isReady()) {
+      Frame.toggle(false);
+    }
+  }, 500);
+};
+
+const focusOffSidebarHandler = (event) => {
+  if (isToggledOpenGloballyFromBackground === true) {
+    return;
+  }
+  console.log('mouse left');
+  if (Frame.isReady()) {
+    Frame.toggle(false);
+  }
+  clearTimeout(mouseLeftSidebarTimer);
+};
+
+let isMouseWithinEdgeDelta = false;
+let isToggledOpenGloballyFromBackground = false;
+const openSidebarUponMouseOverWindowEdgeEventHandler = (event) => {
+  if (isToggledOpenGloballyFromBackground === true) {
+    return;
+  }
+  const delta = 5;
+  if (sidebarLocation === 'left' && event.clientX < delta) {
+    if (!isMouseWithinEdgeDelta) {
+      console.log('reached left side');
+      isMouseWithinEdgeDelta = true;
+      openSidebarUponMouseOverWindowEdge();
+    }
+  } else if (
+    sidebarLocation === 'right' &&
+    event.clientX > $(document).width() - delta
+  ) {
+    if (!isMouseWithinEdgeDelta) {
+      console.log('reached right side');
+      isMouseWithinEdgeDelta = true;
+      openSidebarUponMouseOverWindowEdge();
+    }
+  } else {
+    isMouseWithinEdgeDelta = false;
+  }
+};
+
+const mountAutoShowHideListener = () => {
+  $(document).on('mousemove', openSidebarUponMouseOverWindowEdgeEventHandler);
+  $(document).on(
+    'mouseenter',
+    `#${SIDEBAR_CONTAINER_ID}`,
+    mouseEnteredSidebarHandler
+  );
+  $(document).on(
+    'mouseleave',
+    `#${SIDEBAR_CONTAINER_ID}`,
+    mouseLeftSidebarHandler
+  );
+
+  $(document).on('blur', `#${SIDEBAR_CONTAINER_ID}`, focusOffSidebarHandler);
+};
+
+const unmountAutoShowHideListener = () => {
+  $(document).off('mousemove', openSidebarUponMouseOverWindowEdgeEventHandler);
+  $(document).off(
+    'mouseenter',
+    `#${SIDEBAR_CONTAINER_ID}`,
+    mouseEnteredSidebarHandler
+  );
+  $(document).off(
+    'mouseleave',
+    `#${SIDEBAR_CONTAINER_ID}`,
+    mouseLeftSidebarHandler
+  );
+  $(document).off('blur', `#${SIDEBAR_CONTAINER_ID}`, focusOffSidebarHandler);
+};
+
+/**
+ * Chrome runtime event listener
+ */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.from === 'background' && request.msg === 'TOGGLE_SIDEBAR') {
     if (Frame.isReady()) {
+      isToggledOpenGloballyFromBackground =
+        request.toStatus === true ? true : false;
+
       Frame.toggle(request.toStatus);
     }
   } else if (
@@ -178,6 +303,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   ) {
     const { toStatus } = request;
     autoShowHide = toStatus;
+    if (autoShowHide) {
+      mountAutoShowHideListener();
+    } else {
+      unmountAutoShowHideListener();
+    }
   }
 });
 
@@ -193,27 +323,5 @@ window.addEventListener('keydown', (event) => {
       from: 'content',
       msg: 'REQUEST_TOGGLE_SIDEBAR',
     });
-  }
-});
-
-const openSidebarUponMouseOverWindowEdge = () => {
-  chrome.runtime.sendMessage({
-    from: 'content',
-    msg: 'REQUEST_OPEN_SIDEBAR_UPON_MOUSE_OVER_WINDOW_EDGE',
-  });
-};
-
-$(document).on('mousemove', (event) => {
-  // console.log(event.clientX);
-  const delta = 5;
-  if (sidebarLocation === 'left' && event.clientX < delta) {
-    // console.log('reached left side');
-    openSidebarUponMouseOverWindowEdge();
-  } else if (
-    sidebarLocation === 'right' &&
-    event.clientX > $(document).width() - delta
-  ) {
-    // console.log('reached right side');
-    openSidebarUponMouseOverWindowEdge();
   }
 });
