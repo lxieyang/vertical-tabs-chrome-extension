@@ -12,10 +12,36 @@ All notable changes to this project will be documented in this file.
 
 # v1.x (official releases)
 
+Please provide valuable feedback by:
+
+- Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
+- Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6)
+
+### [1.8.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.8.0) (2020-04-05 #StayingAtHome #TogetherWeBeatCOVID19)
+
+#### New Features
+
+- Automatically show/hide sidebar ([#27](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/27)):
+
+  <img src="preview/repo/auto-show-hide-feature-new-feature.png" width="250"/>
+
+- Refreshed "Update Notice":
+
+  <img src="preview/repo/update-notice-v2.png" width="400"/>
+
+#### Other
+
+- Updated development dependencies
+- Bug fixes and improvements
+
+<br/>
+
 ### [1.7.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.7.1) (2020-01-24 Lunar New Year Eve!)
 
 - Optimize dark mode implementation.
 - Add version number in **Settings**.
+
+<br/>
 
 ### [1.7.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.7.0) (2020-01-23)
 
@@ -25,19 +51,27 @@ All notable changes to this project will be documented in this file.
 
   <img src="preview/repo/context-menu-with-icons.png" width="120"/>
 
+<br/>
+
 ### [1.6.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.6.1) (2020-01-19)
 
 - Fixed [#23](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/23) by removing `iframe-background.gif` after load.
+
+<br/>
 
 ### [1.6.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.6.0) (2020-01-06)
 
 - **Mute** tabs with a single click.
 - Fixed a bug regarding the context menu
 
+<br/>
+
 ### [1.5.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.1) (2019-12-29)
 
 - Fixed a bug where the `new URL()` API returns invalid.
 - Removed redundant code on search bar auto focus.
+
+<br/>
 
 ### [1.5.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.5.0) (2019-12-26)
 
@@ -45,10 +79,14 @@ All notable changes to this project will be documented in this file.
 
 <img src="preview/repo/dark-mode.png" width="300"/>
 
+<br/>
+
 ### [1.2.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.2.1) (2019-12-01)
 
 - Remove `AutoFocus` feature.
 - Updated dependencies.
+
+<br/>
 
 ### [1.2.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.2.0) (2019-09-01)
 
@@ -56,19 +94,27 @@ All notable changes to this project will be documented in this file.
 
 <img src="preview/repo/update-notice.png" width="300"/>
 
+<br/>
+
 ### [1.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.1.0) (2019-09-01)
 
 - Support pinning/unpinning tabs in the context menu
 - Visual indication for pinned tabs
+
+<br/>
 
 ### [1.0.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.2) (2019-08-27)
 
 - Fixed a bug where settings could go out of sync across tabs
 - Added a tip for using `Command + E` (`Ctrl + E` on PCs) to toggle the sidebar
 
+<br/>
+
 ### [1.0.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.1) (2019-08-22)
 
 - Updated dependencies
+
+<br/>
 
 ### [1.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.0.0) (2019-08-21)
 
@@ -82,24 +128,32 @@ All notable changes to this project will be documented in this file.
 
 <img src="./preview/repo/settings-popover.png" alt="settings" width="250" />
 
+<br/>
+
+<br/>
+
 # v0.x (preview releases)
 
 ### [0.4.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.1) (2019-08-19)
 
 - Fixed a bug where long press could trigger the context menu.
 
+<br/>
+
 ### [0.4.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.0) (2019-08-12)
 
-#### New Features:
+#### New Features
 
 - Context menus.
 - Added (re)loading indicator.
 - Added new keyboard shortcut: `Ctrl/Command + E`.
 
-#### Bug fixes:
+#### Bug fixes
 
 - Fixed a browser icon bug.
 - Autofocuses on the search box once sidebar opens.
+
+<br/>
 
 ### [0.3.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.3.0) (2019-08-07)
 
@@ -107,11 +161,15 @@ All notable changes to this project will be documented in this file.
 
 <img src="./preview/repo/filter-tabs.gif" alt="filter tabs" width="250" />
 
+<br/>
+
 ### [0.2.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.2.0) (2019-08-07)
 
 - Drag and Drop to reorder the tabs.
 
 ![dnd tabs](./preview/repo/dnd-tabs.gif)
+
+<br/>
 
 ### [0.1.2](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.2) (2019-08-05)
 
@@ -120,16 +178,20 @@ All notable changes to this project will be documented in this file.
 - Higher favicon resolution.
 - Fixed an issue where the extension icon was not properly updated upon first installation.
 
+<br/>
+
 ### [0.1.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.1) (2019-07-31)
 
 - Minor styling fixes.
 - Display the reload button on hover.
 
+<br/>
+
 ### [0.1.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.1.0) (2019-07-27)
 
 #### Initial Release! 🎆🔥❤
 
-- **Basic Feature:**
+- **Basic Feature**
   - Display tabs vertically in a sidebar on web pages.
   - Tabs are displayed with the same style as Google Chrome.
   - Toggle the sidebar by clicking on the extension icon.

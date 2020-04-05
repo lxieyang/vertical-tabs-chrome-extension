@@ -26,6 +26,13 @@
 
 ---
 
+Please provide valuable feedback by:
+
+- Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
+- Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6)
+
+---
+
 **Dark theme support is here 🕶️🕶️🕶️**
 
 <img src="preview/repo/dark-mode.png" width="300"/>
@@ -44,6 +51,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 ## Features
 
+- Auto show/hide sidebar.
 - Dark theme support.
 - Display tabs vertically in a sidebar on web pages.
 - Tabs are displayed with the same style as Google Chrome.

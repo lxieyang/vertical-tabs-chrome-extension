@@ -66,7 +66,6 @@ class Title extends Component {
 
     chrome.storage.sync.get(['autoShowHideDelay'], (result) => {
       if (result.autoShowHideDelay !== undefined) {
-        console.log(result.autoShowHideDelay);
         this.setState({
           settingAutoShowHideDelay: result.autoShowHideDelay,
         });
