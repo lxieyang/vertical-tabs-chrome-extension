@@ -17,7 +17,7 @@ import DarkModeContext from '../../context/dark-mode-context';
 class Title extends Component {
   state = {
     sidebarOnLeft: null,
-    isSettingsPopoverOpen: true,
+    isSettingsPopoverOpen: false,
 
     // settings
     settingSidebarLocation: 'left',

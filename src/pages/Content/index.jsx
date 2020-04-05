@@ -18,6 +18,7 @@ updateNoticeRoot.setAttribute('id', 'vt-update-notice');
 localStorage.removeItem('vt-update-notice-dismissed');
 
 document.addEventListener('visibilitychange', (info) => {
+  // console.log(info);
   // console.log(document.hidden);
   try {
     chrome.runtime.sendMessage({ msg: 'GET_VERSION_NUMBER' }, (response) => {
@@ -219,6 +220,19 @@ const focusOffSidebarHandler = (event) => {
   clearTimeout(mouseLeftSidebarTimer);
 };
 
+const visibilityChangeOnSidebarHandler = (info) => {
+  if (isToggledOpenGloballyFromBackground === true) {
+    return;
+  }
+  if (document.hidden) {
+    // console.log('mouse left');
+    if (Frame.isReady()) {
+      Frame.toggle(false);
+    }
+    clearTimeout(mouseLeftSidebarTimer);
+  }
+};
+
 let isMouseWithinEdgeDelta = false;
 let isToggledOpenGloballyFromBackground = false;
 const openSidebarUponMouseOverWindowEdgeEventHandler = (event) => {
@@ -260,6 +274,10 @@ const mountAutoShowHideListener = () => {
   );
 
   $(document).on('blur', `#${SIDEBAR_CONTAINER_ID}`, focusOffSidebarHandler);
+  document.addEventListener(
+    'visibilitychange',
+    visibilityChangeOnSidebarHandler
+  );
 };
 
 const unmountAutoShowHideListener = () => {
@@ -275,6 +293,10 @@ const unmountAutoShowHideListener = () => {
     mouseLeftSidebarHandler
   );
   $(document).off('blur', `#${SIDEBAR_CONTAINER_ID}`, focusOffSidebarHandler);
+  document.removeEventListener(
+    'visibilitychange',
+    visibilityChangeOnSidebarHandler
+  );
 };
 
 /**

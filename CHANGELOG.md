@@ -23,6 +23,8 @@ Please provide valuable feedback by:
 
 - Automatically show/hide sidebar ([#27](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/27)):
 
+  _Simply move your mouse cursor to either side (depending on your chosen sidebar position, see the first setting entry) of the window to open the sidebar. Once your cursor moves away, the sidebar will automatically close._
+
   <img src="preview/repo/auto-show-hide-feature-new-feature.png" width="250"/>
 
 - Refreshed "Update Notice":
