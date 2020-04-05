@@ -25,6 +25,8 @@ const SettingsBox = ({
   setSettingDisplayTabTitleInFull,
   settingAutoShowHide,
   setSettingAutoShowHide,
+  settingAutoShowHideDelay,
+  setSettingAutoShowHideDelay,
   settingDarkMode,
   setSettingDarkMode,
 }) => {
@@ -209,7 +211,22 @@ const SettingsBox = ({
                   name="radio"
                 />
                 <FaCheck className="SettingEntryOptionIcon" />
-                Yes
+                Yes{' '}
+                <div className="AdditionalSettingItemContainer">
+                  (hide in
+                  <input
+                    disabled={!settingAutoShowHide}
+                    type="number"
+                    min="0"
+                    className="MillSecondsInput"
+                    placeholder={500}
+                    value={settingAutoShowHideDelay}
+                    onChange={(e) => {
+                      setSettingAutoShowHideDelay(e.target.value);
+                    }}
+                  />{' '}
+                  ms)
+                </div>
               </label>
               <label
                 className={classNames({

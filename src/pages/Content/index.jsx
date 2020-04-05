@@ -8,6 +8,7 @@ import { SIDEBAR_CONTAINER_ID } from '../../shared/constants';
 let shouldShrinkBody = true;
 let sidebarLocation = 'left';
 let autoShowHide = false;
+let autoShowHideDelay = 500;
 const toggleButtonLocation = 'bottom';
 let sidebarWidth = 280;
 
@@ -140,6 +141,12 @@ chrome.storage.sync.get(['autoShowHide'], (result) => {
   }
 });
 
+chrome.storage.sync.get(['autoShowHideDelay'], (result) => {
+  if (result.autoShowHideDelay !== undefined) {
+    autoShowHideDelay = result.autoShowHideDelay;
+  }
+});
+
 const checkSidebarStatus = () => {
   chrome.runtime.sendMessage(
     {
@@ -185,7 +192,7 @@ const mouseEnteredSidebarHandler = (event) => {
   if (isToggledOpenGloballyFromBackground === true) {
     return;
   }
-  console.log('mouse entered');
+  // console.log('mouse entered');
   clearTimeout(mouseLeftSidebarTimer);
 };
 
@@ -193,19 +200,19 @@ const mouseLeftSidebarHandler = (event) => {
   if (isToggledOpenGloballyFromBackground === true) {
     return;
   }
-  console.log('mouse left');
+  // console.log('mouse left');
   mouseLeftSidebarTimer = setTimeout(() => {
     if (Frame.isReady()) {
       Frame.toggle(false);
     }
-  }, 500);
+  }, autoShowHideDelay);
 };
 
 const focusOffSidebarHandler = (event) => {
   if (isToggledOpenGloballyFromBackground === true) {
     return;
   }
-  console.log('mouse left');
+  // console.log('mouse left');
   if (Frame.isReady()) {
     Frame.toggle(false);
   }
@@ -308,6 +315,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else {
       unmountAutoShowHideListener();
     }
+  } else if (
+    request.from === 'background' &&
+    request.msg === 'UPDATE_AUTO_SHOW_HIDE_DELAY_STATUS'
+  ) {
+    const { toStatus } = request;
+    autoShowHideDelay = toStatus;
   }
 });
 

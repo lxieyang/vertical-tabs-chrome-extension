@@ -78,14 +78,18 @@
 }
 
 .PopoverContent .SettingEntryContent label {
-  flex: 0;
-  margin-right: 8px;
+  /* flex: 0; */
+  margin-right: 3px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 4px 6px;
+  padding: 3px 3px;
 
   transition: all 0.1s ease-in;
+}
+
+.PopoverContent .SettingEntryContent label:last-child {
+  margin-right: 0px;
 }
 
 .PopoverContent .SettingEntryContent label:hover,
@@ -115,4 +119,28 @@
   height: 12px;
   margin-right: 6px;
   flex-shrink: 0;
+}
+
+.PopoverContent .SettingEntryContent label .AdditionalSettingItemContainer {
+  margin-left: 4px;
+}
+
+.PopoverContent
+  .SettingEntryContent
+  label
+  .AdditionalSettingItemContainer
+  input {
+  width: 35px;
+  margin: 0px 0px 0px 2px;
+}
+
+.PopoverContent
+  .SettingEntryContent
+  label
+  .AdditionalSettingItemContainer
+  input:focus {
+  outline: none;
+}
+
+input.MillSecondsInput {
 }

@@ -111,6 +111,22 @@ const persistAutoShowHideStatus = (status) => {
   });
 };
 
+let autoShowHideDelay = 500;
+
+chrome.storage.sync.get(['autoShowHideDelay'], (result) => {
+  if (result.autoShowHideDelay !== undefined) {
+    autoShowHideDelay = result.autoShowHideDelay;
+  } else {
+    persistAutoShowHideDelayStatus(500); // default to be 500 ms
+  }
+});
+
+const persistAutoShowHideDelayStatus = (status) => {
+  chrome.storage.sync.set({
+    autoShowHideDelay: status,
+  });
+};
+
 /**
  * Dark Mode
  */
@@ -258,6 +274,23 @@ const updateAutoShowHideStatus = (toStatus) => {
   );
 };
 
+const updateAutoShowHideDelayStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function(tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_AUTO_SHOW_HIDE_DELAY_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
 const updateDarkModeStatus = (toStatus) => {
   chrome.tabs.query(
     {
@@ -361,6 +394,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     autoShowHide = toStatus;
     persistAutoShowHideStatus(autoShowHide);
     updateAutoShowHideStatus(autoShowHide);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_AUTO_SHOW_HIDE_DELAY'
+  ) {
+    const { toStatus } = request;
+    autoShowHideDelay = toStatus;
+    persistAutoShowHideDelayStatus(autoShowHideDelay);
+    updateAutoShowHideDelayStatus(autoShowHideDelay);
   } else if (
     request.from === 'settings' &&
     request.msg === 'USER_CHANGE_DARK_MODE'

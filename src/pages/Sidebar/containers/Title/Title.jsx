@@ -17,13 +17,14 @@ import DarkModeContext from '../../context/dark-mode-context';
 class Title extends Component {
   state = {
     sidebarOnLeft: null,
-    isSettingsPopoverOpen: false,
+    isSettingsPopoverOpen: true,
 
     // settings
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
     settingDisplayTabTitleInFull: true,
     settingAutoShowHide: false,
+    settingAutoShowHideDelay: 500,
     settingDarkMode: 'auto',
   };
 
@@ -59,6 +60,15 @@ class Title extends Component {
       if (result.autoShowHide !== undefined) {
         this.setState({
           settingAutoShowHide: result.autoShowHide === true,
+        });
+      }
+    });
+
+    chrome.storage.sync.get(['autoShowHideDelay'], (result) => {
+      if (result.autoShowHideDelay !== undefined) {
+        console.log(result.autoShowHideDelay);
+        this.setState({
+          settingAutoShowHideDelay: result.autoShowHideDelay,
         });
       }
     });
@@ -104,6 +114,12 @@ class Title extends Component {
       ) {
         const { toStatus } = request;
         this.setState({ settingAutoShowHide: toStatus === true });
+      } else if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_AUTO_SHOW_HIDE_DELAY_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({ settingAutoShowHideDelay: toStatus });
       } else if (
         request.from === 'background' &&
         request.msg === 'UPDATE_DARK_MODE_STATUS'
@@ -174,6 +190,19 @@ class Title extends Component {
     });
   };
 
+  setSettingAutoShowHideDelay = (toStatus) => {
+    if (toStatus === this.state.settingAutoShowHideDelay) {
+      return;
+    }
+
+    this.setState({ settingAutoShowHideDelay: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_AUTO_SHOW_HIDE_DELAY',
+      toStatus,
+    });
+  };
+
   static contextType = DarkModeContext;
 
   setSettingDarkMode = (toStatus) => {
@@ -203,6 +232,7 @@ class Title extends Component {
       settingSidebarShouldShrinkBody,
       settingDisplayTabTitleInFull,
       settingAutoShowHide,
+      settingAutoShowHideDelay,
       settingDarkMode,
     } = this.state;
 
@@ -262,6 +292,10 @@ class Title extends Component {
                       }
                       settingAutoShowHide={settingAutoShowHide}
                       setSettingAutoShowHide={this.setSettingAutoHideShow}
+                      settingAutoShowHideDelay={settingAutoShowHideDelay}
+                      setSettingAutoShowHideDelay={
+                        this.setSettingAutoShowHideDelay
+                      }
                       settingDarkMode={settingDarkMode}
                       setSettingDarkMode={this.setSettingDarkMode}
                     />
