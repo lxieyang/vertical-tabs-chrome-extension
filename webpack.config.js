@@ -5,7 +5,7 @@ var webpack = require('webpack'),
   { CleanWebpackPlugin } = require('clean-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
-  WriteFilePlugin = require('write-file-webpack-plugin');
+  TerserPlugin = require('terser-webpack-plugin');
 
 // load the secrets
 var alias = {
@@ -49,13 +49,30 @@ var options = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader',
-        exclude: /node_modules/,
+        // look for .css or .scss files
+        test: /\.(css|scss)$/,
+        // in the `src` directory
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
       },
       {
         test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
-        loader: 'file-loader?name=[name].[ext]',
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
         exclude: /node_modules/,
       },
       {
@@ -74,7 +91,7 @@ var options = {
     alias: alias,
     extensions: fileExtensions
       .map((extension) => '.' + extension)
-      .concat(['.jsx', '.js', '.css']),
+      .concat(['.js', '.jsx', '.css']),
   },
   plugins: [
     new webpack.ProgressPlugin(),
@@ -85,13 +102,13 @@ var options = {
     }),
     // expose and write the allowed env vars on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
-    new CopyWebpackPlugin(
-      [
+    new CopyWebpackPlugin({
+      patterns: [
         {
           from: 'src/manifest.json',
           to: path.join(__dirname, 'build'),
           force: true,
-          transform: function(content, path) {
+          transform: function (content, path) {
             // generates the manifest file using the package.json informations
             return Buffer.from(
               JSON.stringify({
@@ -103,33 +120,27 @@ var options = {
           },
         },
       ],
-      {
-        logLevel: 'info',
-        copyUnmodified: true,
-      }
-    ),
-    new CopyWebpackPlugin(
-      [
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
         {
           from: 'src/pages/Content/content.styles.css',
           to: path.join(__dirname, 'build'),
           force: true,
         },
       ],
-      {
-        logLevel: 'info',
-        copyUnmodified: true,
-      }
-    ),
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Options', 'index.html'),
       filename: 'options.html',
       chunks: ['options'],
+      cache: false,
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'pages', 'Sidebar', 'index.html'),
       filename: 'sidebar.html',
       chunks: ['sidebar'],
+      cache: false,
     }),
     new HtmlWebpackPlugin({
       template: path.join(
@@ -141,13 +152,25 @@ var options = {
       ),
       filename: 'background.html',
       chunks: ['background'],
+      cache: false,
     }),
-    new WriteFilePlugin(),
   ],
+  infrastructureLogging: {
+    level: 'info',
+  },
 };
 
 if (env.NODE_ENV === 'development') {
-  options.devtool = 'cheap-module-eval-source-map';
+  options.devtool = 'eval-cheap-module-source-map';
+} else {
+  options.optimization = {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      }),
+    ],
+  };
 }
 
 module.exports = options;

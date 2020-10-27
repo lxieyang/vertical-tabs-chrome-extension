@@ -73,7 +73,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 
 Built with the following template:
 
-👉 👉 [Chrome Extension Boilerplate with React 16.6+ and Webpack 4+](https://github.com/lxieyang/chrome-extension-boilerplate-react)
+👉 👉 [Chrome Extension Boilerplate with React 17 and Webpack 5](https://github.com/lxieyang/chrome-extension-boilerplate-react)
 
 ---
 

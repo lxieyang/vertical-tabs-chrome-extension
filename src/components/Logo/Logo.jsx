@@ -13,7 +13,7 @@ const logo = (props) => {
   let src = AppLogo;
 
   if (window.chrome !== undefined && chrome.extension !== undefined) {
-    src = chrome.extension.getURL(AppLogo);
+    src = chrome.extension.getURL('icon-128.png');
   }
 
   return (
