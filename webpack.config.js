@@ -80,9 +80,17 @@ var options = {
         loader: 'html-loader',
         exclude: /node_modules/,
       },
+      { test: /\.(ts|tsx)$/, loader: 'ts-loader', exclude: /node_modules/ },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
+        use: [
+          {
+            loader: 'source-map-loader',
+          },
+          {
+            loader: 'babel-loader',
+          },
+        ],
         exclude: /node_modules/,
       },
     ],
@@ -91,7 +99,7 @@ var options = {
     alias: alias,
     extensions: fileExtensions
       .map((extension) => '.' + extension)
-      .concat(['.js', '.jsx', '.css']),
+      .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
   },
   plugins: [
     new webpack.ProgressPlugin(),
