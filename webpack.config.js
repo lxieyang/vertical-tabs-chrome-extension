@@ -7,6 +7,8 @@ var webpack = require('webpack'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin');
 
+const ASSET_PATH = process.env.ASSET_PATH || '/';
+
 // load the secrets
 var alias = {
   'react-dom': '@hot-loader/react-dom',
@@ -45,6 +47,7 @@ var options = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].bundle.js',
+    publicPath: ASSET_PATH,
   },
   module: {
     rules: [
