@@ -24,7 +24,7 @@
     "glamor": "^2.20.40",
     "immutability-helper": "^3.1.1",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "re-resizable": "^6.7.0",
     "react": "^16.12.0",
