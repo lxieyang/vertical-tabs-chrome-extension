@@ -73,20 +73,40 @@ class TabsList extends Component {
     chrome.tabs.create({});
   };
 
+  renderTab = (tabOrder, idx) => {
+    return (
+      <Tab
+        key={tabOrder.id}
+        idx={idx}
+        id={tabOrder.id}
+        index={tabOrder.index}
+        active={tabOrder.active}
+        pinned={tabOrder.pinned}
+        mutedInfo={tabOrder.mutedInfo}
+        openerTabId={tabOrder.openerTabId}
+        audible={tabOrder.audible}
+        faviconUrl={tabOrder.faviconUrl}
+        title={tabOrder.title}
+        url={tabOrder.url}
+        status={tabOrder.status}
+        activeTab={this.props.activeTab}
+        displayTabInFull={this.props.displayTabInFull}
+        contextMenuShow={this.state.contextMenuShow}
+        contextMenuShowPrev={this.state.contextMenuShowPrev}
+        moveTab={this.props.moveTab}
+        setTabAsLoading={this.props.setTabAsLoading}
+        clearSearchBoxInputText={this.clearSearchBoxInputText}
+        isSearching={this.state.searchBarInputText.length > 0}
+        setContextMenuShow={this.setContextMenuShow}
+        clearContextMenuShow={this.clearContextMenuShow}
+        openNewTabClickedHandler={this.openNewTabClickedHandler}
+      />
+    );
+  };
+
   render() {
-    const {
-      tabOrders,
-      activeTab,
-      tabsDict,
-      moveTab,
-      setTabAsLoading,
-      displayTabInFull,
-    } = this.props;
-    const {
-      searchBarInputText,
-      contextMenuShow,
-      contextMenuShowPrev,
-    } = this.state;
+    const { tabOrders, tabsDict } = this.props;
+    const { searchBarInputText } = this.state;
 
     const inputText = searchBarInputText.toLowerCase();
 
@@ -110,6 +130,9 @@ class TabsList extends Component {
       this.firstTab = null;
     }
 
+    const pinnedTabs = tabOrdersCopy.filter((item) => item.pinned);
+    const unpinnedTabs = tabOrdersCopy.filter((item) => !item.pinned);
+
     return (
       <DarkModeContext.Consumer>
         {({ isDark }) => {
@@ -121,40 +144,38 @@ class TabsList extends Component {
                 searchCount={tabOrdersCopy.length}
               />
 
-              <ul style={{ margin: 0, padding: 0 }}>
-                {tabOrdersCopy.map((tabOrder, idx) => {
+              <div style={{ margin: 0, padding: 0 }}>
+                {pinnedTabs.length > 0 && (
+                  <div className="PinnedTabsContainer">
+                    {pinnedTabs.map((tabOrder, idx) => {
+                      if (tabsDict[tabOrder.id] === undefined) {
+                        return null;
+                      }
+
+                      // let tab = { ...tabsDict[tabOrder.id] };
+                      return (
+                        <React.Fragment key={idx}>
+                          {this.renderTab(tabOrder, idx)}
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {pinnedTabs.length > 0 && unpinnedTabs.length > 0 && (
+                  <div className="PinnedUnpinnedDivider"></div>
+                )}
+
+                {unpinnedTabs.map((tabOrder, idx) => {
                   if (tabsDict[tabOrder.id] === undefined) {
                     return null;
                   }
 
                   // let tab = { ...tabsDict[tabOrder.id] };
                   return (
-                    <Tab
-                      key={tabOrder.id}
-                      idx={idx}
-                      id={tabOrder.id}
-                      index={tabOrder.index}
-                      active={tabOrder.active}
-                      pinned={tabOrder.pinned}
-                      mutedInfo={tabOrder.mutedInfo}
-                      openerTabId={tabOrder.openerTabId}
-                      audible={tabOrder.audible}
-                      faviconUrl={tabOrder.faviconUrl}
-                      title={tabOrder.title}
-                      url={tabOrder.url}
-                      status={tabOrder.status}
-                      activeTab={activeTab}
-                      displayTabInFull={displayTabInFull}
-                      contextMenuShow={contextMenuShow}
-                      contextMenuShowPrev={contextMenuShowPrev}
-                      moveTab={moveTab}
-                      setTabAsLoading={setTabAsLoading}
-                      clearSearchBoxInputText={this.clearSearchBoxInputText}
-                      isSearching={searchBarInputText.length > 0}
-                      setContextMenuShow={this.setContextMenuShow}
-                      clearContextMenuShow={this.clearContextMenuShow}
-                      openNewTabClickedHandler={this.openNewTabClickedHandler}
-                    />
+                    <React.Fragment key={idx}>
+                      {this.renderTab(tabOrder, idx + pinnedTabs.length)}
+                    </React.Fragment>
                   );
                 })}
 
@@ -175,7 +196,7 @@ class TabsList extends Component {
                     <MdAdd size={'22px'} />
                   </div>
                 </li>
-              </ul>
+              </div>
             </div>
           );
         }}

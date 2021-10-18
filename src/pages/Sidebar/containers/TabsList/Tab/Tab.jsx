@@ -159,6 +159,7 @@ const Tab = ({
             <li
               // style={{ opacity: isDragging ? 0 : 1 }}
               ref={ref}
+              title={`${title}\n\n${url}`}
               className={classNames({
                 TabItem: true,
                 blink: isDragging,
@@ -172,6 +173,7 @@ const Tab = ({
               }}
               onMouseOver={() => {
                 if (!isDragging && isHovering) {
+                  console.log(isHovering);
                   if (index === activeTab.index) {
                     chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
                   } else {
@@ -193,6 +195,7 @@ const Tab = ({
               <div
                 className={classNames({
                   TabContainer: true,
+                  isPinned: pinned,
                   Dark: isDark,
                   ActiveTabContainer: active,
                   InactiveTabContainerHovering:
@@ -200,17 +203,6 @@ const Tab = ({
                     (!active && isHovering && isSearching),
                 })}
               >
-                {pinned && (
-                  <div className="PinnedIconContainer">
-                    <FaThumbtack
-                      className={classNames({
-                        PinnedIcon: true,
-                        Dark: isDark,
-                      })}
-                    />
-                  </div>
-                )}
-
                 <div className="TabFaviconContainer">
                   {status === 'loading' ? (
                     <Loader
@@ -228,77 +220,81 @@ const Tab = ({
                   )}
                 </div>
 
-                <div
-                  className="TabTitleContainer"
-                  title={displayTabInFull ? url : `${title}\n\n${url}`}
-                >
-                  <div
-                    className={classNames({
-                      TabTitle: true,
-                      Truncated: !displayTabInFull,
-                    })}
-                  >
-                    {title}
-                  </div>
-                  {mutedInfo.muted && audible && (
-                    <div
-                      className={classNames({
-                        MutedIconContainer: true,
-                        Dark: isDark,
-                      })}
-                      onClick={(e) => muteTabClickedHandler(e, id)}
-                    >
-                      <MdVolumeOff size={'16px'} />
+                {!pinned && (
+                  <>
+                    <div className="TabTitleContainer">
+                      <div
+                        className={classNames({
+                          TabTitle: true,
+                          Truncated: !displayTabInFull,
+                        })}
+                      >
+                        {title}
+                      </div>
+                      {mutedInfo.muted && audible && (
+                        <div
+                          className={classNames({
+                            MutedIconContainer: true,
+                            Dark: isDark,
+                          })}
+                          onClick={(e) => muteTabClickedHandler(e, id)}
+                        >
+                          <MdVolumeOff size={'16px'} />
+                        </div>
+                      )}
+                      {!mutedInfo.muted && audible && (
+                        <div
+                          className={classNames({
+                            MutedIconContainer: true,
+                            Dark: isDark,
+                          })}
+                          onClick={(e) => muteTabClickedHandler(e, id)}
+                        >
+                          <MdVolumeUp size={'16px'} />
+                        </div>
+                      )}
                     </div>
-                  )}
-                  {!mutedInfo.muted && audible && (
+
                     <div
-                      className={classNames({
-                        MutedIconContainer: true,
-                        Dark: isDark,
-                      })}
-                      onClick={(e) => muteTabClickedHandler(e, id)}
+                      title="Reload tab"
+                      className="TabItemActionButtonContainer"
+                      style={{
+                        opacity:
+                          (isHovering && idx === index) ||
+                          (isSearching && isHovering)
+                            ? 1
+                            : 0,
+                      }}
                     >
-                      <MdVolumeUp size={'16px'} />
+                      <div
+                        className={classNames({
+                          TabItemActionButton: true,
+                          Dark: isDark,
+                        })}
+                        onClick={(e) => reloadTabClickedHandler(e, id)}
+                      >
+                        <MdRefresh size={'16px'} />
+                      </div>
                     </div>
-                  )}
-                </div>
 
-                <div
-                  title="Reload tab"
-                  className="TabItemActionButtonContainer"
-                  style={{
-                    opacity:
-                      (isHovering && idx === index) ||
-                      (isSearching && isHovering)
-                        ? 1
-                        : 0,
-                  }}
-                >
-                  <div
-                    className={classNames({
-                      TabItemActionButton: true,
-                      Dark: isDark,
-                    })}
-                    onClick={(e) => reloadTabClickedHandler(e, id)}
-                  >
-                    <MdRefresh size={'16px'} />
-                  </div>
-                </div>
+                    <div className="TabItemActionButtonSpaceBetween"></div>
 
-                <div className="TabItemActionButtonSpaceBetween"></div>
-
-                <div title="Close tab" className="TabItemActionButtonContainer">
-                  <div
-                    className={classNames({
-                      TabItemActionButton: true,
-                      Dark: isDark,
-                    })}
-                    onClick={(e) => closeTabClickedHandler(e, id)}
-                  >
-                    <MdClose size={'16px'} />
-                  </div>
-                </div>
+                    <div
+                      title="Close tab"
+                      className="TabItemActionButtonContainer"
+                    >
+                      <div
+                        className={classNames({
+                          TabItemActionButton: true,
+                          Dark: isDark,
+                        })}
+                        onClick={(e) => closeTabClickedHandler(e, id)}
+                      >
+                        <MdClose size={'16px'} />
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </li>
           </ContextMenuTrigger>

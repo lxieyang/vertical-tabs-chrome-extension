@@ -3,8 +3,8 @@
   display: flex;
   position: relative;
 
-  /* padding: 0px 4px; */
-  margin-top: 1px;
+  padding: 0px 4px;
+  margin-top: 2px;
   box-sizing: border-box;
 }
 
@@ -14,16 +14,20 @@
   /* width: 100%; */
   display: flex;
   align-items: center;
-  padding: 8px 8px 8px 10px;
+  padding: 6px 6px 6px 8px;
   cursor: default;
   color: rgb(60, 64, 67);
   /* border-top-left-radius: 8px;
   border-top-right-radius: 8px; */
-  /* border-radius: 6px; */
+  border-radius: 4px;
 
   transition: all 0.1s ease-in;
 
   position: relative;
+}
+
+.TabContainer.isPinned {
+  padding: 8px;
 }
 
 .TabContainer.Dark {
@@ -72,6 +76,10 @@
   flex-shrink: 0px;
   display: flex;
   align-items: center;
+}
+
+.TabContainer.isPinned .TabFaviconContainer {
+  margin-right: 0px;
 }
 
 .TabTitleContainer {
