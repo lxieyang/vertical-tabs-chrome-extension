@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import copy from 'clipboard-copy';
 import Frame from './modules/frame/frame';
 import UpdateNotice from './modules/UpdateNotice/UpdateNotice';
 import { SIDEBAR_CONTAINER_ID } from '../../shared/constants';
@@ -358,5 +359,16 @@ window.addEventListener('keydown', (event) => {
       from: 'content',
       msg: 'REQUEST_TOGGLE_SIDEBAR',
     });
+  }
+});
+
+/**
+ * Window event listener
+ */
+
+window.addEventListener('message', (event) => {
+  const { msg, payload } = event.data;
+  if (msg === 'COPY_URL') {
+    copy(payload.url);
   }
 });

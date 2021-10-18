@@ -7,7 +7,6 @@ import ItemTypes from '../ItemTypes';
 
 import ReactHoverObserver from 'react-hover-observer';
 import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import copy from 'clipboard-copy';
 
 import { MdClose } from 'react-icons/md';
 import { MdRefresh } from 'react-icons/md';
@@ -20,14 +19,9 @@ import {
   FaRegCopy,
 } from 'react-icons/fa';
 
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+import { useSnackbar } from 'react-simple-snackbar';
 
 import './Tab.css';
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-};
 
 const Tab = ({
   idx,
@@ -54,15 +48,9 @@ const Tab = ({
   clearContextMenuShow,
   openNewTabClickedHandler,
 }) => {
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackbar(false);
-  };
+  const [openSnackbar] = useSnackbar({
+    style: { backgroundColor: '#4DC71F', fontWeight: 600 },
+  });
 
   /* Start of --> Drag and Drop support */
   const ref = useRef(null);
@@ -140,9 +128,16 @@ const Tab = ({
   };
 
   const copyTabURLClickedHandler = (e, tabId) => {
-    copy(url).then(() => {
-      setOpenSnackbar(true);
-    });
+    window.parent.postMessage(
+      {
+        msg: 'COPY_URL',
+        payload: {
+          url,
+        },
+      },
+      '*'
+    );
+    openSnackbar('Copied to clipboard!', 2500);
   };
 
   const closeTabClickedHandler = (e, tabId) => {
@@ -194,24 +189,6 @@ const Tab = ({
                 }
               }}
             >
-              <div
-                className={classNames({
-                  TabContainerPad: true,
-                  Dark: isDark,
-                  TabContainerPadActive: active,
-                  TabContainerPadInactiveHovering:
-                    (!active && isHovering && idx === index) ||
-                    (!active && isHovering && isSearching),
-                })}
-              >
-                <div
-                  className={classNames({
-                    TabContainerLeftPadInner: true,
-                    Dark: isDark,
-                  })}
-                ></div>
-              </div>
-
               <div
                 className={classNames({
                   TabContainer: true,
@@ -322,24 +299,6 @@ const Tab = ({
                   </div>
                 </div>
               </div>
-
-              <div
-                className={classNames({
-                  TabContainerPad: true,
-                  Dark: isDark,
-                  TabContainerPadActive: active,
-                  TabContainerPadInactiveHovering:
-                    (!active && isHovering && idx === index) ||
-                    (!active && isHovering && isSearching),
-                })}
-              >
-                <div
-                  className={classNames({
-                    TabContainerRightPadInner: true,
-                    Dark: isDark,
-                  })}
-                ></div>
-              </div>
             </li>
           </ContextMenuTrigger>
           <ContextMenu
@@ -420,17 +379,6 @@ const Tab = ({
               Close
             </MenuItem>
           </ContextMenu>
-
-          {/* snackbar */}
-          <Snackbar
-            open={openSnackbar}
-            autoHideDuration={2500}
-            onClose={handleSnackbarClose}
-          >
-            <Alert onClose={handleSnackbarClose} severity="success">
-              Copied to clipboard!
-            </Alert>
-          </Snackbar>
         </React.Fragment>
       )}
     </ReactHoverObserver>

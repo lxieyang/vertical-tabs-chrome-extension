@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Media from 'react-media';
+import SnackbarProvider from 'react-simple-snackbar';
+import MediaQuery from 'react-responsive';
 
 import Sidebar from './Sidebar';
 import './index.css';
@@ -50,10 +51,15 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <DarkModeContext.Provider
-        value={{ mediaQueryDark, isDark, setDarkStatus }}
-      >
-        <Media
+      <SnackbarProvider>
+        <DarkModeContext.Provider
+          value={{ mediaQueryDark, isDark, setDarkStatus }}
+        >
+          <DndProvider backend={HTML5Backend}>
+            <Sidebar />
+          </DndProvider>
+        </DarkModeContext.Provider>
+        <MediaQuery
           query="(prefers-color-scheme: dark)"
           onChange={(dark) => {
             setMediaQueryDark(dark);
@@ -61,11 +67,10 @@ const App = () => {
               setDarkStatus(dark);
             }
           }}
-        />
-        <DndProvider backend={HTML5Backend}>
-          <Sidebar />
-        </DndProvider>
-      </DarkModeContext.Provider>
+        >
+          <div style={{ width: 0, height: 0 }}></div>
+        </MediaQuery>
+      </SnackbarProvider>
     </React.Fragment>
   );
 };
