@@ -58,7 +58,7 @@ const Tab = ({
   const darkModeContext = useContext(DarkModeContext);
   const { isDark } = darkModeContext;
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop(() => ({
     accept: ItemTypes.TABCARD,
     hover(item, monitor) {
       if (!ref.current) {
@@ -84,10 +84,11 @@ const Tab = ({
       moveTab(dragIndex, hoverIndex);
       item.idx = hoverIndex;
     },
-  });
+  }));
 
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.TABCARD, id, idx },
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: ItemTypes.TABCARD,
+    item: { id, idx },
     end: (item, monitor) => {
       moveTabToIndex(id, item.idx);
     },
@@ -97,7 +98,7 @@ const Tab = ({
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  });
+  }));
 
   drag(drop(ref));
   /* End of --> Drag and Drop support */
