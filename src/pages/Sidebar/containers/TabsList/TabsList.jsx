@@ -187,6 +187,8 @@ class TabsList extends Component {
                   );
                 })}
 
+                <div className="PinnedUnpinnedDivider"></div>
+
                 <div
                   className={classNames({
                     NewTabButtonContainer: true,
@@ -201,7 +203,7 @@ class TabsList extends Component {
                     })}
                     onClick={(e) => this.openNewTabClickedHandler(e)}
                   >
-                    <MdAdd size={'24px'} style={{ marginRight: 5 }} />
+                    <MdAdd size={'22px'} style={{ marginRight: 3 }} />
                     New Tab
                     <div style={{ flex: 1 }}></div>
                     {platformInfo && platformInfo.os && (
