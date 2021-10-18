@@ -17,6 +17,13 @@ Please provide valuable feedback by:
 - Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
 - Email: xieyangl@cs.cmu.edu
 
+### [1.10.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.10.0) (2021-10-18)
+
+#### New Features
+
+- Bug fixes
+- Smoother drag experience
+
 ### [1.9.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.9.1) (2021-10-17)
 
 #### New Features

@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import classNames from 'classnames';
+import { useDrop } from 'react-dnd';
+import ItemTypes from './ItemTypes';
+import update from 'immutability-helper';
+import { isEqual } from 'lodash';
 import DarkModeContext from '../../context/dark-mode-context';
+import { usePrevious } from '../../../../shared/utils';
 
 import { MdAdd } from 'react-icons/md';
 
@@ -12,18 +17,38 @@ import './TabsList.css';
 
 const TabsList = ({
   tabOrders,
-  tabsDict,
   activeTab,
   displayTabInFull,
-  moveTab,
   setTabAsLoading,
 }) => {
-  let firstTab = null;
+  const [, drop] = useDrop(() => ({ accept: ItemTypes.TABCARD }));
 
   const [searchBarInputText, _setSearchBarInputText] = useState('');
   const [contextMenuShow, _setContextMenuShow] = useState(false);
   const [contextMenuShowPrev, _setContextMenuShowPrev] = useState(null);
   const [platformInfo, _setPlatformInfo] = useState(null);
+
+  const [tabOrdersCopy, _setTabOrdersCopy] = useState([]);
+
+  const prevTabOrders = usePrevious(tabOrders);
+  const prevSearchBarInputText = usePrevious(searchBarInputText);
+  useEffect(() => {
+    if (
+      !isEqual(prevTabOrders, tabOrders) ||
+      !isEqual(prevSearchBarInputText, searchBarInputText)
+    ) {
+      let ordersCopy = [];
+      tabOrders.forEach((tabOrder) => {
+        const { combinedText } = tabOrder;
+        if (combinedText.includes(searchBarInputText.toLowerCase())) {
+          ordersCopy.push({
+            ...tabOrder,
+          });
+        }
+      });
+      _setTabOrdersCopy(ordersCopy);
+    }
+  }, [tabOrders, searchBarInputText]);
 
   const setContextMenuShow = (toStatus) => {
     if (toStatus === false) {
@@ -42,14 +67,14 @@ const TabsList = ({
       if (event.key === 'Enter') {
         // enter key
         if (searchBarInputText.length > 0) {
-          if (firstTab) {
-            chrome.tabs.update(firstTab.id, { active: true });
+          if (tabOrdersCopy && tabOrdersCopy.length > 0) {
+            chrome.tabs.update(tabOrdersCopy[0].id, { active: true });
             clearSearchBoxInputText();
           }
         }
       }
     },
-    [searchBarInputText, firstTab]
+    [searchBarInputText, tabOrdersCopy]
   );
 
   useEffect(() => {
@@ -77,6 +102,32 @@ const TabsList = ({
     chrome.tabs.create({});
   };
 
+  const findTab = useCallback(
+    (id) => {
+      const tab = tabOrdersCopy.filter((tb) => tb.id === id)[0];
+      return {
+        tab,
+        index: tabOrdersCopy.indexOf(tab),
+      };
+    },
+    [tabOrdersCopy]
+  );
+
+  const moveTabCard = useCallback(
+    (id, atIndex) => {
+      const { tab, index } = findTab(id);
+      _setTabOrdersCopy(
+        update(tabOrdersCopy, {
+          $splice: [
+            [index, 1],
+            [atIndex, 0, tab],
+          ],
+        })
+      );
+    },
+    [findTab, tabOrdersCopy, _setTabOrdersCopy]
+  );
+
   const renderTab = (tabOrder, idx) => {
     return (
       <Tab
@@ -97,7 +148,8 @@ const TabsList = ({
         displayTabInFull={displayTabInFull}
         contextMenuShow={contextMenuShow}
         contextMenuShowPrev={contextMenuShowPrev}
-        moveTab={moveTab}
+        findTab={findTab}
+        moveTab={moveTabCard}
         setTabAsLoading={setTabAsLoading}
         clearSearchBoxInputText={clearSearchBoxInputText}
         isSearching={searchBarInputText.length > 0}
@@ -107,28 +159,6 @@ const TabsList = ({
       />
     );
   };
-
-  const inputText = searchBarInputText.toLowerCase();
-
-  const tabOrdersCopy = [];
-  tabOrders.forEach((tabOrder) => {
-    const { id } = tabOrder;
-    if (tabsDict[id] !== undefined) {
-      const { combinedText } = tabsDict[id];
-      if (combinedText.includes(inputText)) {
-        tabOrdersCopy.push({
-          ...tabOrder,
-          ...tabsDict[id],
-        });
-      }
-    }
-  });
-
-  if (tabOrdersCopy.length > 0) {
-    firstTab = tabOrdersCopy[0];
-  } else {
-    firstTab = null;
-  }
 
   const pinnedTabs = tabOrdersCopy.filter((item) => item.pinned);
   const unpinnedTabs = tabOrdersCopy.filter((item) => !item.pinned);
@@ -144,15 +174,10 @@ const TabsList = ({
               searchCount={tabOrdersCopy.length}
             />
 
-            <div style={{ margin: 0, padding: 0 }}>
+            <div style={{ margin: 0, padding: 0 }} ref={drop}>
               {pinnedTabs.length > 0 && (
                 <div className="PinnedTabsContainer">
                   {pinnedTabs.map((tabOrder, idx) => {
-                    if (tabsDict[tabOrder.id] === undefined) {
-                      return null;
-                    }
-
-                    // let tab = { ...tabsDict[tabOrder.id] };
                     return (
                       <React.Fragment key={tabOrder.id}>
                         {renderTab(tabOrder, idx)}
@@ -167,11 +192,6 @@ const TabsList = ({
               )}
 
               {unpinnedTabs.map((tabOrder, idx) => {
-                if (tabsDict[tabOrder.id] === undefined) {
-                  return null;
-                }
-
-                // let tab = { ...tabsDict[tabOrder.id] };
                 return (
                   <React.Fragment key={tabOrder.id}>
                     {renderTab(tabOrder, idx + pinnedTabs.length)}
@@ -213,4 +233,4 @@ const TabsList = ({
   );
 };
 
-export default TabsList;
+export default memo(TabsList);

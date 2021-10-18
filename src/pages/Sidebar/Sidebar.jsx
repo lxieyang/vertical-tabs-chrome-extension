@@ -30,14 +30,14 @@ class Sidebar extends Component {
     this.tabUpdatedHandler = this.handleTabUpdated.bind(this);
     this.tabMovedHandler = this.handleTabMoved.bind(this);
     this.tabActivatedHandler = this.handleTabActivated.bind(this);
-    this.tabHighlightedHandler = this.handleTabHighlighted.bind(this);
+    // this.tabHighlightedHandler = this.handleTabHighlighted.bind(this);
 
     chrome.tabs.onCreated.addListener(this.tabCreatedHandler);
     chrome.tabs.onRemoved.addListener(this.tabRemovedHandler);
     chrome.tabs.onUpdated.addListener(this.tabUpdatedHandler);
     chrome.tabs.onMoved.addListener(this.tabMovedHandler);
     chrome.tabs.onActivated.addListener(this.tabActivatedHandler);
-    chrome.tabs.onHighlighted.addListener(this.tabHighlightedHandler);
+    // chrome.tabs.onHighlighted.addListener(this.tabHighlightedHandler);
   }
 
   componentDidMount() {
@@ -85,7 +85,7 @@ class Sidebar extends Component {
     chrome.tabs.onUpdated.removeListener(this.tabUpdatedHandler);
     chrome.tabs.onMoved.removeListener(this.tabMovedHandler);
     chrome.tabs.onActivated.removeListener(this.tabActivatedHandler);
-    chrome.tabs.onHighlighted.removeListener(this.tabHighlightedHandler);
+    // chrome.tabs.onHighlighted.removeListener(this.tabHighlightedHandler);
 
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -140,7 +140,7 @@ class Sidebar extends Component {
     window.clearTimeout(this.isScrolling);
 
     // Set a timeout to run after scrolling ends
-    this.isScrolling = setTimeout(function() {
+    this.isScrolling = setTimeout(function () {
       chrome.runtime.sendMessage({
         from: 'sidebar',
         msg: 'SIDEBAR_SCROLL_POSITION_CHANGED',
@@ -244,16 +244,20 @@ class Sidebar extends Component {
     this.updateTabOrders();
   };
 
-  handleTabHighlighted = (highlightInfo) => {};
+  // handleTabHighlighted = (highlightInfo) => {
+  // };
 
-  moveTab = (dragIndex, hoverIndex) => {
-    const dragTab = this.state.tabOrders[dragIndex];
-    this.setState({
-      tabOrders: update(this.state.tabOrders, {
-        $splice: [[dragIndex, 1], [hoverIndex, 0, dragTab]],
-      }),
-    });
-  };
+  // moveTab = (dragIndex, hoverIndex) => {
+  //   const dragTab = this.state.tabOrders[dragIndex];
+  //   this.setState({
+  //     tabOrders: update(this.state.tabOrders, {
+  //       $splice: [
+  //         [dragIndex, 1],
+  //         [hoverIndex, 0, dragTab],
+  //       ],
+  //     }),
+  //   });
+  // };
 
   setDisplayTabInFull = (toStatus) => {
     this.setState({ displayTabInFull: toStatus });
@@ -275,10 +279,13 @@ class Sidebar extends Component {
               <Title setDisplayTabInFull={this.setDisplayTabInFull} />
               <TabsList
                 displayTabInFull={displayTabInFull}
-                tabOrders={tabOrders}
+                tabOrders={tabOrders
+                  .filter(({ id }) => tabsDict[id] !== undefined)
+                  .map((tabOrder) => ({
+                    ...tabOrder,
+                    ...tabsDict[tabOrder.id],
+                  }))}
                 activeTab={activeTab}
-                tabsDict={tabsDict}
-                moveTab={this.moveTab}
                 setTabAsLoading={this.setTabAsLoading}
               />
               {/* <UpdateNotice /> */}

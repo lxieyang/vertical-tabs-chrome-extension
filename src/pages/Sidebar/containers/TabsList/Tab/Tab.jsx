@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, memo } from 'react';
 import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import Loader from 'react-loader-spinner';
@@ -40,6 +40,7 @@ const Tab = ({
   displayTabInFull,
   contextMenuShow,
   contextMenuShowPrev,
+  findTab,
   moveTab,
   setTabAsLoading,
   isSearching,
@@ -58,47 +59,41 @@ const Tab = ({
   const darkModeContext = useContext(DarkModeContext);
   const { isDark } = darkModeContext;
 
-  const [, drop] = useDrop(() => ({
-    accept: ItemTypes.TABCARD,
-    hover(item, monitor) {
-      if (!ref.current) {
-        return;
-      }
-
-      const dragIndex = item.idx;
-      const hoverIndex = idx;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      const hoverBoundingRect = ref.current.getBoundingClientRect();
-      const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-      moveTab(dragIndex, hoverIndex);
-      item.idx = hoverIndex;
-    },
-  }));
-
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemTypes.TABCARD,
-    item: { id, idx },
-    end: (item, monitor) => {
-      moveTabToIndex(id, item.idx);
-    },
-    canDrag(monitor) {
-      return !isSearching;
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const originalIndex = findTab(id).index;
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: ItemTypes.TABCARD,
+      item: { id, originalIndex },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+      end: (item, monitor) => {
+        const { id: droppedId, originalIndex } = item;
+        const { index: overIndex } = findTab(droppedId);
+        const didDrop = monitor.didDrop();
+        if (!didDrop) {
+          moveTab(droppedId, originalIndex);
+        } else {
+          moveTabToIndex(id, overIndex);
+        }
+      },
     }),
-  }));
+    [id, originalIndex, moveTab]
+  );
+
+  const [, drop] = useDrop(
+    () => ({
+      accept: ItemTypes.TABCARD,
+      canDrop: () => false,
+      hover({ id: draggedId, originalIndex: draggedIndex }) {
+        if (draggedId !== id) {
+          const { index: overIndex } = findTab(id);
+          moveTab(draggedId, overIndex);
+        }
+      },
+    }),
+    [findTab, moveTab]
+  );
 
   drag(drop(ref));
   /* End of --> Drag and Drop support */
@@ -158,7 +153,7 @@ const Tab = ({
           <ContextMenuTrigger id={id.toString()} holdToDisplay={-1}>
             <li
               // style={{ opacity: isDragging ? 0 : 1 }}
-              ref={ref}
+
               title={`${title}\n\n${url}`}
               className={classNames({
                 TabItem: true,
@@ -192,6 +187,7 @@ const Tab = ({
               }}
             >
               <div
+                ref={ref}
                 className={classNames({
                   TabContainer: true,
                   isPinned: pinned,
@@ -381,4 +377,4 @@ const Tab = ({
   );
 };
 
-export default Tab;
+export default memo(Tab);
