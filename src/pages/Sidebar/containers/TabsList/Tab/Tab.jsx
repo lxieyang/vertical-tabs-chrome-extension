@@ -173,7 +173,6 @@ const Tab = ({
               }}
               onMouseOver={() => {
                 if (!isDragging && isHovering) {
-                  console.log(isHovering);
                   if (index === activeTab.index) {
                     chrome.tabs.highlight({ tabs: [activeTab.index] }, null);
                   } else {

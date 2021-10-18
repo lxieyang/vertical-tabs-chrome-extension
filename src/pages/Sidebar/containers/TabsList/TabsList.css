@@ -1,9 +1,12 @@
 .NewTabButtonContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 8px 8px 10px;
+  /* justify-content: center; */
+  align-items: flex-start;
+  padding: 0px;
   color: rgb(60, 64, 67);
+
+  margin-top: 5px;
+  min-height: 80px;
 }
 
 .NewTabButtonContainer.Dark {
@@ -11,16 +14,18 @@
 }
 
 .NewTabButton {
-  width: 30px;
-  height: 30px;
+  width: 100%;
+  /* height: 30px; */
+
+  padding: 4px 8px;
 
   display: flex;
-  justify-content: center;
   align-items: center;
 
-  border-radius: 50%;
   color: rgb(60, 64, 67);
   transition: all 0.2s ease-in;
+
+  cursor: default;
 }
 
 .NewTabButton.Dark {
@@ -33,6 +38,12 @@
 
 .NewTabButton.Dark:hover {
   background-color: rgb(68, 69, 71);
+}
+
+.NewTabButton .ShortcutName {
+  margin-right: 5px;
+  opacity: 0.6;
+  font-size: 0.8rem;
 }
 
 .PinnedUnpinnedDivider {

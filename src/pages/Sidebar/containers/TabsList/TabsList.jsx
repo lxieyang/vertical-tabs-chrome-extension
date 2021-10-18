@@ -15,6 +15,8 @@ class TabsList extends Component {
     searchBarInputText: '',
     contextMenuShow: false,
     contextMenuShowPrev: null,
+
+    platformInfo: null,
   };
 
   setContextMenuShow = (toStatus) => {
@@ -40,6 +42,12 @@ class TabsList extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.keyPressListener, false);
+
+    chrome.runtime.getPlatformInfo((info) => {
+      this.setState({
+        platformInfo: info,
+      });
+    });
   }
 
   componentWillUnmount() {
@@ -106,7 +114,7 @@ class TabsList extends Component {
 
   render() {
     const { tabOrders, tabsDict } = this.props;
-    const { searchBarInputText } = this.state;
+    const { searchBarInputText, platformInfo } = this.state;
 
     const inputText = searchBarInputText.toLowerCase();
 
@@ -179,7 +187,7 @@ class TabsList extends Component {
                   );
                 })}
 
-                <li
+                <div
                   className={classNames({
                     NewTabButtonContainer: true,
                     Dark: isDark,
@@ -193,9 +201,16 @@ class TabsList extends Component {
                     })}
                     onClick={(e) => this.openNewTabClickedHandler(e)}
                   >
-                    <MdAdd size={'22px'} />
+                    <MdAdd size={'24px'} style={{ marginRight: 5 }} />
+                    New Tab
+                    <div style={{ flex: 1 }}></div>
+                    {platformInfo && platformInfo.os && (
+                      <div className="ShortcutName">
+                        {platformInfo.os === 'mac' ? `⌘T` : `Ctrl+T`}
+                      </div>
+                    )}
                   </div>
-                </li>
+                </div>
               </div>
             </div>
           );
