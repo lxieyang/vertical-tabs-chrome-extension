@@ -29,13 +29,14 @@
 Please provide valuable feedback by:
 
 - Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
-- Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6)
+- Email: xieyangl@cs.cmu.edu
+<!-- - Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6) -->
 
 ---
 
 **Dark theme support is here 🕶️🕶️🕶️**
 
-<img src="preview/repo/dark-mode.png" width="300"/>
+<img src="preview/repo/refreshed-look-dark.png" width="300"/>
 
 ---
 
@@ -63,9 +64,9 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
 - The sidebar is resizable, and can be put on either the left or right of the browser window.
 
-## Planned Features
+<!-- ## Planned Features -->
 
-- Tree styled tabs
+<!-- - Tree styled tabs -->
 
 ## 👉 👉 [Release Notes and Change log](/CHANGELOG.md)
 

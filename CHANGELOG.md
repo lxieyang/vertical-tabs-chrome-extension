@@ -15,7 +15,16 @@ All notable changes to this project will be documented in this file.
 Please provide valuable feedback by:
 
 - Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
-- Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6)
+- Email: xieyangl@cs.cmu.edu
+
+### [1.9.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.9.1) (2021-10-17)
+
+#### New Features
+
+- Refreshed styles
+
+  <img src="preview/repo/refreshed-look-light.png" width="250"/>
+  <img src="preview/repo/refreshed-look-dark.png" width="250"/>
 
 ### [1.8.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.8.0) (2020-04-05 #StayingAtHome #TogetherWeBeatCOVID19)
 
