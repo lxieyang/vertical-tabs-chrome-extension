@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import DarkModeContext from '../../context/dark-mode-context';
 
@@ -10,78 +10,74 @@ import './react-contextmenu.css';
 
 import './TabsList.css';
 
-class TabsList extends Component {
-  state = {
-    searchBarInputText: '',
-    contextMenuShow: false,
-    contextMenuShowPrev: null,
+const TabsList = ({
+  tabOrders,
+  tabsDict,
+  activeTab,
+  displayTabInFull,
+  moveTab,
+  setTabAsLoading,
+}) => {
+  let firstTab = null;
 
-    platformInfo: null,
-  };
+  const [searchBarInputText, _setSearchBarInputText] = useState('');
+  const [contextMenuShow, _setContextMenuShow] = useState(false);
+  const [contextMenuShowPrev, _setContextMenuShowPrev] = useState(null);
+  const [platformInfo, _setPlatformInfo] = useState(null);
 
-  setContextMenuShow = (toStatus) => {
+  const setContextMenuShow = (toStatus) => {
     if (toStatus === false) {
-      this.setState({
-        contextMenuShow: false,
-        contextMenuShowPrev: true,
-      });
+      _setContextMenuShow(false);
+      _setContextMenuShowPrev(true);
     }
   };
 
-  clearContextMenuShow = () => {
-    this.setState({
-      contextMenuShow: false,
-      contextMenuShowPrev: null,
-    });
+  const clearContextMenuShow = () => {
+    _setContextMenuShow(false);
+    _setContextMenuShowPrev(null);
   };
 
-  constructor(props) {
-    super(props);
-    this.keyPressListener = this.keyPressHandler.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener('keydown', this.keyPressListener, false);
-
-    chrome.runtime.getPlatformInfo((info) => {
-      this.setState({
-        platformInfo: info,
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.keyPressListener, false);
-  }
-
-  keyPressHandler(event) {
-    if (event.keyCode === 13) {
-      // enter key
-      if (this.state.searchBarInputText.length > 0) {
-        if (this.firstTab) {
-          chrome.tabs.update(this.firstTab.id, { active: true });
-          this.clearSearchBoxInputText();
+  const keyPressHandler = useCallback(
+    (event) => {
+      if (event.key === 'Enter') {
+        // enter key
+        if (searchBarInputText.length > 0) {
+          if (firstTab) {
+            chrome.tabs.update(firstTab.id, { active: true });
+            clearSearchBoxInputText();
+          }
         }
       }
-    }
-  }
+    },
+    [searchBarInputText, firstTab]
+  );
 
-  handleSearchBarInputText = (event) => {
-    let inputText = event.target.value;
-    this.setState({
-      searchBarInputText: inputText,
+  useEffect(() => {
+    document.addEventListener('keydown', keyPressHandler, false);
+
+    chrome.runtime.getPlatformInfo((info) => {
+      _setPlatformInfo(info);
     });
+
+    return () => {
+      document.removeEventListener('keydown', keyPressHandler, false);
+    };
+  }, [keyPressHandler]);
+
+  const handleSearchBarInputText = (event) => {
+    let inputText = event.target.value;
+    _setSearchBarInputText(inputText);
   };
 
-  clearSearchBoxInputText = () => {
-    this.setState({ searchBarInputText: '' });
+  const clearSearchBoxInputText = () => {
+    _setSearchBarInputText('');
   };
 
-  openNewTabClickedHandler = (e) => {
+  const openNewTabClickedHandler = (e) => {
     chrome.tabs.create({});
   };
 
-  renderTab = (tabOrder, idx) => {
+  const renderTab = (tabOrder, idx) => {
     return (
       <Tab
         key={tabOrder.id}
@@ -97,129 +93,124 @@ class TabsList extends Component {
         title={tabOrder.title}
         url={tabOrder.url}
         status={tabOrder.status}
-        activeTab={this.props.activeTab}
-        displayTabInFull={this.props.displayTabInFull}
-        contextMenuShow={this.state.contextMenuShow}
-        contextMenuShowPrev={this.state.contextMenuShowPrev}
-        moveTab={this.props.moveTab}
-        setTabAsLoading={this.props.setTabAsLoading}
-        clearSearchBoxInputText={this.clearSearchBoxInputText}
-        isSearching={this.state.searchBarInputText.length > 0}
-        setContextMenuShow={this.setContextMenuShow}
-        clearContextMenuShow={this.clearContextMenuShow}
-        openNewTabClickedHandler={this.openNewTabClickedHandler}
+        activeTab={activeTab}
+        displayTabInFull={displayTabInFull}
+        contextMenuShow={contextMenuShow}
+        contextMenuShowPrev={contextMenuShowPrev}
+        moveTab={moveTab}
+        setTabAsLoading={setTabAsLoading}
+        clearSearchBoxInputText={clearSearchBoxInputText}
+        isSearching={searchBarInputText.length > 0}
+        setContextMenuShow={setContextMenuShow}
+        clearContextMenuShow={clearContextMenuShow}
+        openNewTabClickedHandler={openNewTabClickedHandler}
       />
     );
   };
 
-  render() {
-    const { tabOrders, tabsDict } = this.props;
-    const { searchBarInputText, platformInfo } = this.state;
+  const inputText = searchBarInputText.toLowerCase();
 
-    const inputText = searchBarInputText.toLowerCase();
-
-    const tabOrdersCopy = [];
-    tabOrders.forEach((tabOrder) => {
-      const { id } = tabOrder;
-      if (tabsDict[id] !== undefined) {
-        const { combinedText } = tabsDict[id];
-        if (combinedText.includes(inputText)) {
-          tabOrdersCopy.push({
-            ...tabOrder,
-            ...tabsDict[id],
-          });
-        }
+  const tabOrdersCopy = [];
+  tabOrders.forEach((tabOrder) => {
+    const { id } = tabOrder;
+    if (tabsDict[id] !== undefined) {
+      const { combinedText } = tabsDict[id];
+      if (combinedText.includes(inputText)) {
+        tabOrdersCopy.push({
+          ...tabOrder,
+          ...tabsDict[id],
+        });
       }
-    });
-
-    if (tabOrdersCopy.length > 0) {
-      this.firstTab = tabOrdersCopy[0];
-    } else {
-      this.firstTab = null;
     }
+  });
 
-    const pinnedTabs = tabOrdersCopy.filter((item) => item.pinned);
-    const unpinnedTabs = tabOrdersCopy.filter((item) => !item.pinned);
+  if (tabOrdersCopy.length > 0) {
+    firstTab = tabOrdersCopy[0];
+  } else {
+    firstTab = null;
+  }
 
-    return (
-      <DarkModeContext.Consumer>
-        {({ isDark }) => {
-          return (
-            <div style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
-              <SearchBar
-                searchBarInputText={searchBarInputText}
-                handleSearchBarInputText={this.handleSearchBarInputText}
-                searchCount={tabOrdersCopy.length}
-              />
+  const pinnedTabs = tabOrdersCopy.filter((item) => item.pinned);
+  const unpinnedTabs = tabOrdersCopy.filter((item) => !item.pinned);
 
-              <div style={{ margin: 0, padding: 0 }}>
-                {pinnedTabs.length > 0 && (
-                  <div className="PinnedTabsContainer">
-                    {pinnedTabs.map((tabOrder, idx) => {
-                      if (tabsDict[tabOrder.id] === undefined) {
-                        return null;
-                      }
+  return (
+    <DarkModeContext.Consumer>
+      {({ isDark }) => {
+        return (
+          <div style={{ margin: 0, padding: '48px 0px 0px 0px' }}>
+            <SearchBar
+              searchBarInputText={searchBarInputText}
+              handleSearchBarInputText={handleSearchBarInputText}
+              searchCount={tabOrdersCopy.length}
+            />
 
-                      // let tab = { ...tabsDict[tabOrder.id] };
-                      return (
-                        <React.Fragment key={idx}>
-                          {this.renderTab(tabOrder, idx)}
-                        </React.Fragment>
-                      );
-                    })}
-                  </div>
-                )}
+            <div style={{ margin: 0, padding: 0 }}>
+              {pinnedTabs.length > 0 && (
+                <div className="PinnedTabsContainer">
+                  {pinnedTabs.map((tabOrder, idx) => {
+                    if (tabsDict[tabOrder.id] === undefined) {
+                      return null;
+                    }
 
-                {pinnedTabs.length > 0 && unpinnedTabs.length > 0 && (
-                  <div className="PinnedUnpinnedDivider"></div>
-                )}
+                    // let tab = { ...tabsDict[tabOrder.id] };
+                    return (
+                      <React.Fragment key={tabOrder.id}>
+                        {renderTab(tabOrder, idx)}
+                      </React.Fragment>
+                    );
+                  })}
+                </div>
+              )}
 
-                {unpinnedTabs.map((tabOrder, idx) => {
-                  if (tabsDict[tabOrder.id] === undefined) {
-                    return null;
-                  }
-
-                  // let tab = { ...tabsDict[tabOrder.id] };
-                  return (
-                    <React.Fragment key={idx}>
-                      {this.renderTab(tabOrder, idx + pinnedTabs.length)}
-                    </React.Fragment>
-                  );
-                })}
-
+              {pinnedTabs.length > 0 && unpinnedTabs.length > 0 && (
                 <div className="PinnedUnpinnedDivider"></div>
+              )}
 
+              {unpinnedTabs.map((tabOrder, idx) => {
+                if (tabsDict[tabOrder.id] === undefined) {
+                  return null;
+                }
+
+                // let tab = { ...tabsDict[tabOrder.id] };
+                return (
+                  <React.Fragment key={tabOrder.id}>
+                    {renderTab(tabOrder, idx + pinnedTabs.length)}
+                  </React.Fragment>
+                );
+              })}
+
+              <div className="PinnedUnpinnedDivider"></div>
+
+              <div
+                className={classNames({
+                  NewTabButtonContainer: true,
+                  Dark: isDark,
+                })}
+                title="Open a new tab"
+              >
                 <div
                   className={classNames({
-                    NewTabButtonContainer: true,
+                    NewTabButton: true,
                     Dark: isDark,
                   })}
-                  title="Open a new tab"
+                  onClick={(e) => openNewTabClickedHandler(e)}
                 >
-                  <div
-                    className={classNames({
-                      NewTabButton: true,
-                      Dark: isDark,
-                    })}
-                    onClick={(e) => this.openNewTabClickedHandler(e)}
-                  >
-                    <MdAdd size={'22px'} style={{ marginRight: 3 }} />
-                    New Tab
-                    <div style={{ flex: 1 }}></div>
-                    {platformInfo && platformInfo.os && (
-                      <div className="ShortcutName">
-                        {platformInfo.os === 'mac' ? `⌘T` : `Ctrl+T`}
-                      </div>
-                    )}
-                  </div>
+                  <MdAdd size={'22px'} style={{ marginRight: 3 }} />
+                  New Tab
+                  <div style={{ flex: 1 }}></div>
+                  {platformInfo && platformInfo.os && (
+                    <div className="ShortcutName">
+                      {platformInfo.os === 'mac' ? `⌘T` : `Ctrl+T`}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          );
-        }}
-      </DarkModeContext.Consumer>
-    );
-  }
-}
+          </div>
+        );
+      }}
+    </DarkModeContext.Consumer>
+  );
+};
 
 export default TabsList;

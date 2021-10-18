@@ -169,7 +169,7 @@
 }
 
 .blink {
-  animation: blinker 0.8s linear infinite;
+  animation: blinker 1.2s linear infinite;
 }
 
 @keyframes blinker {
