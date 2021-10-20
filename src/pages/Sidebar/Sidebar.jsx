@@ -20,6 +20,7 @@ class Sidebar extends Component {
     tabsDict: {},
 
     displayTabInFull: true,
+    displayTabPreviewFrame: true,
   };
 
   constructor(props) {
@@ -263,8 +264,18 @@ class Sidebar extends Component {
     this.setState({ displayTabInFull: toStatus });
   };
 
+  setDisplayTabPreviewFrame = (toStatus) => {
+    this.setState({ displayTabPreviewFrame: toStatus });
+  };
+
   render() {
-    const { tabOrders, activeTab, tabsDict, displayTabInFull } = this.state;
+    const {
+      tabOrders,
+      activeTab,
+      tabsDict,
+      displayTabInFull,
+      displayTabPreviewFrame,
+    } = this.state;
 
     return (
       <DarkModeContext.Consumer>
@@ -276,9 +287,13 @@ class Sidebar extends Component {
                 Dark: darkModeContext.isDark,
               })}
             >
-              <Title setDisplayTabInFull={this.setDisplayTabInFull} />
+              <Title
+                setDisplayTabInFull={this.setDisplayTabInFull}
+                setDisplayTabPreviewFrame={this.setDisplayTabPreviewFrame}
+              />
               <TabsList
                 displayTabInFull={displayTabInFull}
+                displayTabPreviewFrame={displayTabPreviewFrame}
                 tabOrders={tabOrders
                   .filter(({ id }) => tabsDict[id] !== undefined)
                   .map((tabOrder) => ({

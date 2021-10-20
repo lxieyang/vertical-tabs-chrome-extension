@@ -19,6 +19,7 @@ const TabsList = ({
   tabOrders,
   activeTab,
   displayTabInFull,
+  displayTabPreviewFrame,
   setTabAsLoading,
 }) => {
   const [, drop] = useDrop(() => ({ accept: ItemTypes.TABCARD }));
@@ -146,6 +147,7 @@ const TabsList = ({
         status={tabOrder.status}
         activeTab={activeTab}
         displayTabInFull={displayTabInFull}
+        displayTabPreviewFrame={displayTabPreviewFrame}
         contextMenuShow={contextMenuShow}
         contextMenuShowPrev={contextMenuShowPrev}
         findTab={findTab}

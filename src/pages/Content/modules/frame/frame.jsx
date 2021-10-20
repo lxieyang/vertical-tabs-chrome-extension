@@ -346,9 +346,7 @@ export class Frame extends Component {
                   })}
                   style={{
                     backgroundImage: !this.state.loaded
-                      ? `url(${chrome.extension.getURL(
-                          'iframe-background.gif'
-                        )})`
+                      ? `url(${chrome.runtime.getURL('iframe-background.gif')})`
                       : null,
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',

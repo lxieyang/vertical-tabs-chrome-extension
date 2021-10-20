@@ -20,11 +20,11 @@ chrome.storage.local.get(['sidebarOpen'], (result) => {
 const changeBrowserIconBadgeWithSidebarOpenStatus = (status) => {
   if (status) {
     chrome.browserAction.setIcon({
-      path: chrome.extension.getURL('icon-128-eye.png'),
+      path: chrome.runtime.getURL('icon-128-eye.png'),
     });
   } else {
     chrome.browserAction.setIcon({
-      path: chrome.extension.getURL('icon-128.png'),
+      path: chrome.runtime.getURL('icon-128.png'),
     });
   }
 };
@@ -89,6 +89,25 @@ chrome.storage.sync.get(['displayTabInFull'], (result) => {
 const persistdisplayTabInFullStatus = (status) => {
   chrome.storage.sync.set({
     displayTabInFull: status,
+  });
+};
+
+/**
+ * Display Tab Preview Frame
+ */
+let displayTabPreviewFrame = true;
+
+chrome.storage.sync.get(['displayTabPreviewFrame'], (result) => {
+  if (result.displayTabPreviewFrame !== undefined) {
+    displayTabPreviewFrame = result.displayTabPreviewFrame === true;
+  } else {
+    persistdisplayTabPreviewFrameStatus(true); // default to display tab in full
+  }
+});
+
+const persistdisplayTabPreviewFrameStatus = (status) => {
+  chrome.storage.sync.set({
+    displayTabPreviewFrame: status,
   });
 };
 
@@ -159,7 +178,7 @@ const toggleSidebar = (toStatus = null) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -176,7 +195,7 @@ const updateSidebarWidth = (width) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -193,7 +212,7 @@ const updateSidebarScrollPosition = () => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -211,7 +230,7 @@ const updateSidebarOnLeftStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -228,7 +247,7 @@ const updateShouldShrinkBodyStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -245,11 +264,28 @@ const updateDisplayTabInFullStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
           msg: 'UPDATE_DISPLAY_TAB_IN_FULL_STATUS',
+          toStatus,
+        });
+      });
+    }
+  );
+};
+
+const updateDisplayTabPreviewFrameStatus = (toStatus) => {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    function (tabs) {
+      tabs.forEach((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          from: 'background',
+          msg: 'UPDATE_DISPLAY_TAB_PREVIEW_FRAME_STATUS',
           toStatus,
         });
       });
@@ -262,7 +298,7 @@ const updateAutoShowHideStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -279,7 +315,7 @@ const updateAutoShowHideDelayStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -296,7 +332,7 @@ const updateDarkModeStatus = (toStatus) => {
     {
       currentWindow: true,
     },
-    function(tabs) {
+    function (tabs) {
       tabs.forEach((tab) => {
         chrome.tabs.sendMessage(tab.id, {
           from: 'background',
@@ -309,7 +345,7 @@ const updateDarkModeStatus = (toStatus) => {
 };
 
 // chrome.browserAction.setPopup({
-//   popup: chrome.extension.getURL('sidebar.html'),
+//   popup: chrome.runtime.getURL('sidebar.html'),
 // });
 
 // setTimeout(() => {
@@ -324,7 +360,7 @@ chrome.browserAction.onClicked.addListener((senderTab) => {
   toggleSidebar();
 });
 
-chrome.commands.onCommand.addListener(function(command) {
+chrome.commands.onCommand.addListener(function (command) {
   if (command === '_execute_browser_action') {
     toggleSidebar();
   }
@@ -386,6 +422,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     displayTabInFull = toStatus;
     persistdisplayTabInFullStatus(displayTabInFull);
     updateDisplayTabInFullStatus(displayTabInFull);
+  } else if (
+    request.from === 'settings' &&
+    request.msg === 'USER_CHANGE_DISPLAY_TAB_PREVIEW_FRAME'
+  ) {
+    const { toStatus } = request;
+    displayTabPreviewFrame = toStatus;
+    persistdisplayTabPreviewFrameStatus(displayTabPreviewFrame);
+    updateDisplayTabPreviewFrameStatus(displayTabPreviewFrame);
   } else if (
     request.from === 'settings' &&
     request.msg === 'USER_CHANGE_AUTO_SHOW_HIDE'

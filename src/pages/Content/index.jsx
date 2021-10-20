@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import copy from 'clipboard-copy';
 import Frame from './modules/frame/frame';
+import TabPreviewFrame from './modules/tabPreviewFrame/tabPreviewFrame';
 import UpdateNotice from './modules/UpdateNotice/UpdateNotice';
 import { SIDEBAR_CONTAINER_ID } from '../../shared/constants';
 
@@ -97,7 +98,7 @@ function mountSidebar() {
   // console.log('Mounting sidebar on the', sidebarLocation);
   const App = (
     <Frame
-      url={chrome.extension.getURL('sidebar.html')}
+      url={chrome.runtime.getURL('sidebar.html')}
       shrinkBody={shrinkBody}
       fixShrinkBody={fixShrinkBody}
       viewportWidth={window.innerWidth}
@@ -347,6 +348,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+/**
+ * Window event listener
+ */
 window.addEventListener('keydown', (event) => {
   if (
     (event.ctrlKey && event.key === '`') ||
@@ -361,14 +365,79 @@ window.addEventListener('keydown', (event) => {
     });
   }
 });
+let tabPreviewFrameRoot = document.createElement('div');
+document.body.appendChild(tabPreviewFrameRoot);
+tabPreviewFrameRoot.setAttribute('id', 'tab-preview-frame-root');
 
-/**
- * Window event listener
- */
+tabPreviewFrameRoot.style.zIndex = '-100';
+tabPreviewFrameRoot.style.visibility = 'hidden';
+tabPreviewFrameRoot.style.transition = 'all ease-in-out 0.1s';
+tabPreviewFrameRoot.style.position = 'fixed';
+tabPreviewFrameRoot.style.top = null;
+tabPreviewFrameRoot.style.left = null;
+tabPreviewFrameRoot.style.bottom = null;
+tabPreviewFrameRoot.style.right = null;
+
+let unmountTabPreviewFrameTimeout;
 
 window.addEventListener('message', (event) => {
   const { msg, payload } = event.data;
   if (msg === 'COPY_URL') {
     copy(payload.url);
+  } else if (msg === 'PREVIEW_TAB_ON') {
+    const { id, title, url, faviconUrl, tabItemY, isDark } = payload;
+    // console.log(id, title, url, faviconUrl, tabItemY,isDark);
+
+    if (unmountTabPreviewFrameTimeout) {
+      clearTimeout(unmountTabPreviewFrameTimeout);
+    }
+
+    ReactDOM.render(
+      <TabPreviewFrame
+        id={id}
+        title={title}
+        url={url}
+        faviconUrl={faviconUrl}
+        isDark={isDark}
+      />,
+      tabPreviewFrameRoot
+    );
+    tabPreviewFrameRoot.style.zIndex = '999999999';
+    tabPreviewFrameRoot.style.visibility = 'visible';
+
+    const sidebarIframe = sidebarRoot.querySelector('iframe');
+    const {
+      left: iframeLeft,
+      width: iframeWidth,
+      right: iframeRight,
+    } = sidebarIframe.getBoundingClientRect();
+
+    let top = tabItemY;
+    let previewFrameHeight = tabPreviewFrameRoot
+      .querySelector('.TabPreviewContainer')
+      .getBoundingClientRect().height;
+    if (top + previewFrameHeight >= window.innerHeight) {
+      top = window.innerHeight - previewFrameHeight - 5;
+    }
+
+    tabPreviewFrameRoot.style.top = `${Math.floor(top)}px`;
+
+    const isIframeOnLeft = iframeLeft === 0;
+    if (isIframeOnLeft) {
+      tabPreviewFrameRoot.style.left = `${Math.floor(iframeRight) + 3}px`;
+    } else {
+      tabPreviewFrameRoot.style.right = `${Math.floor(iframeWidth) + 3}px`;
+    }
+  } else if (msg === 'PREVIEW_TAB_OFF') {
+    tabPreviewFrameRoot.style.zIndex = '-100';
+    tabPreviewFrameRoot.style.visibility = 'hidden';
+
+    unmountTabPreviewFrameTimeout = setTimeout(() => {
+      ReactDOM.unmountComponentAtNode(tabPreviewFrameRoot);
+      tabPreviewFrameRoot.style.top = null;
+      tabPreviewFrameRoot.style.left = null;
+      tabPreviewFrameRoot.style.bottom = null;
+      tabPreviewFrameRoot.style.right = null;
+    }, 500);
   }
 });

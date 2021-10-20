@@ -23,6 +23,7 @@ class Title extends Component {
     settingSidebarLocation: 'left',
     settingSidebarShouldShrinkBody: true,
     settingDisplayTabTitleInFull: true,
+    settingDisplayTabPreviewFrame: true,
     settingAutoShowHide: false,
     settingAutoShowHideDelay: 500,
     settingDarkMode: 'auto',
@@ -53,6 +54,17 @@ class Title extends Component {
           settingDisplayTabTitleInFull: result.displayTabInFull === true,
         });
         this.props.setDisplayTabInFull(result.displayTabInFull === true);
+      }
+    });
+
+    chrome.storage.sync.get(['displayTabPreviewFrame'], (result) => {
+      if (result.displayTabPreviewFrame !== undefined) {
+        this.setState({
+          settingDisplayTabPreviewFrame: result.displayTabPreviewFrame === true,
+        });
+        this.props.setDisplayTabPreviewFrame(
+          result.displayTabPreviewFrame === true
+        );
       }
     });
 
@@ -101,6 +113,16 @@ class Title extends Component {
           settingDisplayTabTitleInFull: toStatus === true,
         });
         this.props.setDisplayTabInFull(toStatus === true);
+      }
+      if (
+        request.from === 'background' &&
+        request.msg === 'UPDATE_DISPLAY_TAB_PREVIEW_FRAME_STATUS'
+      ) {
+        const { toStatus } = request;
+        this.setState({
+          settingDisplayTabPreviewFrame: toStatus === true,
+        });
+        this.props.setDisplayTabPreviewFrame(toStatus === true);
       } else if (
         request.from === 'background' &&
         request.msg === 'UPDATE_SHOULD_SHRINK_BODY_STATUS'
@@ -176,6 +198,19 @@ class Title extends Component {
     });
   };
 
+  setSettingDisplayTabPreviewFrame = (toStatus) => {
+    if (toStatus === this.state.settingDisplayTabPreviewFrame) {
+      return;
+    }
+
+    this.setState({ settingDisplayTabPreviewFrame: toStatus });
+    chrome.runtime.sendMessage({
+      from: 'settings',
+      msg: 'USER_CHANGE_DISPLAY_TAB_PREVIEW_FRAME',
+      toStatus,
+    });
+  };
+
   setSettingAutoHideShow = (toStatus) => {
     if (toStatus === this.state.settingAutoShowHide) {
       return;
@@ -230,6 +265,7 @@ class Title extends Component {
       settingSidebarLocation,
       settingSidebarShouldShrinkBody,
       settingDisplayTabTitleInFull,
+      settingDisplayTabPreviewFrame,
       settingAutoShowHide,
       settingAutoShowHideDelay,
       settingDarkMode,
@@ -275,26 +311,39 @@ class Title extends Component {
                     arrowSize={4}
                   >
                     <SettingsBox
+                      //
                       settingSidebarLocation={settingSidebarLocation}
                       setSettingSidebarLocation={this.setSettingSidebarLocation}
+                      //
                       settingSidebarShouldShrinkBody={
                         settingSidebarShouldShrinkBody
                       }
                       setSettingSidebarShouldShrinkBody={
                         this.setSettingSidebarShouldShrinkBody
                       }
+                      //
                       settingDisplayTabTitleInFull={
                         settingDisplayTabTitleInFull
                       }
                       setSettingDisplayTabTitleInFull={
                         this.setSettingDisplayTabTitleInFull
                       }
+                      //
+                      settingDisplayTabPreviewFrame={
+                        settingDisplayTabPreviewFrame
+                      }
+                      setSettingDisplayTabPreviewFrame={
+                        this.setSettingDisplayTabPreviewFrame
+                      }
+                      //
                       settingAutoShowHide={settingAutoShowHide}
                       setSettingAutoShowHide={this.setSettingAutoHideShow}
+                      //
                       settingAutoShowHideDelay={settingAutoShowHideDelay}
                       setSettingAutoShowHideDelay={
                         this.setSettingAutoShowHideDelay
                       }
+                      //
                       settingDarkMode={settingDarkMode}
                       setSettingDarkMode={this.setSettingDarkMode}
                     />

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
 import { MdSettings, MdBrightnessAuto } from 'react-icons/md';
+import { VscPreview } from 'react-icons/vsc';
 import { TiDownload } from 'react-icons/ti';
 import {
   FaAlignJustify,
@@ -23,6 +24,8 @@ const SettingsBox = ({
   setSettingSidebarShouldShrinkBody,
   settingDisplayTabTitleInFull,
   setSettingDisplayTabTitleInFull,
+  settingDisplayTabPreviewFrame,
+  setSettingDisplayTabPreviewFrame,
   settingAutoShowHide,
   setSettingAutoShowHide,
   settingAutoShowHideDelay,
@@ -184,6 +187,49 @@ const SettingsBox = ({
                 />
                 <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
                 Truncated
+              </label>
+            </div>
+          </form>
+        </div>
+
+        {divider}
+        {/* DISPLAY TAB Preview Frame */}
+        <div className="SettingEntryContainer">
+          <div className="SettingEntryTitle">
+            <VscPreview className="SettingEntryTitleIcon" />
+            Display tab preview box:
+          </div>
+          <form className="SettingEntryContent">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <label
+                className={classNames({
+                  Active: settingDisplayTabPreviewFrame,
+                  Dark: isDark,
+                })}
+              >
+                <input
+                  type="radio"
+                  checked={settingDisplayTabPreviewFrame}
+                  onChange={() => setSettingDisplayTabPreviewFrame(true)}
+                  name="radio"
+                />
+                <FaCheck className="SettingEntryOptionIcon" />
+                Yes
+              </label>
+              <label
+                className={classNames({
+                  Active: !settingDisplayTabPreviewFrame,
+                  Dark: isDark,
+                })}
+              >
+                <input
+                  type="radio"
+                  checked={!settingDisplayTabPreviewFrame}
+                  onChange={() => setSettingDisplayTabPreviewFrame(false)}
+                  name="radio"
+                />
+                <FaTimes className="SettingEntryOptionIcon" />
+                No
               </label>
             </div>
           </form>

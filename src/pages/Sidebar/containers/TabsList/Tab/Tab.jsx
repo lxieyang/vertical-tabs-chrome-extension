@@ -23,6 +23,24 @@ import { useSnackbar } from 'react-simple-snackbar';
 
 import './Tab.css';
 
+function fetchFavicon(url) {
+  return new Promise(function (resolve, reject) {
+    var img = new Image();
+    img.onload = function () {
+      var canvas = document.createElement('canvas');
+      canvas.width = this.width;
+      canvas.height = this.height;
+
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(this, 0, 0);
+
+      var dataURL = canvas.toDataURL('image/png');
+      resolve(dataURL);
+    };
+    img.src = url;
+  });
+}
+
 const Tab = ({
   idx,
   id,
@@ -38,6 +56,7 @@ const Tab = ({
   status,
   activeTab,
   displayTabInFull,
+  displayTabPreviewFrame,
   contextMenuShow,
   contextMenuShowPrev,
   findTab,
@@ -53,12 +72,13 @@ const Tab = ({
     style: { backgroundColor: '#4DC71F', fontWeight: 600 },
   });
 
-  /* Start of --> Drag and Drop support */
-  const ref = useRef(null);
-
   const darkModeContext = useContext(DarkModeContext);
   const { isDark } = darkModeContext;
 
+  const tabItemRef = useRef(null);
+
+  /* Start of --> Drag and Drop support */
+  const dndRef = useRef(null);
   const originalIndex = findTab(id).index;
   const [{ isDragging }, drag] = useDrag(
     () => ({
@@ -67,6 +87,9 @@ const Tab = ({
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
+      isDragging: (monitor) => {
+        hideTabPreview();
+      },
       end: (item, monitor) => {
         const { id: droppedId, originalIndex } = item;
         const { index: overIndex } = findTab(droppedId);
@@ -89,13 +112,14 @@ const Tab = ({
         if (draggedId !== id) {
           const { index: overIndex } = findTab(id);
           moveTab(draggedId, overIndex);
+          hideTabPreview();
         }
       },
     }),
     [findTab, moveTab]
   );
 
-  drag(drop(ref));
+  drag(drop(dndRef));
   /* End of --> Drag and Drop support */
 
   /* Start of --> Utility functions */
@@ -146,15 +170,55 @@ const Tab = ({
   };
   /* End of --> Utility functions */
 
+  const showTabPreview = async () => {
+    if (!displayTabPreviewFrame) {
+      return;
+    }
+    try {
+      const tabItemBB = tabItemRef.current.getBoundingClientRect();
+      const { y: tabItemY } = tabItemBB;
+      // console.log(tabItemY, url, title);
+      // console.log(faviconUrl);
+      let faviconDataUrl = await fetchFavicon(faviconUrl);
+      window.parent.postMessage(
+        {
+          msg: 'PREVIEW_TAB_ON',
+          payload: {
+            id,
+            title,
+            url,
+            faviconUrl: faviconDataUrl,
+            tabItemY,
+            isDark,
+          },
+        },
+        '*'
+      );
+    } catch (err) {
+      // console.log(err);
+    }
+  };
+
+  const hideTabPreview = () => {
+    if (!displayTabPreviewFrame) {
+      return;
+    }
+    window.parent.postMessage(
+      {
+        msg: 'PREVIEW_TAB_OFF',
+      },
+      '*'
+    );
+  };
+
   return (
     <ReactHoverObserver>
       {({ isHovering }) => (
         <React.Fragment>
           <ContextMenuTrigger id={id.toString()} holdToDisplay={-1}>
             <li
-              // style={{ opacity: isDragging ? 0 : 1 }}
-
-              title={`${title}\n\n${url}`}
+              ref={tabItemRef}
+              // title={`${title}\n\n${url}`}
               className={classNames({
                 TabItem: true,
                 blink: isDragging,
@@ -178,16 +242,21 @@ const Tab = ({
                   }
                 }
               }}
+              onMouseEnter={() => {
+                showTabPreview();
+              }}
               onMouseLeave={() => {
                 if (!isDragging) {
                   if (index !== activeTab.index) {
                     chrome.tabs.update(id, { highlighted: false });
                   }
                 }
+
+                hideTabPreview();
               }}
             >
               <div
-                ref={ref}
+                ref={dndRef}
                 className={classNames({
                   TabContainer: true,
                   isPinned: pinned,
