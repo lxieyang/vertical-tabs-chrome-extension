@@ -2,7 +2,6 @@ var webpack = require('webpack'),
   path = require('path'),
   fileSystem = require('fs'),
   env = require('./utils/env'),
-  { CleanWebpackPlugin } = require('clean-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   TerserPlugin = require('terser-webpack-plugin');
@@ -47,6 +46,7 @@ var options = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].bundle.js',
+    clean: true,
     publicPath: ASSET_PATH,
   },
   module: {
@@ -106,11 +106,6 @@ var options = {
   },
   plugins: [
     new webpack.ProgressPlugin(),
-    // clean the build folder
-    new CleanWebpackPlugin({
-      verbose: true,
-      // cleanStaleWebpackAssets: false,
-    }),
     // expose and write the allowed env vars on the compiled bundle
     new webpack.EnvironmentPlugin(['NODE_ENV']),
     new CopyWebpackPlugin({
