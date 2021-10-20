@@ -170,6 +170,7 @@ const Tab = ({
   };
   /* End of --> Utility functions */
 
+  /* Start of tab preview support */
   const showTabPreview = async () => {
     if (!displayTabPreviewFrame) {
       return;
@@ -177,14 +178,12 @@ const Tab = ({
     try {
       const tabItemBB = tabItemRef.current.getBoundingClientRect();
       const { y: tabItemY } = tabItemBB;
-      // console.log(tabItemY, url, title);
-      // console.log(faviconUrl);
+      // console.log(tabItemY, url, title, faviconUrl);
       let faviconDataUrl = await fetchFavicon(faviconUrl);
       window.parent.postMessage(
         {
           msg: 'PREVIEW_TAB_ON',
           payload: {
-            id,
             title,
             url,
             faviconUrl: faviconDataUrl,
@@ -210,6 +209,7 @@ const Tab = ({
       '*'
     );
   };
+  /* End of tab preview support */
 
   return (
     <ReactHoverObserver>
