@@ -21,7 +21,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason === 'install' || details.reason === 'update') {
     console.log('go to release log page');
     chrome.tabs.create({
-      url: `https://github.com/lxieyang/vertical-tabs-chrome-extension/blob/master/CHANGELOG.md#v1x-official-releases`,
+      url: `https://github.com/lxieyang/vertical-tabs-chrome-extension/blob/master/CHANGELOG.md#v2x-official-releases`,
     });
   }
 });

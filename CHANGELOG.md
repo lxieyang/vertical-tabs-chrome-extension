@@ -10,12 +10,28 @@
 
 All notable changes to this project will be documented in this file.
 
-# v1.x (official releases)
-
 Please provide valuable feedback by:
 
 - Creating a [new issue](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/new)
 - Email: xieyangl@cs.cmu.edu
+
+---
+
+# v2.x (official releases)
+
+### [2.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.0) (2021-10-21)
+
+#### New Features
+
+- Tab Preview
+
+  <img src="preview/repo/tab-preview-light.png" width="600"/>
+  <br/>
+  <img src="preview/repo/tab-preview-dark.png" width="600"/>
+
+---
+
+# v1.x (official releases)
 
 ### [1.10.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.10.0) (2021-10-18)
 

@@ -32,6 +32,10 @@ Please provide valuable feedback by:
 - Email: xieyangl@cs.cmu.edu
 <!-- - Filling out this [Google form](https://forms.gle/YiUg8xeEUD6f1JqM6) -->
 
+**Tab preview support is here 🕶️🕶️🕶️**
+
+<img src="preview/repo/tab-preview-light.png" width="600"/>
+
 ---
 
 **Dark theme support is here 🕶️🕶️🕶️**
