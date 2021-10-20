@@ -46,10 +46,13 @@ const browserInfo = detect();
 
 const TabPreviewFrame = ({ id, title, url, faviconUrl, isDark }) => {
   let domain = new URL(url).hostname;
-  // console.log(faviconUrl);
 
   if (domain.toLocaleLowerCase() === 'newtab') {
     domain = browserInfo.name + '://newtab';
+  } else if (domain.trim().length === 0) {
+    if (url.startsWith('file:')) {
+      domain = 'local or shared file';
+    }
   }
 
   return (

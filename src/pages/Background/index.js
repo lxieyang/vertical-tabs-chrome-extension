@@ -101,7 +101,7 @@ chrome.storage.sync.get(['displayTabPreviewFrame'], (result) => {
   if (result.displayTabPreviewFrame !== undefined) {
     displayTabPreviewFrame = result.displayTabPreviewFrame === true;
   } else {
-    persistdisplayTabPreviewFrameStatus(true); // default to display tab in full
+    persistdisplayTabPreviewFrameStatus(true); // default to display tab preview frame
   }
 });
 

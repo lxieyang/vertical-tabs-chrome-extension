@@ -218,7 +218,7 @@ const Tab = ({
           <ContextMenuTrigger id={id.toString()} holdToDisplay={-1}>
             <li
               ref={tabItemRef}
-              // title={`${title}\n\n${url}`}
+              title={!displayTabPreviewFrame ? `${title}\n\n${url}` : null}
               className={classNames({
                 TabItem: true,
                 blink: isDragging,
