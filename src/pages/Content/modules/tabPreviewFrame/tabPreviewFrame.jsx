@@ -5,11 +5,14 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   width: 220px;
-  font-family: sans-serif;
-  font-size: 14px !important;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   border-radius: 3px;
   padding: 0px;
+  text-align: left;
+  font-family: sans-serif;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: normal;
 `;
 
 const Title = styled.div`

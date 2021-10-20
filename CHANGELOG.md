@@ -19,11 +19,13 @@ Please provide valuable feedback by:
 
 # v2.x (official releases)
 
-### [2.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.0) (2021-10-21)
+### [2.0.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.1) (2021-10-21)
 
-#### New Features
+- Fixed a bug where texts could be center-aligned instead of left-aligned in the tab preview box.
 
-- Tab Preview
+### [2.0.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.0) (2021-10-20)
+
+- Tab Preview support!
 
   <img src="preview/repo/tab-preview-light.png" width="600"/>
   <br/>
@@ -35,14 +37,10 @@ Please provide valuable feedback by:
 
 ### [1.10.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.10.0) (2021-10-18)
 
-#### New Features
-
 - Bug fixes
 - Smoother drag experience
 
 ### [1.9.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.9.1) (2021-10-17)
-
-#### New Features
 
 - Refreshed styles
 
@@ -50,8 +48,6 @@ Please provide valuable feedback by:
   <img src="preview/repo/refreshed-look-dark.png" width="250"/>
 
 ### [1.8.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v1.8.0) (2020-04-05 #StayingAtHome #TogetherWeBeatCOVID19)
-
-#### New Features
 
 - Automatically show/hide sidebar ([#27](https://github.com/lxieyang/vertical-tabs-chrome-extension/issues/27)):
 
@@ -62,8 +58,6 @@ Please provide valuable feedback by:
 - Refreshed "Update Notice":
 
   <img src="preview/repo/update-notice-v2.png" width="400"/>
-
-#### Other
 
 - Updated development dependencies
 - Bug fixes and improvements
@@ -176,13 +170,9 @@ Please provide valuable feedback by:
 
 ### [0.4.0](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v0.4.0) (2019-08-12)
 
-#### New Features
-
 - Context menus.
 - Added (re)loading indicator.
 - Added new keyboard shortcut: `Ctrl/Command + E`.
-
-#### Bug fixes
 
 - Fixed a browser icon bug.
 - Autofocuses on the search box once sidebar opens.
