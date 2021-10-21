@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import classNames from 'classnames';
 import DarkModeContext from '../../../context/dark-mode-context';
-import { MdSettings, MdBrightnessAuto } from 'react-icons/md';
+import { MdBrightnessAuto } from 'react-icons/md';
 import { VscPreview } from 'react-icons/vsc';
 import { TiDownload } from 'react-icons/ti';
 import {
@@ -16,6 +16,29 @@ import { WiMoonAltNew, WiMoonAltWaxingCrescent3 } from 'react-icons/wi';
 import { MdFontDownload } from 'react-icons/md';
 
 import './SettingsBox.css';
+
+const Option = ({ checkedValue, onChangeHandler, Icon, children }) => {
+  const darkModeContext = useContext(DarkModeContext);
+  const { isDark } = darkModeContext;
+
+  return (
+    <label
+      className={classNames({
+        Active: checkedValue,
+        Dark: isDark,
+      })}
+    >
+      <input
+        type="radio"
+        checked={checkedValue}
+        onChange={onChangeHandler}
+        name="radio"
+      />
+      <Icon className="SettingEntryOptionIcon" />
+      {children}
+    </label>
+  );
+};
 
 const SettingsBox = ({
   settingSidebarLocation,
@@ -46,7 +69,6 @@ const SettingsBox = ({
   return (
     <div className={classNames({ PopoverContainer: true, Dark: isDark })}>
       <div className={classNames({ PopoverTitle: true, Dark: isDark })}>
-        {/* <MdSettings style={{ marginRight: 6 }} size={'19px'} />  */}
         Settings <div style={{ flex: 1 }}></div>
         <a
           title="Source code"
@@ -58,6 +80,7 @@ const SettingsBox = ({
           v{chrome.runtime.getManifest().version}
         </a>
       </div>
+
       <div className={classNames({ PopoverContent: true, Dark: isDark })}>
         {/* SIDEBAR POSITION */}
         <div className="SettingEntryContainer">
@@ -66,38 +89,20 @@ const SettingsBox = ({
             Sidebar position:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingSidebarLocation === 'left',
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingSidebarLocation === 'left'}
-                  onChange={() => setSettingSidebarLocation('left')}
-                  name="radio"
-                />
-                <FaAlignLeft className="SettingEntryOptionIcon" />
-                Left
-              </label>
-              <label
-                className={classNames({
-                  Active: settingSidebarLocation !== 'left',
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingSidebarLocation !== 'left'}
-                  onChange={() => setSettingSidebarLocation('right')}
-                  name="radio"
-                />
-                <FaAlignRight className="SettingEntryOptionIcon" />
-                Right
-              </label>
-            </div>
+            <Option
+              checkedValue={settingSidebarLocation === 'left'}
+              onChangeHandler={() => setSettingSidebarLocation('left')}
+              Icon={FaAlignLeft}
+            >
+              Left
+            </Option>
+            <Option
+              checkedValue={settingSidebarLocation !== 'left'}
+              onChangeHandler={() => setSettingSidebarLocation('right')}
+              Icon={FaAlignRight}
+            >
+              Right
+            </Option>
           </form>
         </div>
 
@@ -114,38 +119,20 @@ const SettingsBox = ({
             Squeeze webpage when the sidebar opens:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingSidebarShouldShrinkBody,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingSidebarShouldShrinkBody}
-                  onChange={() => setSettingSidebarShouldShrinkBody(true)}
-                  name="radio"
-                />
-                <FaCheck className="SettingEntryOptionIcon" />
-                Yes
-              </label>
-              <label
-                className={classNames({
-                  Active: !settingSidebarShouldShrinkBody,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={!settingSidebarShouldShrinkBody}
-                  onChange={() => setSettingSidebarShouldShrinkBody(false)}
-                  name="radio"
-                />
-                <FaTimes className="SettingEntryOptionIcon" />
-                No
-              </label>
-            </div>
+            <Option
+              checkedValue={settingSidebarShouldShrinkBody}
+              onChangeHandler={() => setSettingSidebarShouldShrinkBody(true)}
+              Icon={FaCheck}
+            >
+              Yes
+            </Option>
+            <Option
+              checkedValue={!settingSidebarShouldShrinkBody}
+              onChangeHandler={() => setSettingSidebarShouldShrinkBody(false)}
+              Icon={FaTimes}
+            >
+              No
+            </Option>
           </form>
         </div>
 
@@ -157,81 +144,45 @@ const SettingsBox = ({
             Display tab title:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingDisplayTabTitleInFull,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingDisplayTabTitleInFull}
-                  onChange={() => setSettingDisplayTabTitleInFull(true)}
-                  name="radio"
-                />
-                <WiMoonAltNew className="SettingEntryOptionIcon" />
-                Full
-              </label>
-              <label
-                className={classNames({
-                  Active: !settingDisplayTabTitleInFull,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={!settingDisplayTabTitleInFull}
-                  onChange={() => setSettingDisplayTabTitleInFull(false)}
-                  name="radio"
-                />
-                <WiMoonAltWaxingCrescent3 className="SettingEntryOptionIcon" />
-                Truncated
-              </label>
-            </div>
+            <Option
+              checkedValue={settingDisplayTabTitleInFull}
+              onChangeHandler={() => setSettingDisplayTabTitleInFull(true)}
+              Icon={WiMoonAltNew}
+            >
+              Full
+            </Option>
+            <Option
+              checkedValue={!settingDisplayTabTitleInFull}
+              onChangeHandler={() => setSettingDisplayTabTitleInFull(false)}
+              Icon={WiMoonAltWaxingCrescent3}
+            >
+              Truncated
+            </Option>
           </form>
         </div>
 
         {divider}
-        {/* DISPLAY TAB Preview Frame */}
+        {/* DISPLAY TAB PREVIEW FRAME */}
         <div className="SettingEntryContainer">
           <div className="SettingEntryTitle">
             <VscPreview className="SettingEntryTitleIcon" />
             Display tab preview box:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingDisplayTabPreviewFrame,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingDisplayTabPreviewFrame}
-                  onChange={() => setSettingDisplayTabPreviewFrame(true)}
-                  name="radio"
-                />
-                <FaCheck className="SettingEntryOptionIcon" />
-                Yes
-              </label>
-              <label
-                className={classNames({
-                  Active: !settingDisplayTabPreviewFrame,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={!settingDisplayTabPreviewFrame}
-                  onChange={() => setSettingDisplayTabPreviewFrame(false)}
-                  name="radio"
-                />
-                <FaTimes className="SettingEntryOptionIcon" />
-                No
-              </label>
-            </div>
+            <Option
+              checkedValue={settingDisplayTabPreviewFrame}
+              onChangeHandler={() => setSettingDisplayTabPreviewFrame(true)}
+              Icon={FaCheck}
+            >
+              Yes
+            </Option>
+            <Option
+              checkedValue={!settingDisplayTabPreviewFrame}
+              onChangeHandler={() => setSettingDisplayTabPreviewFrame(false)}
+              Icon={FaTimes}
+            >
+              No
+            </Option>
           </form>
         </div>
 
@@ -243,53 +194,35 @@ const SettingsBox = ({
             Auto show/hide sidebar:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingAutoShowHide,
-                  Dark: isDark,
-                })}
-              >
+            <Option
+              checkedValue={settingAutoShowHide}
+              onChangeHandler={() => setSettingAutoShowHide(true)}
+              Icon={FaCheck}
+            >
+              Yes{' '}
+              <div className="AdditionalSettingItemContainer">
+                (hide in
                 <input
-                  type="radio"
-                  checked={settingAutoShowHide}
-                  onChange={() => setSettingAutoShowHide(true)}
-                  name="radio"
-                />
-                <FaCheck className="SettingEntryOptionIcon" />
-                Yes{' '}
-                <div className="AdditionalSettingItemContainer">
-                  (hide in
-                  <input
-                    disabled={!settingAutoShowHide}
-                    type="number"
-                    min="0"
-                    className="MillSecondsInput"
-                    placeholder={500}
-                    value={settingAutoShowHideDelay}
-                    onChange={(e) => {
-                      setSettingAutoShowHideDelay(e.target.value);
-                    }}
-                  />{' '}
-                  ms)
-                </div>
-              </label>
-              <label
-                className={classNames({
-                  Active: !settingAutoShowHide,
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={!settingAutoShowHide}
-                  onChange={() => setSettingAutoShowHide(false)}
-                  name="radio"
-                />
-                <FaTimes className="SettingEntryOptionIcon" />
-                No
-              </label>
-            </div>
+                  disabled={!settingAutoShowHide}
+                  type="number"
+                  min="0"
+                  className="MillSecondsInput"
+                  placeholder={500}
+                  value={settingAutoShowHideDelay}
+                  onChange={(e) => {
+                    setSettingAutoShowHideDelay(e.target.value);
+                  }}
+                />{' '}
+                ms)
+              </div>
+            </Option>
+            <Option
+              checkedValue={!settingAutoShowHide}
+              onChangeHandler={() => setSettingAutoShowHide(false)}
+              Icon={FaTimes}
+            >
+              No
+            </Option>
           </form>
         </div>
 
@@ -301,53 +234,27 @@ const SettingsBox = ({
             Dark theme:
           </div>
           <form className="SettingEntryContent">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <label
-                className={classNames({
-                  Active: settingDarkMode === 'auto',
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingDarkMode === 'auto'}
-                  onChange={() => setSettingDarkMode('auto')}
-                  name="radio"
-                />
-                <MdBrightnessAuto className="SettingEntryOptionIcon" />
-                Auto
-              </label>
-              <label
-                className={classNames({
-                  Active: settingDarkMode === 'light',
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingDarkMode === 'light'}
-                  onChange={() => setSettingDarkMode('light')}
-                  name="radio"
-                />
-                <IoIosSunny className="SettingEntryOptionIcon" />
-                Light
-              </label>
-              <label
-                className={classNames({
-                  Active: settingDarkMode === 'dark',
-                  Dark: isDark,
-                })}
-              >
-                <input
-                  type="radio"
-                  checked={settingDarkMode === 'dark'}
-                  onChange={() => setSettingDarkMode('dark')}
-                  name="radio"
-                />
-                <IoIosMoon className="SettingEntryOptionIcon" />
-                Dark
-              </label>
-            </div>
+            <Option
+              checkedValue={settingDarkMode === 'auto'}
+              onChangeHandler={() => setSettingDarkMode('auto')}
+              Icon={MdBrightnessAuto}
+            >
+              Auto
+            </Option>
+            <Option
+              checkedValue={settingDarkMode === 'light'}
+              onChangeHandler={() => setSettingDarkMode('light')}
+              Icon={IoIosSunny}
+            >
+              Light
+            </Option>
+            <Option
+              checkedValue={settingDarkMode === 'dark'}
+              onChangeHandler={() => setSettingDarkMode('dark')}
+              Icon={IoIosMoon}
+            >
+              Dark
+            </Option>
           </form>
         </div>
       </div>

@@ -75,6 +75,8 @@
 .PopoverContent .SettingEntryContent {
   margin: 6px 0px 0px 18px;
   opacity: 0.8;
+  display: flex;
+  align-items: center;
 }
 
 .PopoverContent .SettingEntryContent label {

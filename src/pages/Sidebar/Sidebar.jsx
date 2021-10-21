@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import update from 'immutability-helper';
 import DarkModeContext from './context/dark-mode-context';
 import { sortBy } from 'lodash';
 
@@ -31,14 +30,12 @@ class Sidebar extends Component {
     this.tabUpdatedHandler = this.handleTabUpdated.bind(this);
     this.tabMovedHandler = this.handleTabMoved.bind(this);
     this.tabActivatedHandler = this.handleTabActivated.bind(this);
-    // this.tabHighlightedHandler = this.handleTabHighlighted.bind(this);
 
     chrome.tabs.onCreated.addListener(this.tabCreatedHandler);
     chrome.tabs.onRemoved.addListener(this.tabRemovedHandler);
     chrome.tabs.onUpdated.addListener(this.tabUpdatedHandler);
     chrome.tabs.onMoved.addListener(this.tabMovedHandler);
     chrome.tabs.onActivated.addListener(this.tabActivatedHandler);
-    // chrome.tabs.onHighlighted.addListener(this.tabHighlightedHandler);
   }
 
   componentDidMount() {
@@ -86,7 +83,6 @@ class Sidebar extends Component {
     chrome.tabs.onUpdated.removeListener(this.tabUpdatedHandler);
     chrome.tabs.onMoved.removeListener(this.tabMovedHandler);
     chrome.tabs.onActivated.removeListener(this.tabActivatedHandler);
-    // chrome.tabs.onHighlighted.removeListener(this.tabHighlightedHandler);
 
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -244,21 +240,6 @@ class Sidebar extends Component {
   handleTabActivated = (activeInfo) => {
     this.updateTabOrders();
   };
-
-  // handleTabHighlighted = (highlightInfo) => {
-  // };
-
-  // moveTab = (dragIndex, hoverIndex) => {
-  //   const dragTab = this.state.tabOrders[dragIndex];
-  //   this.setState({
-  //     tabOrders: update(this.state.tabOrders, {
-  //       $splice: [
-  //         [dragIndex, 1],
-  //         [hoverIndex, 0, dragTab],
-  //       ],
-  //     }),
-  //   });
-  // };
 
   setDisplayTabInFull = (toStatus) => {
     this.setState({ displayTabInFull: toStatus });
