@@ -1,67 +1,71 @@
 import React, { Component } from 'react';
 import cx from 'classnames';
-import { css } from 'glamor';
+import { css } from '@emotion/css';
 import { node, object, string, number, func } from 'prop-types';
 
 import { Resizable } from 're-resizable';
 
 import { SIDEBAR_CONTAINER_ID } from '../../../../shared/constants';
 
-const iframeClass = css({
-  border: 'none',
-  width: '100%',
-  height: '100%',
-  background: 'white',
-  boxSizing: 'border-box',
-  // borderRadius: '3px',
-});
+const iframeClass = css`
+  border: none;
+  width: 100%;
+  height: 100%;
+  background: white;
+  box-sizing: border-box;
+  /* borderRadius: 3px; */
+`;
 
-const containerClass = css({
-  position: 'fixed',
-  top: '0px',
-  // right: '0px',
-  height: '100%',
-  padding: '0px 0px 0px 0px',
-  boxSizing: 'border-box',
-  borderRadius: '3px',
-  boxShadow: '0px 0px 8px rgba(0,0,0,.15)',
-  // transform: 'translateX(115%)',
-  transition: 'transform .25s cubic-bezier(0, 0, 0.3, 1)',
-  zIndex: 99999999,
-});
+const containerClass = css`
+  position: fixed;
+  top: 0px;
+  /* right: 0px; */
+  height: 100%;
+  padding: 0px 0px 0px 0px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+  /* transform: translateX(115%); */
+  transition: transform 0.25s cubic-bezier(0, 0, 0.3, 1);
+  z-index: 99999999;
+`;
 
-const containerRightClass = css({
-  right: '0px',
-});
+const containerRightClass = css`
+  right: 0px;
+`;
 
-const containerLeftClass = css({
-  left: '0px',
-});
+const containerLeftClass = css`
+  left: 0px;
+`;
 
-const containerVisibleClass = css({
-  transform: 'translate3d(0,0,0)',
-});
+const containerVisibleClass = css`
+  transform: translate3d(0, 0, 0);
+`;
 
-const containerMinimizedClass = css({
-  cursor: 'pointer',
-  '& > iframe': {
-    pointerEvents: 'none',
-  },
-});
+const containerMinimizedClass = css`
+  cursor: pointer;
+  & > iframe {
+    pointer-events: none;
+  }
+`;
 
-const containerRightMinimizedClass = css({
-  transform: 'translateX(105%)',
-  // ':hover': {
-  //   transform: `translateX(94%)`,
-  // },
-});
+const containerRightMinimizedClass = css`
+  transform: translateX(105%);
+  ${
+    '' /* &:hover {
+    transform: translateX(94%);
+  } */
+  }
+`;
 
-const containerLeftMinimizedClass = css({
-  transform: 'translateX(-105%)',
-  // ':hover': {
-  //   transform: `translateX(-94%)`,
-  // },
-});
+const containerLeftMinimizedClass = css`
+  transform: translateX(-105%);
+  ${
+    '' /* &:hover {
+    transform: translateX(-94%);
+  } */
+  }
+`;
 
 const FRAME_TOGGLE_FUNCTION = 'chromeIframeSidebarToggle';
 const FRAME_FIX_SHRINK_BODY_FUNCTION = 'chromeIframeFixShrinkBody';
