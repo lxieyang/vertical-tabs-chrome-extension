@@ -2,7 +2,10 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Frame from '../modules/frame/frame';
-import { SIDEBAR_CONTAINER_ID } from '../../../shared/constants';
+import {
+  SIDEBAR_CONTAINER_ID,
+  APP_NAME_SHORT,
+} from '../../../shared/constants';
 
 document.body.style.transition = 'margin .25s cubic-bezier(0, 0, 0.3, 1)';
 
@@ -17,8 +20,10 @@ const setSidebarWidth = (width) => {
   sidebarWidth = width;
 };
 
-chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
-  let widthObj = result['vt-sidebar-width'];
+const SIDEBAR_WIDTH_KEY = `${APP_NAME_SHORT}-sidebar-width`;
+
+chrome.storage.sync.get([SIDEBAR_WIDTH_KEY], (result) => {
+  let widthObj = result[SIDEBAR_WIDTH_KEY];
   if (widthObj !== undefined) {
     sidebarWidth = JSON.parse(widthObj).width;
   }

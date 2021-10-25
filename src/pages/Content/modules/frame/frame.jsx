@@ -5,7 +5,10 @@ import { node, object, string, number, func } from 'prop-types';
 
 import { Resizable } from 're-resizable';
 
-import { SIDEBAR_CONTAINER_ID } from '../../../../shared/constants';
+import {
+  SIDEBAR_CONTAINER_ID,
+  APP_NAME_SHORT,
+} from '../../../../shared/constants';
 
 const iframeClass = css`
   border: none;
@@ -70,6 +73,8 @@ const containerLeftMinimizedClass = css`
 const FRAME_TOGGLE_FUNCTION = 'chromeIframeSidebarToggle';
 const FRAME_FIX_SHRINK_BODY_FUNCTION = 'chromeIframeFixShrinkBody';
 
+const SIDEBAR_WIDTH_KEY = `${APP_NAME_SHORT}-sidebar-width`;
+
 export class Frame extends Component {
   state = {
     isVisible: false,
@@ -125,8 +130,8 @@ export class Frame extends Component {
     }, delay);
 
     try {
-      chrome.storage.sync.get(['vt-sidebar-width'], (result) => {
-        let widthObj = result['vt-sidebar-width'];
+      chrome.storage.sync.get([SIDEBAR_WIDTH_KEY], (result) => {
+        let widthObj = result[SIDEBAR_WIDTH_KEY];
         if (widthObj !== undefined) {
           let width = JSON.parse(widthObj).width;
           if (width) {
@@ -134,13 +139,13 @@ export class Frame extends Component {
           }
         }
       });
-      // let widthObj = localStorage.getItem('vt-sidebar-width');
+      // let widthObj = localStorage.getItem(SIDEBAR_WIDTH_KEY);
       // if (widthObj !== undefined) {
       //   this.setState({ width: JSON.parse(widthObj).width });
       // }
     } catch (e) {
-      chrome.storage.sync.remove(['vt-sidebar-width']);
-      // localStorage.removeItem('vt-sidebar-width');
+      chrome.storage.sync.remove([SIDEBAR_WIDTH_KEY]);
+      // localStorage.removeItem(SIDEBAR_WIDTH_KEY);
     }
 
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -301,10 +306,10 @@ export class Frame extends Component {
               this.props.shrinkBody(true);
 
               chrome.storage.sync.set({
-                'vt-sidebar-width': JSON.stringify({ width: width }),
+                [SIDEBAR_WIDTH_KEY]: JSON.stringify({ width: width }),
               });
               // localStorage.setItem(
-              //   'vt-sidebar-width',
+              //   [SIDEBAR_WIDTH_KEY],
               //   JSON.stringify({ width: width })
               // );
 
@@ -344,7 +349,7 @@ export class Frame extends Component {
                 }}
               >
                 <iframe
-                  title={'vt-sidebar-iframe'}
+                  title={`${APP_NAME_SHORT}-sidebar-iframe`}
                   className={cx({
                     [iframeClass]: true,
                   })}
