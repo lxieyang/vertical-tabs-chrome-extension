@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Popover, { ArrowContainer } from 'react-tiny-popover';
+import { Popover, ArrowContainer } from 'react-tiny-popover';
 import { MdChevronLeft } from 'react-icons/md';
 import { MdChevronRight } from 'react-icons/md';
 import { MdSettings } from 'react-icons/md';
@@ -288,23 +288,23 @@ class Title extends Component {
 
               <Popover
                 isOpen={isSettingsPopoverOpen}
-                position={['bottom']}
+                positions={['bottom']}
                 padding={0}
-                // windowBorderPadding={10}
-                disableReposition={false}
-                onClickOutside={() =>
-                  this.setState({ isSettingsPopoverOpen: false })
-                }
+                onClickOutside={() => {
+                  this.setState({
+                    isSettingsPopoverOpen: false,
+                  });
+                }}
                 containerStyle={{
                   zIndex: 999999999,
                   minWidth: '180px',
                   maxWidth: '290px',
                   padding: '0px 2px 2px 2px',
                 }}
-                content={({ position, targetRect, popoverRect }) => (
+                content={({ position, childRect, popoverRect }) => (
                   <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
                     position={position}
-                    targetRect={targetRect}
+                    childRect={childRect}
                     popoverRect={popoverRect}
                     arrowColor={'#ebebeb'}
                     arrowSize={4}
