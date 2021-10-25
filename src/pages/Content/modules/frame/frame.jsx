@@ -14,7 +14,7 @@ const iframeClass = css`
   border: none;
   width: 100%;
   height: 100%;
-  background: white;
+  background-color: white;
   box-sizing: border-box;
   /* borderRadius: 3px; */
 `;
