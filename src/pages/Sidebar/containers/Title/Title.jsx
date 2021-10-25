@@ -303,7 +303,6 @@ class Title extends Component {
                 }}
                 content={({ position, targetRect, popoverRect }) => (
                   <ArrowContainer // if you'd like an arrow, you can import the ArrowContainer!
-                    className="123"
                     position={position}
                     targetRect={targetRect}
                     popoverRect={popoverRect}
