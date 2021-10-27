@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 class ErrorBoundary extends Component {
   state = { hasError: false };
@@ -13,7 +13,11 @@ class ErrorBoundary extends Component {
 
   render() {
     // if (this.state.hasError) {
-    //   return <h1>Oops, we done goofed up</h1>;
+    //   return (
+    //     <h1>
+    //       Oops, please refresh the current page to use Vertical Tabs again.
+    //     </h1>
+    //   );
     // }
     return this.props.children;
   }

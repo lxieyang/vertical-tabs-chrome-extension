@@ -12,7 +12,7 @@ const UpdateNoticeContainer = styled.div`
   padding: 8px 16px;
   border-radius: 10px;
   color: #000;
-  background-color: #fff;
+  background-color: #fff !important;
 
   font-family: sans-serif;
   text-align: center;
@@ -21,8 +21,6 @@ const UpdateNoticeContainer = styled.div`
   font-style: normal;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%);
   line-height: 22px;
-
-  z-index: 999999999;
 `;
 
 const ExtensionNameContainerSpan = styled.span`

@@ -20,6 +20,7 @@ const iframeClass = css`
 `;
 
 const containerClass = css`
+  background-color: #fff;
   position: fixed;
   top: 0px;
   /* right: 0px; */
