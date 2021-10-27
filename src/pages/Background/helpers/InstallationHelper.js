@@ -18,7 +18,10 @@ chrome.runtime.onInstalled.addListener((details) => {
     const prevVersion = details.previousVersion;
     console.log(thisVersion, prevVersion);
   }
-  if (details.reason === 'install' || details.reason === 'update') {
+  if (
+    details.reason === 'install'
+    // || details.reason === 'update'
+  ) {
     console.log('go to release log page');
     chrome.tabs.create({
       url: `https://github.com/lxieyang/vertical-tabs-chrome-extension/blob/master/CHANGELOG.md#v2x-official-releases`,

@@ -4,6 +4,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import SnackbarProvider from 'react-simple-snackbar';
 import MediaQuery from 'react-responsive';
+import EB from './containers/ErrorBoundary/ErrorBoundary';
 
 import Sidebar from './Sidebar';
 import './index.css';
@@ -50,7 +51,7 @@ const App = () => {
   }
 
   return (
-    <React.Fragment>
+    <EB>
       <SnackbarProvider>
         <DarkModeContext.Provider
           value={{ mediaQueryDark, isDark, setDarkStatus }}
@@ -71,7 +72,7 @@ const App = () => {
           <div style={{ width: 0, height: 0 }}></div>
         </MediaQuery>
       </SnackbarProvider>
-    </React.Fragment>
+    </EB>
   );
 };
 

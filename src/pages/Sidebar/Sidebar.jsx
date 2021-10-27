@@ -260,34 +260,32 @@ class Sidebar extends Component {
 
     return (
       <DarkModeContext.Consumer>
-        {(darkModeContext) => {
-          return (
-            <div
-              className={classNames({
-                SidebarContainer: true,
-                Dark: darkModeContext.isDark,
-              })}
-            >
-              <Title
-                setDisplayTabInFull={this.setDisplayTabInFull}
-                setDisplayTabPreviewFrame={this.setDisplayTabPreviewFrame}
-              />
-              <TabsList
-                displayTabInFull={displayTabInFull}
-                displayTabPreviewFrame={displayTabPreviewFrame}
-                tabOrders={tabOrders
-                  .filter(({ id }) => tabsDict[id] !== undefined)
-                  .map((tabOrder) => ({
-                    ...tabOrder,
-                    ...tabsDict[tabOrder.id],
-                  }))}
-                activeTab={activeTab}
-                setTabAsLoading={this.setTabAsLoading}
-              />
-              {/* <UpdateNotice /> */}
-            </div>
-          );
-        }}
+        {({ isDark }) => (
+          <div
+            className={classNames({
+              SidebarContainer: true,
+              Dark: isDark,
+            })}
+          >
+            <Title
+              setDisplayTabInFull={this.setDisplayTabInFull}
+              setDisplayTabPreviewFrame={this.setDisplayTabPreviewFrame}
+            />
+            <TabsList
+              displayTabInFull={displayTabInFull}
+              displayTabPreviewFrame={displayTabPreviewFrame}
+              tabOrders={tabOrders
+                .filter(({ id }) => tabsDict[id] !== undefined)
+                .map((tabOrder) => ({
+                  ...tabOrder,
+                  ...tabsDict[tabOrder.id],
+                }))}
+              activeTab={activeTab}
+              setTabAsLoading={this.setTabAsLoading}
+            />
+            {/* <UpdateNotice /> */}
+          </div>
+        )}
       </DarkModeContext.Consumer>
     );
   }

@@ -1,7 +1,7 @@
 import copy from 'clipboard-copy';
-import './helpers/UpdateNoticeHelper';
 import './helpers/SidebarHelper';
 import './helpers/TabPreviewHelper';
+import './helpers/UpdateNoticeHelper';
 
 window.addEventListener('message', (event) => {
   const { msg, payload } = event.data;
