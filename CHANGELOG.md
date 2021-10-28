@@ -19,6 +19,10 @@ Please provide valuable feedback by:
 
 # v2.x (official releases)
 
+### [2.0.4](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.4) (2021-10-28)
+
+- Added indications for audio playing status in the tab preview box.
+
 ### [2.0.3](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.3) (2021-10-27)
 
 - Bug fixes.
