@@ -19,6 +19,11 @@ Please provide valuable feedback by:
 
 # v2.x (official releases)
 
+### [2.0.3](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.3) (2021-10-27)
+
+- Bug fixes.
+- Optimized UX when the extension is updated.
+
 ### [2.0.1](https://github.com/lxieyang/vertical-tabs-chrome-extension/releases/tag/v2.0.1) (2021-10-21)
 
 - Fixed a bug where texts could be center-aligned instead of left-aligned in the tab preview box.
