@@ -30,7 +30,8 @@ let unmountTabPreviewFrameTimeout;
 window.addEventListener('message', (event) => {
   const { msg, payload } = event.data;
   if (msg === 'PREVIEW_TAB_ON') {
-    const { title, url, faviconUrl, tabItemY, isDark } = payload;
+    const { title, url, muted, audible, faviconUrl, tabItemY, isDark } =
+      payload;
     // console.log(title, url, faviconUrl, tabItemY, isDark);
 
     if (unmountTabPreviewFrameTimeout) {
@@ -42,6 +43,8 @@ window.addEventListener('message', (event) => {
         <TabPreviewFrame
           title={title}
           url={url}
+          muted={muted}
+          audible={audible}
           faviconUrl={faviconUrl}
           isDark={isDark}
         />,

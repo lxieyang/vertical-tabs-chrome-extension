@@ -4,7 +4,7 @@ import { detect } from 'detect-browser';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 220px;
+  width: 240px;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   border-radius: 3px;
   padding: 0px;
@@ -16,10 +16,10 @@ const Container = styled.div`
   line-height: normal !important;
 `;
 
-const Title = styled.div`
+const TitleContainer = styled.div`
   padding: 8px 10px;
   background: ${(props) => (props.isDark ? 'rgb(36, 36, 36)' : '#fefefe')};
-  color: ${(props) => (props.isDark ? 'rgb(167, 167, 167)' : '#333')};
+  color: ${(props) => (props.isDark ? 'rgb(190, 190, 190)' : '#333')};
 
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -27,10 +27,34 @@ const Title = styled.div`
   word-wrap: break-word;
 `;
 
+const TabInfoContainer = styled.div`
+  font-size: 11px;
+  opacity: 0.8;
+`;
+
+const AudibleOrMuted = styled.div`
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+`;
+
+const AudioMutedBadge = styled.span`
+  border-radius: 3px;
+  background-color: ${(props) => (props.isMuted ? 'inherent' : '#fe8c0a')};
+  color: ${(props) => (props.isMuted ? 'inherent' : '#fff')};
+  border: 1px solid transparent;
+  border-color: ${(props) => (props.isMuted ? '#666' : 'transparent')};
+
+  margin-left: 4px;
+  margin-right: 1px;
+
+  padding: 0.5px 2px;
+`;
+
 const Domain = styled.div`
   padding: 8px 10px;
   background: ${(props) => (props.isDark ? '#35363A' : 'rgb(222, 225, 230)')};
-  color: ${(props) => (props.isDark ? 'rgb(167, 167, 167)' : '#444')};
+  color: ${(props) => (props.isDark ? 'rgb(190, 190, 190)' : '#444')};
 
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -76,7 +100,14 @@ const NotSecureBadge = styled.div`
 
 const browserInfo = detect();
 
-const TabPreviewFrame = ({ title, url, faviconUrl, isDark }) => {
+const TabPreviewFrame = ({
+  title,
+  url,
+  muted,
+  audible,
+  faviconUrl,
+  isDark,
+}) => {
   let domain = new URL(url).hostname;
 
   if (url.startsWith(browserInfo.name + '://') && !domain.includes('://')) {
@@ -89,7 +120,23 @@ const TabPreviewFrame = ({ title, url, faviconUrl, isDark }) => {
 
   return (
     <Container className="TabPreviewContainer">
-      <Title isDark={isDark}>{title}</Title>
+      <TitleContainer isDark={isDark}>
+        <div>{title}</div>
+        <TabInfoContainer>
+          {muted && audible && (
+            <AudibleOrMuted>
+              This tab is{' '}
+              <AudioMutedBadge isMuted={true}>muted</AudioMutedBadge>.
+            </AudibleOrMuted>
+          )}
+          {!muted && audible && (
+            <AudibleOrMuted>
+              This tab is{' '}
+              <AudioMutedBadge isMuted={false}>playing audio</AudioMutedBadge>.
+            </AudibleOrMuted>
+          )}
+        </TabInfoContainer>
+      </TitleContainer>
 
       <Domain isDark={isDark}>
         <DomainNameDisplay>

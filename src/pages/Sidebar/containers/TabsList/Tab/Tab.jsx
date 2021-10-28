@@ -186,6 +186,8 @@ const Tab = ({
           payload: {
             title,
             url,
+            muted: mutedInfo.muted,
+            audible: audible,
             faviconUrl: faviconDataUrl,
             tabItemY,
             isDark,
