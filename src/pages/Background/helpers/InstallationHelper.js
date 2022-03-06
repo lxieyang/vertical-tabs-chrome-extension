@@ -44,7 +44,7 @@ chrome.storage.local.get(['shouldShowTips'], (result) => {
 });
 
 chrome.browserAction.setTitle({
-  title: `Vertical Tabs: Use Command + E (Ctrl + E on PC) to toggle the sidebar`,
+  title: `Vertical Tabs: Use Command + Q (Ctrl + Q on PC) to toggle the sidebar`,
 });
 
 const persistShouldShowTipsStatus = (toStatus) => {
