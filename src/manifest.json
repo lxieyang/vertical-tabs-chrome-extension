@@ -28,8 +28,8 @@
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+E",
-        "mac": "Command+E"
+        "default": "Ctrl+Q",
+        "mac": "Command+Q"
       }
     }
   },
