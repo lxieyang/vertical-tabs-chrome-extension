@@ -64,7 +64,7 @@ Youtube Preview Link: [https://youtu.be/BcpD38IjY6A](https://youtu.be/BcpD38IjY6
 - Search and filter tabs.
 - Context menu on tabs.
 - Toggle the sidebar by clicking on the extension icon.
-- Toggle the sidebar using the keyboard shortcut: **`Cmd + E`** (**`Ctrl + E`** on PC) ~~or `Ctrl` + `` ` `` or `Ctrl` + `Esc` or `Cmd` + `Esc` or `Opt` + `Esc` or `Alt` + `Esc`~~
+- Toggle the sidebar using the keyboard shortcut: **`Cmd + Q`** (**`Ctrl + Q`** on PC) (You can change this via chrome://extensions/shortcuts)
   - Using keyboard shortcuts are recommended once you formed the corresponding muscle memory.
 - The sidebar is resizable, and can be put on either the left or right of the browser window.
 
